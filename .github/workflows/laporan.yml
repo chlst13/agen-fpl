@@ -1,0 +1,49 @@
+# ============================================================
+#  LAPORAN FPL HARIAN — analisis penuh, dikirim ke Telegram
+#  beserta file HTML dan Excel-nya.
+# ============================================================
+name: Laporan FPL
+
+on:
+  schedule:
+    - cron: "0 23 * * *"   # 23:00 UTC = 06:00 WIB
+    - cron: "0 3 * * 5"    # 03:00 UTC Jumat = 10:00 WIB, jelang deadline
+  workflow_dispatch:
+
+concurrency:
+  group: laporan-fpl
+
+jobs:
+  laporan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: Asia/Jakarta
+      FPL_ENTRY_ID:      ${{ secrets.FPL_ENTRY_ID }}
+      TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      FPL_SKUAD_MANUAL:  ${{ vars.FPL_SKUAD_MANUAL }}
+      FPL_PAKAI_AI:      ${{ vars.FPL_PAKAI_AI }}
+      FPL_BANK:          ${{ vars.FPL_BANK }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Susun laporan
+        run: python agen_fpl.py
+
+      - name: Simpan salinan laporan
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: laporan-fpl
+          path: laporan/
+          retention-days: 14
