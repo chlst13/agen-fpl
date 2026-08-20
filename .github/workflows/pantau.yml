@@ -1,0 +1,60 @@
+# ============================================================
+#  PEMANTAU FPL — jalan di server GitHub, laptop boleh mati
+#  Mengecek perubahan status pemain dan mengirim Telegram.
+# ============================================================
+name: Pemantau FPL
+
+on:
+  schedule:
+    # Tiap 20 menit. Butuh repo PUBLIC (menit Actions tak terbatas).
+    # Kalau repo kamu PRIVATE, ganti ke "0,30 * * * *" agar muat di kuota gratis.
+    - cron: "*/20 * * * *"
+  workflow_dispatch:        # tombol "Run workflow" untuk uji manual
+
+concurrency:
+  group: pemantau-fpl
+  cancel-in-progress: false   # jangan potong run yang sedang menyimpan state
+
+permissions:
+  contents: write             # dibutuhkan untuk menyimpan state_pantau.json
+
+jobs:
+  pantau:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: Asia/Jakarta
+      FPL_ENTRY_ID:      ${{ secrets.FPL_ENTRY_ID }}
+      TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      FPL_SKUAD_MANUAL:  ${{ vars.FPL_SKUAD_MANUAL }}
+      FPL_PANTAU_TAMBAHAN: ${{ vars.FPL_PANTAU_TAMBAHAN }}
+      FPL_PAKAI_AI:      ${{ vars.FPL_PAKAI_AI }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Jalankan pemantau
+        run: python pemantau_fpl.py
+
+      - name: Simpan kondisi terakhir
+        run: |
+          if [ ! -f state_pantau.json ]; then exit 0; fi
+          git config user.name  "agen-fpl"
+          git config user.email "agen-fpl@users.noreply.github.com"
+          git add state_pantau.json
+          git diff --staged --quiet && exit 0
+          git commit -m "state: $(date -u +%FT%TZ) [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash && git push && exit 0
+            sleep 5
+          done
+          echo "Gagal menyimpan state setelah 3 percobaan"
