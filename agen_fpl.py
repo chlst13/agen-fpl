@@ -253,10 +253,41 @@ def sinyal_harga(df, ambang):
 # ANALISIS SKUAD
 # ------------------------------------------------------------------
 
-def ambil_skuad(cfg, gw_berjalan, df):
+def skuad_terkini(entry_id, gw_berjalan, gw_next):
+    """
+    Baca skuad dari akun FPL, lalu TERAPKAN transfer yang sudah kamu lakukan
+    untuk gameweek berikutnya.
+
+    Kenapa perlu: endpoint picks/ hanya menampilkan susunan gameweek berjalan.
+    Kalau kamu menjual A dan membeli B hari Rabu untuk GW berikutnya, picks/
+    masih menampilkan A sampai gameweek berganti. Padahal justru B yang perlu
+    dipantau. Jadi transfernya kita tempelkan sendiri.
+    """
+    if not entry_id or not gw_berjalan:
+        return []
+    picks = ambil(f"entry/{entry_id}/event/{gw_berjalan}/picks/", wajib=False)
+    if not picks or not picks.get("picks"):
+        return []
+    ids = [p["element"] for p in picks["picks"]]
+
+    transfers = ambil(f"entry/{entry_id}/transfers/", wajib=False) or []
+    tertunda = [t for t in transfers if t.get("event") == gw_next]
+    tertunda.sort(key=lambda t: t.get("time", ""))  # urut waktu, agar transfer berantai benar
+
+    for t in tertunda:
+        keluar, masuk = t.get("element_out"), t.get("element_in")
+        if keluar in ids:
+            ids[ids.index(keluar)] = masuk
+        elif masuk not in ids:
+            ids.append(masuk)
+    return ids
+
+
+def ambil_skuad(cfg, gw_berjalan, df, gw_next=None):
     """Ambil skuad dari akun FPL. Kalau belum bisa, pakai daftar manual."""
     entry = cfg.get("entry_id") or 0
     nama_tim, bank = "Skuad kamu", cfg.get("budget_bank", 0.0)
+    sumber = "daftar manual"
     ids = []
 
     if entry:
@@ -264,17 +295,16 @@ def ambil_skuad(cfg, gw_berjalan, df):
         if info:
             nama_tim = info.get("name", nama_tim)
             bank = angka(info.get("last_deadline_bank"), bank * 10) / 10.0
-        if gw_berjalan:
-            picks = ambil(f"entry/{entry}/event/{gw_berjalan}/picks/", wajib=False)
-            if picks and picks.get("picks"):
-                ids = [p["element"] for p in picks["picks"]]
+        ids = skuad_terkini(entry, gw_berjalan, gw_next or (gw_berjalan or 0) + 1)
+        if ids:
+            sumber = "akun FPL (transfer terbaru sudah ikut)"
 
     if not ids and cfg.get("skuad_manual"):
         cari = {n.lower().strip() for n in cfg["skuad_manual"]}
         ids = df[df["Nama"].str.lower().isin(cari)]["_id"].tolist()
 
     skuad = df[df["_id"].isin(ids)].copy() if ids else pd.DataFrame(columns=df.columns)
-    return nama_tim, bank, skuad
+    return nama_tim, bank, skuad, sumber
 
 
 def rekomendasi(df, skuad, bank):
@@ -374,7 +404,7 @@ def tabel_html(judul, records, kolom):
     return f"<h3>{judul}</h3><table><thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table>"
 
 
-def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai):
+def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber=""):
     kol = ["Nama", "Klub", "Pos", "Harga", "Form", "xGI/90", "FDR", "Milik%", "Skor"]
     bagian = ""
 
@@ -416,7 +446,7 @@ tr:last-child td{{border-bottom:0}}
 @media(max-width:640px){{body{{padding:14px}}table{{font-size:12px}}td,th{{padding:6px}}}}
 </style></head><body>
 <h1>AGEN FPL</h1>
-<div class="meta">{nama_tim} &nbsp;·&nbsp; Gameweek {gw} &nbsp;·&nbsp; Bank {bank:.1f}jt &nbsp;·&nbsp; {dt.datetime.now():%d %b %Y %H:%M}</div>
+<div class="meta">{nama_tim} &nbsp;·&nbsp; Gameweek {gw} &nbsp;·&nbsp; Bank {bank:.1f}jt &nbsp;·&nbsp; {dt.datetime.now():%d %b %Y %H:%M}{f' &nbsp;·&nbsp; skuad dari {sumber}' if sumber else ''}</div>
 {blok_ai}{bagian}
 <div class="kaki">Skor agen = gabungan nilai per harga (30%), xGI per 90 menit (25%),
 kemudahan jadwal (20%), keandalan menit (15%), dan poin per laga (10%),
@@ -482,7 +512,8 @@ def jalankan():
     df = bangun_tabel(bootstrap, jadwal)
     naik, turun = sinyal_harga(df, cfg["ambang_harga"])
 
-    nama_tim, bank, skuad = ambil_skuad(cfg, gw_berjalan, df)
+    nama_tim, bank, skuad, sumber = ambil_skuad(cfg, gw_berjalan, df, gw_next)
+    print(f"→ Skuad dibaca dari: {sumber} ({len(skuad)} pemain)")
     rek = rekomendasi(df, skuad, bank)
 
     # ringkasan padat untuk dikirim ke Claude
@@ -502,7 +533,7 @@ def jalankan():
     )
     ai = komentar_ai(cfg, ringkasan)
 
-    berkas_html = tulis_html(folder, gw_next, nama_tim, bank, df, skuad, rek, naik, turun, ai)
+    berkas_html = tulis_html(folder, gw_next, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber)
     berkas_xlsx = tulis_excel(folder, gw_next, df, skuad, naik, turun)
 
     # pesan Telegram

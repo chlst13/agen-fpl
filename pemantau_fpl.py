@@ -248,6 +248,31 @@ def jam_ke_deadline(bootstrap):
     return None, None, None
 
 
+def tahap_laporan(catatan, gw, sisa_jam, ambang):
+    """
+    Tentukan apakah laporan pra-deadline perlu dikirim sekarang.
+    Sepenuhnya mengikuti deadline asli dari API — tidak peduli hari apa.
+    `ambang` misalnya [6, 2] artinya: kirim saat sisa 6 jam, lalu saat sisa 2 jam.
+    """
+    if gw is None or sisa_jam is None or sisa_jam <= 0:
+        return None
+    sudah = set(catatan.get("tahap", [])) if catatan.get("gw") == gw else set()
+    for t in sorted(ambang, reverse=True):
+        if sisa_jam <= t and t not in sudah:
+            return t
+    return None
+
+
+def simpan_state(potret_kini, catatan):
+    BERKAS_STATE.write_text(
+        json.dumps(
+            {"waktu": dt.datetime.now().isoformat(), "potret": potret_kini, "laporan": catatan},
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+
 # ------------------------------------------------------------------
 # ALUR UTAMA
 # ------------------------------------------------------------------
@@ -260,12 +285,14 @@ def jalankan():
     gw, sisa_jam, batas = jam_ke_deadline(bootstrap)
 
     # --- tentukan siapa yang dipantau ketat ---
-    gw_berjalan, _ = inti.gw_aktif(bootstrap)
+    gw_berjalan, gw_depan = inti.gw_aktif(bootstrap)
     penting = set()
-    if cfg.get("entry_id") and gw_berjalan:
-        picks = inti.ambil(f"entry/{cfg['entry_id']}/event/{gw_berjalan}/picks/", wajib=False)
-        if picks and picks.get("picks"):
-            penting = {str(p["element"]) for p in picks["picks"]}
+    sumber = "daftar manual"
+    if cfg.get("entry_id"):
+        ids = inti.skuad_terkini(cfg["entry_id"], gw_berjalan, gw or gw_depan)
+        if ids:
+            penting = {str(i) for i in ids}
+            sumber = "akun FPL"
     if not penting and cfg.get("skuad_manual"):
         cari = {n.lower().strip() for n in cfg["skuad_manual"]}
         penting = {pid for pid, v in kini.items() if v["nama"].lower() in cari}
@@ -273,20 +300,20 @@ def jalankan():
         for pid, v in kini.items():
             if v["nama"].lower() == n.lower().strip():
                 penting.add(pid)
+    print(f"→ Memantau {len(penting)} pemain (skuad dari {sumber})")
 
     # --- bandingkan dengan snapshot lalu ---
-    lama = {}
+    lama, catatan = {}, {}
     if BERKAS_STATE.exists():
         try:
-            lama = json.loads(BERKAS_STATE.read_text(encoding="utf-8")).get("potret", {})
+            simpanan = json.loads(BERKAS_STATE.read_text(encoding="utf-8"))
+            lama = simpanan.get("potret", {})
+            catatan = simpanan.get("laporan", {})
         except json.JSONDecodeError:
-            lama = {}
+            lama, catatan = {}, {}
 
     perubahan = bandingkan(lama, kini, penting) if lama else []
-    BERKAS_STATE.write_text(
-        json.dumps({"waktu": dt.datetime.now().isoformat(), "potret": kini}, ensure_ascii=False),
-        encoding="utf-8",
-    )
+    simpan_state(kini, catatan)
 
     if not lama:
         print("→ Snapshot awal dibuat. Perbandingan mulai berjalan pada eksekusi berikutnya.")
@@ -294,6 +321,7 @@ def jalankan():
 
     # --- mode siaga menjelang deadline ---
     siaga = sisa_jam is not None and 0 < sisa_jam <= JAM_SIAGA
+    tahap = tahap_laporan(catatan, gw, sisa_jam, cfg.get("tahap_laporan_jam", [6, 2]))
     blok_rotasi, blok_berita, bendera = "", "", []
 
     if siaga and penting:
@@ -314,7 +342,7 @@ def jalankan():
             blok_berita = f"\n<b>Pantauan berita (belum resmi):</b>\n{berita}"
 
     # --- susun pesan ---
-    if not perubahan and not siaga:
+    if not perubahan and not siaga and tahap is None:
         print("→ Tidak ada perubahan. Diam.")
         return 0
 
@@ -345,6 +373,20 @@ def jalankan():
 
     print(pesan.replace("<b>", "").replace("</b>", ""))
     print(f"\n✓ Telegram: {'terkirim' if terkirim else 'dilewati'}")
+
+    # --- laporan lengkap otomatis menjelang deadline ---
+    if tahap is not None:
+        print(f"\n→ Deadline tinggal {sisa_jam:.1f} jam. Menyusun laporan lengkap…")
+        try:
+            inti.jalankan()
+            if catatan.get("gw") != gw:
+                catatan = {"gw": gw, "tahap": []}
+            catatan["tahap"] = sorted(set(catatan.get("tahap", [])) | {tahap}, reverse=True)
+            simpan_state(kini, catatan)
+            print(f"✓ Laporan pra-deadline ({tahap} jam) terkirim.")
+        except Exception as e:
+            print(f"⚠ Laporan pra-deadline gagal, akan dicoba lagi: {e}")
+
     return 0
 
 

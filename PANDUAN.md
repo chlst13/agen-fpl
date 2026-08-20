@@ -1,3 +1,11 @@
+> **Catatan.** Berkas ini adalah referensi teknis: cara kerja rumus, arti
+> tiap kolom, dan cara menjalankan bot di komputer sendiri.
+>
+> **Kalau tujuanmu memasang bot di GitHub tanpa laptop, ikuti
+> `PANDUAN-PEMASANGAN.md` saja.** Berkas itu sudah lengkap dan berdiri sendiri.
+
+---
+
 # Agen FPL — panduan pemasangan
 
 Agen ini menarik data resmi FPL, menghitung skor tiap pemain, membedah skuadmu,
