@@ -28,6 +28,16 @@ from pathlib import Path
 import requests
 import pandas as pd
 
+try:
+    import fitur_lanjutan as lanjut
+except ImportError:      # agen tetap jalan walau modul lanjutan belum diunggah
+    lanjut = None
+
+try:
+    import laporan_gw as lapgw
+except ImportError:
+    lapgw = None
+
 # ------------------------------------------------------------------
 # KONFIGURASI
 # ------------------------------------------------------------------
@@ -47,6 +57,8 @@ BAWAAN = {
     "pakai_komentar_ai": True,
     "ambang_harga": 0.75,
     "kirim_berkas": True,
+    "tahap_laporan_jam": [24, 3, 1],
+    "liga_id": 0,
 }
 
 API = "https://fantasy.premierleague.com/api"
@@ -65,6 +77,10 @@ def muat_config():
     def boolean(s):
         return s.strip().lower() in ("1", "true", "ya", "yes", "on")
 
+    def jam(s):
+        """'24,3,1' -> [24, 3, 1]"""
+        return sorted({int(float(x)) for x in s.split(",") if x.strip()}, reverse=True)
+
     peta = {
         "FPL_ENTRY_ID": ("entry_id", int),
         "TELEGRAM_TOKEN": ("telegram_token", str),
@@ -74,6 +90,8 @@ def muat_config():
         "FPL_PANTAU_TAMBAHAN": ("pantau_tambahan", daftar),
         "FPL_PAKAI_AI": ("pakai_komentar_ai", boolean),
         "FPL_BANK": ("budget_bank", float),
+        "FPL_TAHAP_LAPORAN": ("tahap_laporan_jam", jam),
+        "FPL_LIGA_ID": ("liga_id", int),
     }
     for env, (kunci, ubah) in peta.items():
         nilai = os.environ.get(env, "").strip()
@@ -215,9 +233,13 @@ def bangun_tabel(bootstrap, jadwal):
             + andal * 0.15
             + min(100, angka(p.get("points_per_game")) * 12) * 0.10
         ) * (1.0 if siap else 0.45)
+        if p.get("penalties_order") == 1:
+            skor *= 1.08
 
+        peran = lanjut.peran_bola_mati(p) if lanjut else None
         baris.append({
             "Nama": p["web_name"],
+            "Bola Mati": (lanjut.jelaskan_bola_mati(peran) if peran else "") or "",
             "Klub": klub.get(p["team"], "?"),
             "Pos": posisi.get(p["element_type"], "?"),
             "Harga": harga,
@@ -236,6 +258,7 @@ def bangun_tabel(bootstrap, jadwal):
             "Kabar": (p.get("news") or "").strip(),
             "Skor": round(skor, 1),
             "_id": p["id"],
+            "_klub": p["team"],
         })
 
     df = pd.DataFrame(baris)
@@ -374,6 +397,86 @@ def komentar_ai(cfg, ringkasan):
 
 
 # ------------------------------------------------------------------
+# FITUR LANJUTAN
+# ------------------------------------------------------------------
+
+def rakit_lanjutan(cfg, bootstrap, fixtures, df, skuad, gw_next):
+    """Kumpulkan semua analisis lanjutan. Kegagalan di sini tidak boleh
+    menjatuhkan laporan utama, jadi seluruhnya dibungkus try."""
+    kosong = {"riwayat": None, "liga": None, "chip": [], "differ": [],
+              "khusus": {}, "ticker": [], "teks": "", "nama_klub": {}}
+    if lanjut is None:
+        return kosong
+    try:
+        nama_klub = {t["id"]: t["short_name"] for t in bootstrap["teams"]}
+        klub_ids = set(nama_klub)
+
+        khusus = lanjut.deteksi_gw_khusus(fixtures, klub_ids, gw_next, 8)
+        ticker = lanjut.ticker_jadwal(fixtures, nama_klub, klub_ids, gw_next, 6)
+        differ = lanjut.cari_differential(df)
+        riwayat = riwayat_aman(cfg)
+        liga = lanjut.papan_liga(ambil, cfg.get("liga_id"), cfg.get("entry_id"))
+
+        klub_skuad = []
+        if not skuad.empty:
+            balik = {v: k for k, v in nama_klub.items()}
+            klub_skuad = [balik.get(k) for k in skuad["Klub"] if balik.get(k)]
+        chip = lanjut.saran_chip(
+            riwayat["chip_terpakai"] if riwayat else set(), khusus, klub_skuad, nama_klub)
+
+        teks = lanjut.ringkas_telegram(riwayat, liga, chip, differ, khusus, nama_klub)
+        return {"riwayat": riwayat, "liga": liga, "chip": chip, "differ": differ,
+                "khusus": khusus, "ticker": ticker, "teks": teks, "nama_klub": nama_klub}
+    except Exception as e:
+        print(f"⚠ Fitur lanjutan dilewati: {e}")
+        return kosong
+
+
+def riwayat_aman(cfg):
+    try:
+        return lanjut.riwayat_tim(ambil, cfg.get("entry_id"))
+    except Exception:
+        return None
+
+
+def bedah_gw_lengkap(cfg, bootstrap, fixtures, gw):
+    """Kumpulkan poin, skor pertandingan, dan pembedahan untuk satu gameweek."""
+    kosong = {"poin": {}, "laga": [], "bedah": None, "teks": ""}
+    if lapgw is None or not cfg.get("entry_id"):
+        return kosong
+    try:
+        entry = cfg["entry_id"]
+        events = lapgw.peta_event(bootstrap)
+        nama_klub = {t["id"]: t["short_name"] for t in bootstrap["teams"]}
+        nama_pemain = {p["id"]: p["web_name"] for p in bootstrap["elements"]}
+        posisi = {p["id"]: p["element_type"] for p in bootstrap["elements"]}
+        singkat = {p["id"]: p["singular_name_short"] for p in bootstrap["element_types"]}
+        posisi = {k: singkat.get(v, "?") for k, v in posisi.items()}
+        klub_pemain = {p["id"]: p["team"] for p in bootstrap["elements"]}
+
+        hist = ambil(f"entry/{entry}/history/", wajib=False)
+        picks = ambil(f"entry/{entry}/event/{gw}/picks/", wajib=False)
+        live = ambil(f"event/{gw}/live/", wajib=False)
+
+        poin = lapgw.tabel_poin(hist, events)
+        baris_hist = next((g for g in (hist or {}).get("current", []) if g["event"] == gw), None)
+
+        pengali, ids = {}, []
+        if picks and picks.get("picks"):
+            pengali = {p["element"]: p.get("multiplier", 1) for p in picks["picks"]}
+            ids = [p["element"] for p in picks["picks"]]
+
+        laga = lapgw.skor_pertandingan(fixtures, gw, nama_klub, klub_pemain,
+                                       nama_pemain, ids, live, pengali)
+        bedah = lapgw.bedah_gameweek(picks, live, nama_pemain, posisi, baris_hist, events, gw)
+        teks = lapgw.teks_gw_telegram(gw, bedah, laga, poin)
+        return {"poin": poin, "laga": laga, "bedah": bedah, "teks": teks}
+    except Exception as e:
+        print(f"⚠ Pembedahan gameweek dilewati: {e}")
+        return kosong
+
+
+# ------------------------------------------------------------------
 # KELUARAN
 # ------------------------------------------------------------------
 
@@ -404,8 +507,8 @@ def tabel_html(judul, records, kolom):
     return f"<h3>{judul}</h3><table><thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table>"
 
 
-def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber=""):
-    kol = ["Nama", "Klub", "Pos", "Harga", "Form", "xGI/90", "FDR", "Milik%", "Skor"]
+def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber="", ekstra=None, gwr=None):
+    kol = ["Nama", "Klub", "Pos", "Harga", "Form", "xGI/90", "FDR", "Milik%", "Bola Mati", "Skor"]
     bagian = ""
 
     if rek["kapten"]:
@@ -417,6 +520,62 @@ def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumb
     for keluar, masuk in rek["beli"].items():
         bagian += tabel_html(f"Pengganti untuk {keluar}", masuk,
                              ["Nama", "Klub", "Harga", "Skor", "Form", "FDR", "Milik%"])
+
+    gwr = gwr or {}
+    if gwr.get("poin", {}).get("baris") and lapgw:
+        bagian += lapgw.batang_html(gwr["poin"]["baris"])
+        bagian += tabel_html("Rincian poin per gameweek", gwr["poin"]["baris"],
+                             ["GW", "Poin", "Rata dunia", "Selisih", "Bangku", "Hit", "Peringkat"])
+    if gwr.get("laga"):
+        rows = []
+        for m in gwr["laga"]:
+            rows.append({"Pertandingan": m["laga"], "Status": m["status"],
+                         "Poin dari laga ini": m["poin_laga"],
+                         "Pemainmu": ", ".join(
+                             f"{p['nama']} {p['poin']}" + ("©" if p["kali"] > 1 else "")
+                             + (" (bangku)" if p["bangku"] else "")
+                             for p in m["pemainku"])})
+        bagian += tabel_html("Hasil pertandingan klub pemainmu", rows,
+                             ["Pertandingan", "Status", "Poin dari laga ini", "Pemainmu"])
+    if gwr.get("bedah") and gwr["bedah"].get("catatan"):
+        isi = "<br>".join(gwr["bedah"]["catatan"])
+        bagian += f"<h3>Pembedahan gameweek</h3><div class='ai'><p>{isi}</p></div>"
+        if gwr["bedah"].get("starter"):
+            bagian += tabel_html("Perolehan tiap pemain", gwr["bedah"]["starter"],
+                                 ["nama", "pos", "menit", "mentah", "kali", "efektif", "rincian"])
+
+    ekstra = ekstra or {}
+
+    if ekstra.get("chip"):
+        bagian += tabel_html(
+            "Saran chip", 
+            [{"GW": c["gw"], "Chip": c["chip"], "Kekuatan": c["kekuatan"], "Alasan": c["alasan"]}
+             for c in ekstra["chip"]],
+            ["GW", "Chip", "Kekuatan", "Alasan"])
+
+    if ekstra.get("khusus"):
+        bagian += tabel_html(
+            "Blank & double gameweek",
+            [{"GW": g,
+              "Main dua kali": ", ".join(ekstra["nama_klub"].get(k, "?") for k in i["double"]) or "—",
+              "Tidak main": ", ".join(ekstra["nama_klub"].get(k, "?") for k in i["blank"]) or "—"}
+             for g, i in sorted(ekstra["khusus"].items())],
+            ["GW", "Main dua kali", "Tidak main"])
+
+    if ekstra.get("differ"):
+        bagian += tabel_html("Differential — bagus tapi belum ramai dimiliki",
+                             ekstra["differ"],
+                             ["Nama", "Klub", "Pos", "Harga", "Milik%", "Form", "xGI/90", "FDR", "Skor"])
+
+    if ekstra.get("ticker"):
+        tk = ekstra["ticker"][:10]
+        kolom_tk = [k for k in tk[0].keys()] if tk else []
+        bagian += tabel_html("Ticker jadwal 6 gameweek (huruf besar = kandang)", tk, kolom_tk)
+
+    if ekstra.get("liga") and ekstra["liga"].get("saya"):
+        lg = ekstra["liga"]
+        bagian += tabel_html(f"{lg['liga']} — 3 teratas", lg["puncak"],
+                             ["rank", "tim", "manajer", "total", "gw"])
 
     bagian += tabel_html("Peringkat 25 teratas", df.head(25)[kol].to_dict("records"), kol)
     bagian += tabel_html("Tekanan beli tertinggi", naik.head(8)[kol + ["Tekanan"]].to_dict("records"),
@@ -513,6 +672,13 @@ def jalankan():
     naik, turun = sinyal_harga(df, cfg["ambang_harga"])
 
     nama_tim, bank, skuad, sumber = ambil_skuad(cfg, gw_berjalan, df, gw_next)
+    ekstra = rakit_lanjutan(cfg, bootstrap, fixtures, df, skuad, gw_next)
+    gwr = bedah_gw_lengkap(cfg, bootstrap, fixtures, gw_berjalan) if gw_berjalan else {"teks": ""}
+    ekstra["nama_klub"] = {tm["id"]: tm["short_name"] for tm in bootstrap["teams"]}
+    if ekstra.get("khusus"):
+        print(f"→ Gameweek khusus: {sorted(ekstra['khusus'])}")
+    if ekstra.get("chip"):
+        print(f"→ Saran chip: {[c['chip'] + ' GW' + str(c['gw']) for c in ekstra['chip']]}")
     print(f"→ Skuad dibaca dari: {sumber} ({len(skuad)} pemain)")
     rek = rekomendasi(df, skuad, bank)
 
@@ -533,7 +699,7 @@ def jalankan():
     )
     ai = komentar_ai(cfg, ringkasan)
 
-    berkas_html = tulis_html(folder, gw_next, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber)
+    berkas_html = tulis_html(folder, gw_next, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber, ekstra, gwr)
     berkas_xlsx = tulis_excel(folder, gw_next, df, skuad, naik, turun)
 
     # pesan Telegram
@@ -546,13 +712,25 @@ def jalankan():
         baris.append(f"⚠️ Titik lemah: {j['Nama']} ({j['Klub']}) — skor {j['Skor']}")
         gnt = rek["beli"].get(j["Nama"], [])
         if gnt:
-            baris.append(f"↔️ Ganti ke: {gnt[0]['Nama']} ({gnt[0]['Harga']}jt, skor {gnt[0]['Skor']})")
+            baris.append(f"↔️ Ganti ke: {gnt[0]['Nama']} ({gnt[0]['Klub']}, "
+                         f"{gnt[0]['Harga']}jt, skor {gnt[0]['Skor']})")
+    def dengan_klub(sub, n=4):
+        return ", ".join(f"{r['Nama']} ({r['Klub']})" for r in sub.head(n).to_dict("records"))
+
     if len(naik):
-        baris.append(f"📈 Berpotensi naik: {', '.join(naik['Nama'].head(4))}")
+        baris.append(f"📈 Berpotensi naik: {dengan_klub(naik)}")
     if len(turun):
-        baris.append(f"📉 Berpotensi turun: {', '.join(turun['Nama'].head(4))}")
+        baris.append(f"📉 Berpotensi turun: {dengan_klub(turun)}")
+    if gwr.get("teks"):
+        baris.append("\n" + gwr["teks"])
+    if ekstra.get("teks"):
+        baris.append(ekstra["teks"])
     if ai:
         baris += ["", ai[:900]]
+    if gwr.get("teks"):
+        baris.append("\n" + gwr["teks"])
+    if ekstra.get("teks"):
+        baris.append(ekstra["teks"])
     pesan = "\n".join(baris)
 
     terkirim = kirim_telegram(cfg, pesan)

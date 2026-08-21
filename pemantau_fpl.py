@@ -25,12 +25,22 @@ import requests
 
 import agen_fpl as inti
 
+try:
+    import fitur_lanjutan as lanjut
+except ImportError:
+    lanjut = None
+
+try:
+    import laporan_gw as lapgw
+except ImportError:
+    lapgw = None
+
 AKAR = Path(__file__).resolve().parent
 BERKAS_STATE = AKAR / "state_pantau.json"
 
 # Ambang: pemantauan penuh untuk skuad & pantauan, pemain lain hanya kalau populer
 MILIK_MINIMAL = 5.0          # persen kepemilikan
-JAM_SIAGA = 8                # mulai cek berita mendalam saat deadline < 8 jam
+JAM_SIAGA = 6                # jendela siaga tetap: cek mendalam saat deadline < 6 jam
 
 
 # ------------------------------------------------------------------
@@ -39,6 +49,7 @@ JAM_SIAGA = 8                # mulai cek berita mendalam saat deadline < 8 jam
 
 def potret(bootstrap):
     """Rekam kondisi tiap pemain yang layak dipantau."""
+    klub = {t["id"]: t["short_name"] for t in bootstrap.get("teams", [])}
     return {
         str(p["id"]): {
             "nama": p["web_name"],
@@ -47,7 +58,8 @@ def potret(bootstrap):
             "kabar": (p.get("news") or "").strip(),
             "harga": p.get("now_cost", 0),
             "milik": inti.angka(p.get("selected_by_percent")),
-            "klub": p["team"],
+            "klub": klub.get(p["team"], "?"),
+            "bolamati": list(lanjut.peran_bola_mati(p)) if lanjut else [],
         }
         for p in bootstrap["elements"]
     }
@@ -79,7 +91,9 @@ def bandingkan(lama, baru, penting):
             continue
 
         tanda = "🔴" if pid in penting else "⚪"
-        nama = kini["nama"]
+        # Nama pendek FPL sering ambigu — "Bruno G." (NEW) vs "B.Fernandes" (MUN).
+        # Klub ditempelkan supaya tidak salah orang.
+        nama = f"{kini['nama']} ({kini['klub']})" if kini.get("klub") else kini["nama"]
 
         # 1. status berubah
         if dulu["status"] != kini["status"]:
@@ -112,7 +126,15 @@ def bandingkan(lama, baru, penting):
             })
             continue
 
-        # 4. harga berubah
+        # 4. peran bola mati berubah — jarang diumumkan, dampaknya besar
+        if lanjut and dulu.get("bolamati") and dulu["bolamati"] != kini.get("bolamati"):
+            pesan = lanjut.perubahan_bola_mati(
+                tuple(dulu["bolamati"]), tuple(kini["bolamati"]), nama)
+            if pesan:
+                kabar.append({"berat": 3 if pid in penting else 2, "teks": f"{tanda} {pesan}"})
+                continue
+
+        # 5. harga berubah
         if dulu["harga"] != kini["harga"]:
             arah = "📈" if kini["harga"] > dulu["harga"] else "📉"
             kabar.append({
@@ -181,7 +203,10 @@ def periksa_rotasi(ids, potret_kini):
         if not ringkas:
             continue
         r = klasifikasi_rotasi(ringkas.get("history", []))
-        r["nama"] = potret_kini.get(str(pid), {}).get("nama", str(pid))
+        info = potret_kini.get(str(pid), {})
+        r["nama"] = info.get("nama", str(pid))
+        if info.get("klub"):
+            r["nama"] += f" ({info['klub']})"
         hasil.append(r)
     hasil.sort(key=lambda x: -x["skor"])
     return hasil
@@ -248,6 +273,14 @@ def jam_ke_deadline(bootstrap):
     return None, None, None
 
 
+def label_tahap(jam):
+    """24 -> '1 hari', 3 -> '3 jam'."""
+    if jam >= 24 and jam % 24 == 0:
+        hari = jam // 24
+        return f"{hari} hari"
+    return f"{jam} jam"
+
+
 def tahap_laporan(catatan, gw, sisa_jam, ambang):
     """
     Tentukan apakah laporan pra-deadline perlu dikirim sekarang.
@@ -261,6 +294,11 @@ def tahap_laporan(catatan, gw, sisa_jam, ambang):
         if sisa_jam <= t and t not in sudah:
             return t
     return None
+
+
+def fixtures_semua():
+    """Tarik jadwal hanya saat benar-benar diperlukan, bukan tiap 20 menit."""
+    return inti.ambil("fixtures/", wajib=False) or []
 
 
 def simpan_state(potret_kini, catatan):
@@ -320,8 +358,8 @@ def jalankan():
         return 0
 
     # --- mode siaga menjelang deadline ---
-    siaga = sisa_jam is not None and 0 < sisa_jam <= JAM_SIAGA
-    tahap = tahap_laporan(catatan, gw, sisa_jam, cfg.get("tahap_laporan_jam", [6, 2]))
+    tahap = tahap_laporan(catatan, gw, sisa_jam, cfg.get("tahap_laporan_jam", [24, 3, 1]))
+    siaga = (tahap is not None) or (sisa_jam is not None and 0 < sisa_jam <= JAM_SIAGA)
     blok_rotasi, blok_berita, bendera = "", "", []
 
     if siaga and penting:
@@ -333,16 +371,32 @@ def jalankan():
             )
 
         bendera = [
-            v["nama"] for pid, v in kini.items()
+            f"{v['nama']} ({v['klub']})" if v.get("klub") else v["nama"]
+            for pid, v in kini.items()
             if pid in penting and (v["status"] != "a" or (v["peluang"] is not None and v["peluang"] < 100))
         ]
         nama_dicek = list(dict.fromkeys(bendera + [r["nama"] for r in rawan[:3]]))
+        if lanjut and cfg.get("entry_id") and gw_berjalan:
+            picks = inti.ambil(f"entry/{cfg['entry_id']}/event/{gw_berjalan}/picks/", wajib=False)
+            layak = lanjut.cek_kelayakan(picks, kini)
+            if layak and layak["catatan"]:
+                blok_rotasi += "\n<b>Pemeriksaan skuad:</b>\n" + "\n".join(
+                    "• " + c for c in layak["catatan"])
+
         berita = cek_berita(cfg, nama_dicek)
         if berita:
             blok_berita = f"\n<b>Pantauan berita (belum resmi):</b>\n{berita}"
 
     # --- susun pesan ---
-    if not perubahan and not siaga and tahap is None:
+    gw_perlu_dibedah = None
+    if lapgw is not None and cfg.get("entry_id"):
+        try:
+            gw_perlu_dibedah = lapgw.gw_baru_selesai(
+                lapgw.peta_event(bootstrap), catatan.get("gw_dibedah"))
+        except Exception:
+            gw_perlu_dibedah = None
+
+    if not perubahan and not siaga and tahap is None and gw_perlu_dibedah is None:
         print("→ Tidak ada perubahan. Diam.")
         return 0
 
@@ -350,6 +404,8 @@ def jalankan():
     if sisa_jam is not None and sisa_jam > 0:
         baris.append(f"<b>PEMANTAU FPL — GW{gw}</b>")
         baris.append(f"⏳ Deadline {sisa_jam:.1f} jam lagi ({batas.astimezone():%a %d %b %H:%M})")
+        if tahap is not None:
+            baris.append(f"🚨 <b>PENGINGAT — {label_tahap(tahap)} sebelum deadline</b>")
     else:
         baris.append("<b>PEMANTAU FPL</b>")
 
@@ -363,6 +419,16 @@ def jalankan():
 
     if bendera:
         baris.append(f"\n⚠️ Bendera aktif di skuadmu: {', '.join(bendera)}")
+    if lanjut and siaga and cfg.get("entry_id") and gw_berjalan:
+        try:
+            picks = inti.ambil(f"entry/{cfg['entry_id']}/event/{gw_berjalan}/picks/", wajib=False)
+            layak = lanjut.cek_kelayakan(picks, kini)
+            if layak and layak["catatan"]:
+                baris.append("\n<b>Pemeriksaan skuad:</b>")
+                baris += [f"   {c}" for c in layak["catatan"]]
+        except Exception as e:
+            print(f"⚠ Pemeriksaan kelayakan dilewati: {e}")
+
     if blok_rotasi:
         baris.append(blok_rotasi)
     if blok_berita:
@@ -374,6 +440,22 @@ def jalankan():
     print(pesan.replace("<b>", "").replace("</b>", ""))
     print(f"\n✓ Telegram: {'terkirim' if terkirim else 'dilewati'}")
 
+    # --- pembedahan otomatis begitu gameweek rampung ---
+    if lapgw is not None and cfg.get("entry_id"):
+        try:
+            events = lapgw.peta_event(bootstrap)
+            selesai = lapgw.gw_baru_selesai(events, catatan.get("gw_dibedah"))
+            if selesai:
+                print(f"\n→ GW{selesai} rampung dan bonus sudah final. Membedah…")
+                hasil = inti.bedah_gw_lengkap(cfg, bootstrap, fixtures_semua(), selesai)
+                if hasil.get("teks"):
+                    inti.kirim_telegram(cfg, hasil["teks"])
+                    catatan["gw_dibedah"] = selesai
+                    simpan_state(kini, catatan)
+                    print(f"✓ Pembedahan GW{selesai} terkirim.")
+        except Exception as e:
+            print(f"⚠ Pembedahan gameweek dilewati: {e}")
+
     # --- laporan lengkap otomatis menjelang deadline ---
     if tahap is not None:
         print(f"\n→ Deadline tinggal {sisa_jam:.1f} jam. Menyusun laporan lengkap…")
@@ -383,7 +465,7 @@ def jalankan():
                 catatan = {"gw": gw, "tahap": []}
             catatan["tahap"] = sorted(set(catatan.get("tahap", [])) | {tahap}, reverse=True)
             simpan_state(kini, catatan)
-            print(f"✓ Laporan pra-deadline ({tahap} jam) terkirim.")
+            print(f"✓ Laporan pengingat {label_tahap(tahap)} terkirim.")
         except Exception as e:
             print(f"⚠ Laporan pra-deadline gagal, akan dicoba lagi: {e}")
 
