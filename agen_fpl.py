@@ -712,19 +712,62 @@ Data: API resmi Fantasy Premier League.</div>
     return berkas
 
 
+BATAS_TELEGRAM = 3900          # batas resmi 4096, disisakan ruang aman
+
+
+def potong_pesan(pesan, batas=BATAS_TELEGRAM):
+    """
+    Telegram menolak pesan di atas 4096 karakter. Sebelumnya pesan panjang
+    dipotong begitu saja — bagian akhir hilang tanpa jejak. Sekarang dipecah
+    per baris supaya tidak ada isi yang lenyap.
+    """
+    if len(pesan) <= batas:
+        return [pesan]
+
+    potongan, sekarang = [], ""
+    for baris in pesan.split("\n"):
+        # satu baris raksasa tetap harus dipaksa pecah
+        while len(baris) > batas:
+            if sekarang:
+                potongan.append(sekarang)
+                sekarang = ""
+            potongan.append(baris[:batas])
+            baris = baris[batas:]
+        if len(sekarang) + len(baris) + 1 > batas:
+            potongan.append(sekarang)
+            sekarang = baris
+        else:
+            sekarang = f"{sekarang}\n{baris}" if sekarang else baris
+    if sekarang:
+        potongan.append(sekarang)
+    return potongan
+
+
 def kirim_telegram(cfg, pesan):
     token, chat = cfg.get("telegram_token"), cfg.get("telegram_chat_id")
     if not token or not chat:
         return False
-    try:
-        r = requests.post(
-            f"https://api.telegram.org/bot{token}/sendMessage",
-            timeout=20,
-            json={"chat_id": chat, "text": pesan[:4000], "parse_mode": "HTML"},
-        )
-        return r.status_code == 200
-    except requests.RequestException:
-        return False
+
+    bagian = potong_pesan(pesan)
+    berhasil = True
+    for i, isi in enumerate(bagian):
+        if len(bagian) > 1:
+            isi = f"<i>({i + 1}/{len(bagian)})</i>\n{isi}"
+        try:
+            r = requests.post(
+                f"https://api.telegram.org/bot{token}/sendMessage",
+                timeout=20,
+                json={"chat_id": chat, "text": isi, "parse_mode": "HTML"},
+            )
+            if r.status_code != 200:
+                berhasil = False
+                print(f"⚠ Telegram menolak bagian {i + 1}: {r.text[:120]}")
+        except requests.RequestException as e:
+            berhasil = False
+            print(f"⚠ Telegram gagal di bagian {i + 1}: {e}")
+        if i < len(bagian) - 1:
+            time.sleep(0.4)        # hormati batas laju Telegram
+    return berhasil
 
 
 def kirim_dokumen(cfg, berkas, judul=""):
