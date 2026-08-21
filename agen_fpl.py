@@ -38,6 +38,11 @@ try:
 except ImportError:
     lapgw = None
 
+try:
+    import berita as modberita
+except ImportError:
+    modberita = None
+
 # ------------------------------------------------------------------
 # KONFIGURASI
 # ------------------------------------------------------------------
@@ -483,6 +488,34 @@ def rakit_lanjutan(cfg, bootstrap, fixtures, df, skuad, gw_next):
         return kosong
 
 
+def rakit_berita(cfg, bootstrap, df, skuad):
+    """Ringkasan berita beserta tindakan yang disarankan."""
+    kosong = {"item": [], "dampak": None, "teks": ""}
+    if modberita is None:
+        return kosong
+    try:
+        ids_skuad = skuad["_id"].tolist() if not skuad.empty else []
+
+        ids_incaran = []
+        if cfg.get("pantau_tambahan"):
+            kandidat = [{"id": r["_id"], "nama": r["Nama"], "klub": r["Klub"]}
+                        for r in df[["_id", "Nama", "Klub"]].to_dict("records")]
+            ids_incaran, _ = cocok_manual(cfg["pantau_tambahan"], kandidat)
+
+        item = modberita.kumpulkan_berita(bootstrap, ids_skuad, ids_incaran)
+        dampak = modberita.dampak_peringkat(item)
+
+        ai = ""
+        if cfg.get("pakai_komentar_ai"):
+            ai = modberita.briefing_ai(cfg, item)
+
+        return {"item": item, "dampak": dampak,
+                "teks": modberita.ringkas_telegram(item, dampak, ai)}
+    except Exception as e:
+        print(f"⚠ Ringkasan berita dilewati: {e}")
+        return kosong
+
+
 def riwayat_aman(cfg):
     try:
         return lanjut.riwayat_tim(ambil, cfg.get("entry_id"))
@@ -558,7 +591,7 @@ def tabel_html(judul, records, kolom):
     return f"<h3>{judul}</h3><table><thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table>"
 
 
-def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber="", ekstra=None, gwr=None):
+def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber="", ekstra=None, gwr=None, kabar=None):
     kol = ["Nama", "Klub", "Pos", "Harga", "Form", "xGI/90", "FDR", "Milik%", "Bola Mati", "Skor"]
     bagian = ""
 
@@ -571,6 +604,17 @@ def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumb
     for keluar, masuk in rek["beli"].items():
         bagian += tabel_html(f"Pengganti untuk {keluar}", masuk,
                              ["Nama", "Klub", "Harga", "Skor", "Form", "FDR", "Milik%"])
+
+    kabar = kabar or {}
+    if kabar.get("item") and modberita:
+        rows = modberita.tabel_html(kabar["item"])
+        if rows:
+            if kabar.get("dampak"):
+                bagian += (f"<h3>Ringkasan berita</h3><div class='ai'><p>"
+                           f"{kabar['dampak']['kalimat']}</p></div>")
+            bagian += tabel_html("Berita & tindakan yang disarankan", rows,
+                                 ["Pemain", "Pos", "Harga", "Milik%", "Status",
+                                  "Peluang", "Kabar", "Tindakan", "Alasan"])
 
     gwr = gwr or {}
     if gwr.get("poin", {}).get("baris") and lapgw:
@@ -725,6 +769,10 @@ def jalankan():
     nama_tim, bank, skuad, sumber = ambil_skuad(cfg, gw_berjalan, df, gw_next)
     ekstra = rakit_lanjutan(cfg, bootstrap, fixtures, df, skuad, gw_next)
     gwr = bedah_gw_lengkap(cfg, bootstrap, fixtures, gw_berjalan) if gw_berjalan else {"teks": ""}
+    kabar = rakit_berita(cfg, bootstrap, df, skuad)
+    if kabar["item"]:
+        perlu = [b for b in kabar["item"] if b["tindakan"] not in ("ABAIKAN", "TAHAN")]
+        print(f"→ Berita tersaring: {len(kabar['item'])} kabar, {len(perlu)} butuh tindakan")
     ekstra["nama_klub"] = {tm["id"]: tm["short_name"] for tm in bootstrap["teams"]}
     if ekstra.get("khusus"):
         print(f"→ Gameweek khusus: {sorted(ekstra['khusus'])}")
@@ -750,7 +798,7 @@ def jalankan():
     )
     ai = komentar_ai(cfg, ringkasan)
 
-    berkas_html = tulis_html(folder, gw_next, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber, ekstra, gwr)
+    berkas_html = tulis_html(folder, gw_next, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber, ekstra, gwr, kabar)
     berkas_xlsx = tulis_excel(folder, gw_next, df, skuad, naik, turun)
 
     # pesan Telegram
@@ -776,12 +824,16 @@ def jalankan():
         baris.append(f"📈 Berpotensi naik: {dengan_klub(naik)}")
     if len(turun):
         baris.append(f"📉 Berpotensi turun: {dengan_klub(turun)}")
+    if kabar.get("teks"):
+        baris.append(kabar["teks"])
     if gwr.get("teks"):
         baris.append("\n" + gwr["teks"])
     if ekstra.get("teks"):
         baris.append(ekstra["teks"])
     if ai:
         baris += ["", ai[:900]]
+    if kabar.get("teks"):
+        baris.append(kabar["teks"])
     if gwr.get("teks"):
         baris.append("\n" + gwr["teks"])
     if ekstra.get("teks"):
