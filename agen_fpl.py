@@ -276,6 +276,52 @@ def sinyal_harga(df, ambang):
 # ANALISIS SKUAD
 # ------------------------------------------------------------------
 
+def cocok_manual(daftar, kandidat):
+    """
+    Cocokkan daftar nama manual dengan pemain sungguhan.
+
+    Nama pendek FPL tidak unik — beberapa pemain berbagi nama yang sama
+    persis di klub berbeda. Kalau tidak dijaga, satu nama bisa menarik dua
+    pemain dan skuadmu terbaca lebih dari 15 orang.
+
+    Format yang diterima: "Semenyo" atau "Semenyo (BOU)" untuk memperjelas.
+
+    `kandidat` : daftar dict berisi id, nama, klub
+    Mengembalikan (daftar_id, catatan_masalah)
+    """
+    import re
+    ids, catatan = [], []
+
+    for baku in daftar:
+        baku = str(baku).strip()
+        if not baku:
+            continue
+        cocok_klub = re.match(r"^(.*?)\s*\(([^)]+)\)\s*$", baku)
+        if cocok_klub:
+            nama_cari = cocok_klub.group(1).strip().lower()
+            klub_cari = cocok_klub.group(2).strip().lower()
+        else:
+            nama_cari, klub_cari = baku.lower(), None
+
+        temuan = [k for k in kandidat if str(k["nama"]).strip().lower() == nama_cari]
+        if klub_cari:
+            temuan = [k for k in temuan if str(k["klub"]).strip().lower() == klub_cari]
+
+        if not temuan:
+            catatan.append(f"'{baku}' tidak ditemukan — periksa ejaannya di aplikasi FPL")
+        elif len(temuan) > 1:
+            klub = ", ".join(sorted(str(k["klub"]) for k in temuan))
+            catatan.append(
+                f"'{baku}' cocok dengan {len(temuan)} pemain ({klub}). "
+                f"Tulis jadi '{baku} (KLUB)' untuk memperjelas"
+            )
+            ids += [k["id"] for k in temuan]
+        else:
+            ids.append(temuan[0]["id"])
+
+    return list(dict.fromkeys(ids)), catatan
+
+
 def skuad_terkini(entry_id, gw_berjalan, gw_next):
     """
     Baca skuad dari akun FPL, lalu TERAPKAN transfer yang sudah kamu lakukan
@@ -323,8 +369,13 @@ def ambil_skuad(cfg, gw_berjalan, df, gw_next=None):
             sumber = "akun FPL (transfer terbaru sudah ikut)"
 
     if not ids and cfg.get("skuad_manual"):
-        cari = {n.lower().strip() for n in cfg["skuad_manual"]}
-        ids = df[df["Nama"].str.lower().isin(cari)]["_id"].tolist()
+        kandidat = [{"id": r["_id"], "nama": r["Nama"], "klub": r["Klub"]}
+                    for r in df[["_id", "Nama", "Klub"]].to_dict("records")]
+        ids, catatan = cocok_manual(cfg["skuad_manual"], kandidat)
+        for c in catatan:
+            print(f"⚠ Daftar manual: {c}")
+        if len(ids) != 15:
+            print(f"⚠ Daftar manual menghasilkan {len(ids)} pemain, seharusnya 15.")
 
     skuad = df[df["_id"].isin(ids)].copy() if ids else pd.DataFrame(columns=df.columns)
     return nama_tim, bank, skuad, sumber

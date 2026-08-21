@@ -332,8 +332,12 @@ def jalankan():
             penting = {str(i) for i in ids}
             sumber = "akun FPL"
     if not penting and cfg.get("skuad_manual"):
-        cari = {n.lower().strip() for n in cfg["skuad_manual"]}
-        penting = {pid for pid, v in kini.items() if v["nama"].lower() in cari}
+        kandidat = [{"id": pid, "nama": v["nama"], "klub": v.get("klub", "")}
+                    for pid, v in kini.items()]
+        ids, catatan = inti.cocok_manual(cfg["skuad_manual"], kandidat)
+        penting = {str(i) for i in ids}
+        for c in catatan:
+            print(f"⚠ Daftar manual: {c}")
     for n in cfg.get("pantau_tambahan", []):
         for pid, v in kini.items():
             if v["nama"].lower() == n.lower().strip():
