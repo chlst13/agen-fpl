@@ -339,6 +339,10 @@ def jalankan():
             if v["nama"].lower() == n.lower().strip():
                 penting.add(pid)
     print(f"→ Memantau {len(penting)} pemain (skuad dari {sumber})")
+    if sumber == "daftar manual" and len(penting) < 15:
+        print(f"⚠ Hanya {len(penting)} pemain terpantau. Sebelum deadline pertama "
+              f"musim, akun FPL belum bisa dibaca — lengkapi FPL_SKUAD_MANUAL "
+              f"dengan 15 nama supaya tidak ada pemain yang lolos pantauan.")
 
     # --- bandingkan dengan snapshot lalu ---
     lama, catatan = {}, {}

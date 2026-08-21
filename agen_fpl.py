@@ -703,7 +703,11 @@ def jalankan():
     berkas_xlsx = tulis_excel(folder, gw_next, df, skuad, naik, turun)
 
     # pesan Telegram
-    baris = [f"<b>AGEN FPL — GW{gw_next}</b>", f"{nama_tim} · bank {bank:.1f}jt", ""]
+    baris = [f"<b>AGEN FPL — GW{gw_next}</b>", f"{nama_tim} · bank {bank:.1f}jt"]
+    if sumber.startswith("daftar manual"):
+        baris.append("⚠️ <i>Skuad dibaca dari daftar manual, bukan akun FPL. "
+                     "Transfer terbarumu belum tentu ikut terbaca.</i>")
+    baris.append("")
     if rek["kapten"]:
         k = rek["kapten"][0]
         baris.append(f"⭐ Kapten: <b>{k['Nama']}</b> ({k['Klub']}) — skor {k['Skor']}, FDR {k['FDR']}")
