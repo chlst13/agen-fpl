@@ -6,8 +6,10 @@ name: Laporan FPL
 
 on:
   schedule:
-    - cron: "0 23 * * *"   # 23:00 UTC = 06:00 WIB
-    - cron: "0 3 * * 5"    # 03:00 UTC Jumat = 10:00 WIB, jelang deadline
+    - cron: "0 23 * * *"   # 23:00 UTC = 06:00 WIB, laporan rutin harian
+    # Laporan jelang deadline TIDAK dijadwalkan di sini. Pemantau membaca
+    # deadline asli dari API FPL dan memicu laporan sendiri saat sisa 6 jam
+    # dan 2 jam — hari apa pun deadline-nya jatuh.
   workflow_dispatch:
 
 concurrency:
@@ -26,6 +28,7 @@ jobs:
       FPL_SKUAD_MANUAL:  ${{ vars.FPL_SKUAD_MANUAL }}
       FPL_PAKAI_AI:      ${{ vars.FPL_PAKAI_AI }}
       FPL_BANK:          ${{ vars.FPL_BANK }}
+      FPL_LIGA_ID:       ${{ vars.FPL_LIGA_ID }}
 
     steps:
       - uses: actions/checkout@v4
