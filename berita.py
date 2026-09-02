@@ -76,6 +76,37 @@ def _bobot(status, peluang):
     return 10
 
 
+def _intel(status, peluang, umur, kabar):
+    """Confidence dan dampak menit dari fakta resmi yang tersedia."""
+    peluang_baku = 100 if peluang is None else max(0, min(100, int(peluang)))
+    if status in ("i", "s", "u", "n"):
+        menit = "0–15 menit"
+    elif peluang_baku <= 25:
+        menit = "0–30 menit"
+    elif peluang_baku <= 50:
+        menit = "20–60 menit"
+    elif peluang_baku <= 75:
+        menit = "45–75 menit"
+    else:
+        menit = "60–90 menit"
+
+    skor = 55
+    if status != "a":
+        skor += 20
+    if peluang is not None:
+        skor += 10
+    if umur is not None and umur <= 24:
+        skor += 10
+    if kabar:
+        skor += 5
+    skor = min(95, skor)
+    label = "Tinggi" if skor >= 80 else ("Sedang" if skor >= 60 else "Rendah")
+    segar = "aktif" if umur is None else (
+        f"{umur:.0f} jam lalu" if umur < 48 else f"{umur / 24:.1f} hari lalu"
+    )
+    return menit, f"{label} ({skor}%)", segar
+
+
 def saran_tindakan(item):
     """
     Terjemahkan satu berita jadi keputusan. Inilah bagian yang menentukan
@@ -147,6 +178,7 @@ def kumpulkan_berita(bootstrap, ids_skuad, ids_incaran=None, jam=72, milik_minim
         # "Pulih" = statusnya sudah fit tapi masih ada catatan berita,
         # biasanya kalimat seperti "returned to training".
         pulih = status == "a"
+        estimasi_menit, confidence, kesegaran = _intel(status, peluang, umur, kabar)
 
         item = {
             "id": pid,
@@ -164,6 +196,10 @@ def kumpulkan_berita(bootstrap, ids_skuad, ids_incaran=None, jam=72, milik_minim
             "incaran": pid in incaran,
             "pulih": pulih,
             "bobot": _bobot(status, peluang),
+            "sumber": "FPL resmi",
+            "estimasi_menit": estimasi_menit,
+            "confidence": confidence,
+            "kesegaran": kesegaran,
         }
         item["tindakan"], item["alasan"] = saran_tindakan(item)
         hasil.append(item)
@@ -308,6 +344,7 @@ def ringkas_telegram(berita, dampak, ai="", batas=10):
             f"\n{tanda} <b>{b['nama']} ({b['klub']})</b> — {b['status']}"
             + (f", peluang {b['peluang']}%" if b["peluang"] < 100 else "")
             + f"\n   {b['kabar']}"
+            + f"\n   ⏱ {b['estimasi_menit']} · confidence {b['confidence']} · {b['kesegaran']}"
             + f"\n   {IKON.get(b['tindakan'], '·')} <b>{b['tindakan']}</b> — {b['alasan']}"
         )
 
@@ -326,6 +363,10 @@ def tabel_html(berita, batas=20):
             "Milik%": b["milik"],
             "Status": b["status"],
             "Peluang": f"{b['peluang']}%",
+            "Estimasi Menit": b.get("estimasi_menit", ""),
+            "Confidence": b.get("confidence", ""),
+            "Kesegaran": b.get("kesegaran", ""),
+            "Sumber": b.get("sumber", "FPL resmi"),
             "Kabar": b["kabar"],
             "Tindakan": b["tindakan"],
             "Alasan": b["alasan"],

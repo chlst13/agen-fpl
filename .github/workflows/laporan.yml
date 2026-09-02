@@ -15,6 +15,9 @@ on:
 concurrency:
   group: laporan-fpl
 
+permissions:
+  contents: write
+
 jobs:
   laporan:
     runs-on: ubuntu-latest
@@ -31,6 +34,7 @@ jobs:
       FPL_LIGA_ID:       ${{ vars.FPL_LIGA_ID }}
       FPL_HORIZON_STRATEGI: ${{ vars.FPL_HORIZON_STRATEGI }}
       FPL_BIAYA_HIT:     ${{ vars.FPL_BIAYA_HIT }}
+      FPL_FREE_TRANSFERS: ${{ vars.FPL_FREE_TRANSFERS }}
 
     steps:
       - uses: actions/checkout@v4
@@ -52,3 +56,19 @@ jobs:
           name: laporan-fpl
           path: laporan/
           retention-days: 14
+
+      - name: Simpan kalibrasi model
+        if: success()
+        run: |
+          [ -f state_strategi.json ] || exit 0
+          git config user.name  "agen-fpl"
+          git config user.email "agen-fpl@users.noreply.github.com"
+          git add state_strategi.json
+          git diff --staged --quiet && exit 0
+          git commit -m "state: calibration $(date -u +%FT%TZ) [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash && git push && exit 0
+            sleep 5
+          done
+          echo "Gagal menyimpan state kalibrasi"
+          exit 1
