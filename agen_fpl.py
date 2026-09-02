@@ -779,6 +779,9 @@ Data: API resmi Fantasy Premier League.</div>
 
 BATAS_TELEGRAM = 3900          # batas resmi 4096, disisakan ruang aman
 BATAS_RINGKASAN = 3400         # laporan utama harus tetap satu bubble Telegram
+PERCOBAAN_TELEGRAM = 3
+TIMEOUT_TELEGRAM = (15, 90)    # connect timeout, read timeout
+JEDA_RETRY_TELEGRAM = 3
 
 
 def potong_pesan(pesan, batas=BATAS_TELEGRAM):
@@ -830,28 +833,69 @@ def batasi_satu_pesan(pesan, batas=BATAS_RINGKASAN):
 def kirim_telegram(cfg, pesan, satu_pesan=False):
     token, chat = cfg.get("telegram_token"), cfg.get("telegram_chat_id")
     if not token or not chat:
+        print("⚠ Telegram dilewati: TELEGRAM_TOKEN atau TELEGRAM_CHAT_ID belum tersedia.")
         return False
 
     bagian = [batasi_satu_pesan(pesan)] if satu_pesan else potong_pesan(pesan)
-    berhasil = True
     for i, isi in enumerate(bagian):
         if len(bagian) > 1:
             isi = f"<i>({i + 1}/{len(bagian)})</i>\n{isi}"
-        try:
-            r = requests.post(
-                f"https://api.telegram.org/bot{token}/sendMessage",
-                timeout=20,
-                json={"chat_id": chat, "text": isi, "parse_mode": "HTML"},
-            )
-            if r.status_code != 200:
-                berhasil = False
-                print(f"⚠ Telegram menolak bagian {i + 1}: {r.text[:120]}")
-        except requests.RequestException as e:
-            berhasil = False
-            print(f"⚠ Telegram gagal di bagian {i + 1}: {e}")
+        bagian_terkirim = False
+        for percobaan in range(1, PERCOBAAN_TELEGRAM + 1):
+            try:
+                r = requests.post(
+                    f"https://api.telegram.org/bot{token}/sendMessage",
+                    timeout=TIMEOUT_TELEGRAM,
+                    json={"chat_id": chat, "text": isi, "parse_mode": "HTML"},
+                )
+                if r.status_code == 200:
+                    bagian_terkirim = True
+                    break
+
+                detail = (r.text or "tanpa detail")[:180].replace("\n", " ")
+                sementara = r.status_code == 429 or r.status_code >= 500
+                if not sementara or percobaan == PERCOBAAN_TELEGRAM:
+                    print(
+                        f"✗ Telegram menolak bagian {i + 1} "
+                        f"(HTTP {r.status_code}): {detail}"
+                    )
+                    break
+                print(
+                    f"⚠ Telegram sementara gagal untuk bagian {i + 1} "
+                    f"(HTTP {r.status_code}, percobaan {percobaan}/"
+                    f"{PERCOBAAN_TELEGRAM}); mencoba lagi."
+                )
+            except requests.ReadTimeout as e:
+                # sendMessage tidak memiliki idempotency key. Jika respons timeout,
+                # Telegram mungkin sudah menerima pesan; mengulang otomatis dapat
+                # membuat chat ganda. Read timeout dibuat panjang dan dihentikan di
+                # sini supaya perbaikan tidak menghidupkan kembali masalah duplikasi.
+                print(
+                    f"✗ Telegram tidak memberi respons untuk bagian {i + 1} "
+                    f"setelah {TIMEOUT_TELEGRAM[1]} detik. Tidak diulang otomatis "
+                    f"untuk mencegah pesan ganda: {e}"
+                )
+                break
+            except requests.RequestException as e:
+                if percobaan == PERCOBAAN_TELEGRAM:
+                    print(
+                        f"✗ Telegram gagal untuk bagian {i + 1} setelah "
+                        f"{PERCOBAAN_TELEGRAM} percobaan: {e}"
+                    )
+                    break
+                print(
+                    f"⚠ Koneksi Telegram gagal untuk bagian {i + 1} "
+                    f"(percobaan {percobaan}/{PERCOBAAN_TELEGRAM}): {e}. "
+                    "Mencoba lagi."
+                )
+
+            time.sleep(JEDA_RETRY_TELEGRAM * percobaan)
+
+        if not bagian_terkirim:
+            return False
         if i < len(bagian) - 1:
             time.sleep(0.4)        # hormati batas laju Telegram
-    return berhasil
+    return True
 
 
 def kirim_dokumen(cfg, berkas, judul=""):
@@ -971,6 +1015,7 @@ def jalankan(pengantar_telegram=""):
     baris.append("\n<i>Analisis lengkap, proyeksi pemain, dan seluruh opsi transfer ada di lampiran.</i>")
     pesan = "\n".join(baris)
 
+    telegram_siap = bool(cfg.get("telegram_token") and cfg.get("telegram_chat_id"))
     terkirim = kirim_telegram(cfg, pesan, satu_pesan=True)
     if terkirim and cfg.get("kirim_berkas", True):
         kirim_dokumen(cfg, berkas_html, f"Laporan lengkap GW{gw_next} — buka di browser HP")
@@ -978,8 +1023,18 @@ def jalankan(pengantar_telegram=""):
 
     print(f"✓ Laporan  : {berkas_html}")
     print(f"✓ Data     : {berkas_xlsx}")
-    print(f"✓ Telegram : {'terkirim' if terkirim else 'dilewati (token/chat_id kosong)'}")
-    return 0
+    if terkirim:
+        print("✓ Telegram : terkirim")
+        return 0
+
+    if telegram_siap:
+        print("✗ Telegram : gagal dikirim; lihat pesan galat di atas")
+    else:
+        print("✗ Telegram : secret TELEGRAM_TOKEN/TELEGRAM_CHAT_ID tidak tersedia")
+
+    # Di GitHub Actions kegagalan Telegram harus terlihat merah. Saat dijalankan
+    # lokal tanpa secret, laporan HTML/Excel tetap boleh dibuat untuk diperiksa.
+    return 1 if os.environ.get("GITHUB_ACTIONS") else 0
 
 
 if __name__ == "__main__":
