@@ -39,6 +39,22 @@ def simpan(data, path=BERKAS_KEPUTUSAN):
     )
 
 
+def _utc(nilai=None):
+    """Normalisasi waktu menjadi UTC; nilai rusak dikembalikan sebagai None."""
+    if nilai is None:
+        return dt.datetime.now(dt.timezone.utc)
+    if isinstance(nilai, dt.datetime):
+        waktu = nilai
+    else:
+        try:
+            waktu = dt.datetime.fromisoformat(str(nilai).replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            return None
+    if waktu.tzinfo is None:
+        waktu = waktu.replace(tzinfo=dt.timezone.utc)
+    return waktu.astimezone(dt.timezone.utc)
+
+
 def _normal_id(nilai):
     try:
         return int(float(nilai))
@@ -88,23 +104,79 @@ def teks_ringkasan(data, gw, batas=4):
     return "\n".join(baris)
 
 
+def _opsi_layak(transfer, batas=None):
+    """Hanya tampilkan opsi yang lolos pagar kualitas mesin strategi."""
+    if transfer is None or transfer.empty:
+        return transfer
+    kandidat = transfer.copy()
+    if "Status Om" in kandidat:
+        kandidat = kandidat[kandidat["Status Om"] != "DITOLAK"]
+    if "Keputusan" in kandidat:
+        kandidat = kandidat[kandidat["Keputusan"] != "TAHAN"]
+    if "Kesiapan" in kandidat:
+        kandidat = kandidat[kandidat["Kesiapan"] != "MERAH"]
+    return kandidat.head(batas) if batas else kandidat
+
+
+def catat_penawaran(transfer, gw, kedaluwarsa=None, path=BERKAS_KEPUTUSAN):
+    """Simpan snapshot opsi yang benar-benar dikirim ke Telegram.
+
+    Snapshot menjadi pagar pengaman: callback lama, opsi yang tidak pernah
+    ditawarkan, dan klik setelah deadline tidak boleh dianggap persetujuan.
+    """
+    sekarang = _utc()
+    batas = _utc(kedaluwarsa) if kedaluwarsa else sekarang + dt.timedelta(hours=36)
+    opsi = []
+    # Harus sama dengan jumlah tombol default agar opsi yang tidak terlihat
+    # di pesan terbaru tidak dapat disetujui dari tombol laporan lama.
+    for _, r in _opsi_layak(transfer, batas=3).iterrows():
+        keluar, masuk = _normal_id(r.get("_keluar_id")), _normal_id(r.get("_masuk_id"))
+        if not keluar or not masuk:
+            continue
+        gain_col = next(
+            (c for c in r.index if str(c).startswith("Gain ") and str(c).endswith("GW")),
+            None,
+        )
+        opsi.append({
+            "keluar_id": keluar,
+            "masuk_id": masuk,
+            "keluar": str(r.get("Keluar", keluar)),
+            "masuk": str(r.get("Masuk", masuk)),
+            "kesiapan": str(r.get("Kesiapan", "BELUM DINILAI")),
+            "confidence": float(r.get("Confidence Masuk%", 0) or 0),
+            "xmins": float(r.get("xMins Masuk", 0) or 0),
+            "gain": float(r.get(gain_col, 0) or 0) if gain_col else 0,
+        })
+
+    data = muat(path)
+    data["penawaran"] = {
+        "gw": _normal_id(gw),
+        "dibuat": sekarang.isoformat(timespec="seconds"),
+        "kedaluwarsa": batas.isoformat(timespec="seconds") if batas else "",
+        "opsi": opsi,
+    }
+    simpan(data, path)
+    return data["penawaran"]
+
+
 def keyboard(transfer, gw, batas=3):
     """Tombol keputusan untuk maksimal tiga rekomendasi teratas."""
     if transfer is None or transfer.empty:
         return None
     rows = []
-    kandidat = transfer[transfer.get("Status Om", "") != "DITOLAK"] if "Status Om" in transfer else transfer
-    for _, r in kandidat.head(batas).iterrows():
+    kandidat = _opsi_layak(transfer, batas=batas)
+    for _, r in kandidat.iterrows():
         keluar = _normal_id(r.get("_keluar_id"))
         masuk = _normal_id(r.get("_masuk_id"))
         if not keluar or not masuk:
             continue
         kode = f"{_normal_id(gw)}|{keluar}|{masuk}"
+        warna = "🟢" if r.get("Kesiapan") == "HIJAU" else "🟡"
         label = f"{str(r.get('Keluar', '?'))[:10]}→{str(r.get('Masuk', '?'))[:10]}"
         rows.append([
-            {"text": f"✅ {label}", "callback_data": f"fpl|a|{kode}"},
-            {"text": "❌ Tolak", "callback_data": f"fpl|r|{kode}"},
-            {"text": "⏸ Tunda", "callback_data": f"fpl|d|{kode}"},
+            {"text": f"{warna} Setujui {label}", "callback_data": f"fpl2|a|{kode}"},
+            {"text": "❌ Tolak", "callback_data": f"fpl2|r|{kode}"},
+            {"text": "⏸ Tunda", "callback_data": f"fpl2|d|{kode}"},
         ])
     return {"inline_keyboard": rows} if rows else None
 
@@ -120,7 +192,7 @@ def _jawab_callback(token, callback_id, teks):
         pass
 
 
-def proses_callback(cfg, bootstrap, path=BERKAS_KEPUTUSAN):
+def proses_callback(cfg, bootstrap, path=BERKAS_KEPUTUSAN, gw_aktif=None, sekarang=None):
     """Ambil klik tombol Telegram dan simpan sebagai catatan keputusan."""
     token = cfg.get("telegram_token")
     chat_id = str(cfg.get("telegram_chat_id") or "")
@@ -146,8 +218,8 @@ def proses_callback(cfg, bootstrap, path=BERKAS_KEPUTUSAN):
         print(f"⚠ Gagal membaca tombol Telegram: {e}")
         return []
 
-    pemain = {int(p["id"]): p.get("web_name", str(p["id"]))
-              for p in bootstrap.get("elements", [])}
+    detail_pemain = {int(p["id"]): p for p in bootstrap.get("elements", [])}
+    pemain = {pid: p.get("web_name", str(pid)) for pid, p in detail_pemain.items()}
     diproses = []
     offset = int(data.get("offset", 0))
 
@@ -156,7 +228,7 @@ def proses_callback(cfg, bootstrap, path=BERKAS_KEPUTUSAN):
         cb = update.get("callback_query") or {}
         mentah = str(cb.get("data") or "")
         bagian = mentah.split("|")
-        if len(bagian) != 5 or bagian[0] != "fpl" or bagian[1] not in STATUS:
+        if len(bagian) != 5 or bagian[0] not in ("fpl", "fpl2") or bagian[1] not in STATUS:
             continue
         pesan_chat = str((((cb.get("message") or {}).get("chat") or {}).get("id") or ""))
         if pesan_chat != chat_id:
@@ -165,6 +237,36 @@ def proses_callback(cfg, bootstrap, path=BERKAS_KEPUTUSAN):
 
         _, aksi, gw, keluar, masuk = bagian
         gw, keluar, masuk = map(_normal_id, (gw, keluar, masuk))
+
+        penawaran = data.get("penawaran") or {}
+        pasangan = {
+            (_normal_id(x.get("keluar_id")), _normal_id(x.get("masuk_id")))
+            for x in penawaran.get("opsi", [])
+        }
+        kini = _utc(sekarang) or _utc()
+        batas = _utc(penawaran.get("kedaluwarsa"))
+        alasan_batal = ""
+        if _normal_id(penawaran.get("gw")) != gw or (keluar, masuk) not in pasangan:
+            alasan_batal = "Tombol rekomendasi lama. Jalankan laporan terbaru."
+        elif gw_aktif is not None and gw != _normal_id(gw_aktif):
+            alasan_batal = f"Rekomendasi GW{gw} sudah tidak aktif."
+        elif batas and kini >= batas:
+            alasan_batal = "Deadline sudah lewat; keputusan tidak disimpan."
+
+        calon = detail_pemain.get(masuk, {})
+        peluang = calon.get("chance_of_playing_next_round")
+        if not alasan_batal and aksi == "a" and (
+            calon.get("status", "a") != "a" or (peluang is not None and peluang < 75)
+        ):
+            alasan_batal = (
+                f"{pemain.get(masuk, masuk)} kini berisiko/tidak fit; "
+                "persetujuan dibatalkan."
+            )
+        if alasan_batal:
+            _jawab_callback(token, cb.get("id", ""), alasan_batal)
+            print(f"⚠ Keputusan Telegram diabaikan: {alasan_batal}")
+            continue
+
         status = STATUS[aksi]
         item = {
             "gw": gw,

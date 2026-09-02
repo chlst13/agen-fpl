@@ -323,16 +323,15 @@ def simpan_state(potret_kini, catatan):
 def jalankan():
     cfg = inti.muat_config()
     bootstrap = inti.ambil("bootstrap-static/")
+    gw, sisa_jam, batas = jam_ke_deadline(bootstrap)
+    gw_berjalan, gw_depan = inti.gw_aktif(bootstrap)
     # Klik Setujui/Tolak/Tunda diproses di awal agar tetap tercatat walaupun
     # tidak ada perubahan pemain dan pemantau kemudian memilih diam.
     if keputusan:
-        keputusan.proses_callback(cfg, bootstrap)
+        keputusan.proses_callback(cfg, bootstrap, gw_aktif=gw or gw_depan)
     kini = potret(bootstrap)
 
-    gw, sisa_jam, batas = jam_ke_deadline(bootstrap)
-
     # --- tentukan siapa yang dipantau ketat ---
-    gw_berjalan, gw_depan = inti.gw_aktif(bootstrap)
     penting = set()
     sumber = "daftar manual"
     if cfg.get("entry_id"):

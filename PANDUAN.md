@@ -138,6 +138,17 @@ Opsi yang ditolak tidak lagi menjadi prioritas pada GW yang sama. Persetujuan
 ini **tidak mengeksekusi transfer ke akun FPL**; eksekusi final tetap dilakukan
 di aplikasi FPL agar tidak ada hit, chip, atau transfer permanen tanpa kontrol.
 
+Tombol hanya muncul untuk opsi yang lolos **pagar keputusan**:
+
+- **HIJAU** — gain, expected minutes, confidence, dan risiko memenuhi syarat kuat.
+- **KUNING** — masih layak dipertimbangkan, tetapi ada ketidakpastian yang perlu dipantau.
+- **MERAH/TAHAN** — tidak ditawarkan untuk disetujui.
+
+Setiap klik diperiksa ulang. Bot menolak tombol dari laporan lama, tombol setelah
+deadline, rekomendasi untuk GW yang sudah lewat, atau persetujuan pemain masuk
+yang status resminya berubah menjadi cedera/diragukan. Jalankan `Laporan FPL`
+lagi untuk memperoleh tombol baru setelah ada perubahan penting.
+
 ---
 
 ## Batasnya
