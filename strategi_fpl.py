@@ -181,8 +181,12 @@ def analisis_transfer(df, skuad, proyeksi, bank, horizon=5, biaya_hit=4, batas=1
     if skuad.empty or proyeksi.empty:
         return pd.DataFrame()
 
+    kolom_proyeksi = [
+        "_id", *[c for c in proyeksi if c.startswith("GW")], kolom_total, "Risiko",
+        *[c for c in ("xMins", "Confidence%") if c in proyeksi],
+    ]
     gabung = df.merge(
-        proyeksi[["_id", *[c for c in proyeksi if c.startswith("GW")], kolom_total, "Risiko"]],
+        proyeksi[kolom_proyeksi],
         on="_id",
         how="left",
         suffixes=("", "_proyeksi"),
@@ -217,6 +221,22 @@ def analisis_transfer(df, skuad, proyeksi, bank, horizon=5, biaya_hit=4, batas=1
             else:
                 keputusan = "TAHAN"
 
+            confidence = int(round(_angka(masuk.get("Confidence%"), 50)))
+            xmins = round(_angka(masuk.get("xMins"), 0), 1)
+            risiko = masuk.get("Risiko", "")
+            if (
+                keputusan == "LAYAK" and risiko == "Rendah"
+                and confidence >= 70 and xmins >= 60 and gain_gw > 0
+            ):
+                kesiapan = "HIJAU"
+            elif (
+                keputusan in ("LAYAK", "OPSIONAL") and risiko != "Tinggi"
+                and confidence >= 50 and xmins >= 45
+            ):
+                kesiapan = "KUNING"
+            else:
+                kesiapan = "MERAH"
+
             hasil.append({
                 "Keluar": keluar["Nama"],
                 "Klub Keluar": keluar["Klub"],
@@ -228,7 +248,10 @@ def analisis_transfer(df, skuad, proyeksi, bank, horizon=5, biaya_hit=4, batas=1
                 "Gain GW Depan": round(gain_gw, 2),
                 f"Gain {horizon}GW": round(gain, 2),
                 "Net jika -4": round(net_hit, 2),
-                "Risiko Masuk": masuk.get("Risiko", ""),
+                "Risiko Masuk": risiko,
+                "Confidence Masuk%": confidence,
+                "xMins Masuk": xmins,
+                "Kesiapan": kesiapan,
                 "Keputusan": keputusan,
                 "_keluar_id": keluar["_id"],
                 "_masuk_id": masuk["_id"],
@@ -571,6 +594,10 @@ def rencana_jangka_panjang(transfer, gw_awal, horizon=5):
     """Susun satu keputusan kini dan watchlist tanpa menjanjikan kepastian palsu."""
     if not transfer.empty and "Status Om" in transfer:
         transfer = transfer[transfer["Status Om"] != "DITOLAK"]
+    if not transfer.empty and "Kesiapan" in transfer:
+        transfer = transfer[transfer["Kesiapan"] != "MERAH"]
+    if not transfer.empty and "Keputusan" in transfer:
+        transfer = transfer[transfer["Keputusan"] != "TAHAN"]
     if transfer.empty:
         return [{
             "GW": gw_awal,
@@ -619,6 +646,10 @@ def teks_telegram(kapten, transfer, rencana, horizon=5, lineup=None, liga_mode=N
         baris.append("🔒 <b>Simpan transfer</b> — belum ada upgrade yang cukup kuat.")
     else:
         layak = transfer[transfer.get("Status Om", "") != "DITOLAK"] if "Status Om" in transfer else transfer
+        if "Kesiapan" in layak:
+            layak = layak[layak["Kesiapan"] != "MERAH"]
+        if "Keputusan" in layak:
+            layak = layak[layak["Keputusan"] != "TAHAN"]
         if layak.empty:
             baris.append("🔒 Semua opsi saat ini sudah ditolak Om — simpan transfer sambil menunggu data baru.")
             utama = None
@@ -629,6 +660,12 @@ def teks_telegram(kapten, transfer, rencana, horizon=5, lineup=None, liga_mode=N
             baris.append(
                 f"↔️ Prioritas: <b>{utama['Keluar']} → {utama['Masuk']}</b> "
                 f"({utama[gain_col]:+.1f} poin/{horizon}GW, bank tersisa {utama['Sisa Bank']:.1f}jt)"
+            )
+            warna = "🟢" if utama.get("Kesiapan") == "HIJAU" else "🟡"
+            baris.append(
+                f"{warna} Pagar keputusan: <b>{utama.get('Kesiapan', 'BELUM DINILAI')}</b> · "
+                f"confidence {utama.get('Confidence Masuk%', 0):.0f}% · "
+                f"estimasi {utama.get('xMins Masuk', 0):.0f} menit."
             )
             if utama.get("Status Om") and utama.get("Status Om") != "BELUM DIPUTUSKAN":
                 baris.append(f"📝 Status keputusan Om: <b>{utama['Status Om']}</b>")

@@ -1123,6 +1123,12 @@ def jalankan(pengantar_telegram=""):
     pesan = "\n".join(baris)
 
     telegram_siap = bool(cfg.get("telegram_token") and cfg.get("telegram_chat_id"))
+    if modkeputusan:
+        deadline = next(
+            (e.get("deadline_time") for e in bootstrap.get("events", []) if e.get("id") == gw_next),
+            None,
+        )
+        modkeputusan.catat_penawaran(strategi.get("transfer"), gw_next, deadline)
     tombol = modkeputusan.keyboard(strategi.get("transfer"), gw_next) if modkeputusan else None
     terkirim = kirim_telegram(cfg, pesan, satu_pesan=True, reply_markup=tombol)
     if terkirim and cfg.get("kirim_berkas", True):

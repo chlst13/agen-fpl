@@ -57,18 +57,19 @@ jobs:
           path: laporan/
           retention-days: 14
 
-      - name: Simpan kalibrasi model
+      - name: Simpan state strategi dan tombol keputusan
         if: success()
         run: |
-          [ -f state_strategi.json ] || exit 0
           git config user.name  "agen-fpl"
           git config user.email "agen-fpl@users.noreply.github.com"
-          git add state_strategi.json
+          for f in state_strategi.json keputusan_transfer.json; do
+            [ -f "$f" ] && git add "$f"
+          done
           git diff --staged --quiet && exit 0
-          git commit -m "state: calibration $(date -u +%FT%TZ) [skip ci]"
+          git commit -m "state: strategy $(date -u +%FT%TZ) [skip ci]"
           for i in 1 2 3; do
             git pull --rebase --autostash && git push && exit 0
             sleep 5
           done
-          echo "Gagal menyimpan state kalibrasi"
+          echo "Gagal menyimpan state strategi"
           exit 1

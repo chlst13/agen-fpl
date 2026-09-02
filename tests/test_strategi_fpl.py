@@ -77,6 +77,31 @@ class TestStrategiFPL(unittest.TestCase):
         self.assertNotIn("Kandidat Terlarang", set(hasil["Masuk"]))
         self.assertIn("Kandidat Aman", set(hasil["Masuk"]))
 
+    def test_pagar_keputusan_hanya_hijau_untuk_opsi_berkualitas(self):
+        df = pd.DataFrame([
+            {"_id": 1, "_klub": 1, "Nama": "Keluar", "Klub": "AAA",
+             "Pos": "MID", "Harga": 7.0, "Siap": True},
+            {"_id": 2, "_klub": 2, "Nama": "Aman", "Klub": "BBB",
+             "Pos": "MID", "Harga": 7.0, "Siap": True},
+            {"_id": 3, "_klub": 3, "Nama": "Rotasi", "Klub": "CCC",
+             "Pos": "MID", "Harga": 7.0, "Siap": True},
+        ])
+        skuad = df[df["_id"] == 1]
+        proyeksi = pd.DataFrame([
+            {"_id": 1, "GW4": 2, "Total 5GW": 10, "Risiko": "Rendah",
+             "xMins": 80, "Confidence%": 90},
+            {"_id": 2, "GW4": 6, "Total 5GW": 30, "Risiko": "Rendah",
+             "xMins": 78, "Confidence%": 88},
+            {"_id": 3, "GW4": 7, "Total 5GW": 32, "Risiko": "Tinggi",
+             "xMins": 35, "Confidence%": 45},
+        ])
+
+        hasil = strategi.analisis_transfer(df, skuad, proyeksi, bank=0, horizon=5)
+        status = hasil.set_index("Masuk")["Kesiapan"].to_dict()
+
+        self.assertEqual(status["Aman"], "HIJAU")
+        self.assertEqual(status["Rotasi"], "MERAH")
+
     def test_lineup_selalu_memiliki_formasi_legal(self):
         posisi = ["GKP", "GKP"] + ["DEF"] * 5 + ["MID"] * 5 + ["FWD"] * 3
         skuad = pd.DataFrame([
