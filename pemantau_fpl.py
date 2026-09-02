@@ -427,15 +427,6 @@ def jalankan():
 
     if bendera:
         baris.append(f"\n⚠️ Bendera aktif di skuadmu: {', '.join(bendera)}")
-    if lanjut and siaga and cfg.get("entry_id") and gw_berjalan:
-        try:
-            picks = inti.ambil(f"entry/{cfg['entry_id']}/event/{gw_berjalan}/picks/", wajib=False)
-            layak = lanjut.cek_kelayakan(picks, kini)
-            if layak and layak["catatan"]:
-                baris.append("\n<b>Pemeriksaan skuad:</b>")
-                baris += [f"   {c}" for c in layak["catatan"]]
-        except Exception as e:
-            print(f"⚠ Pemeriksaan kelayakan dilewati: {e}")
 
     if blok_rotasi:
         baris.append(blok_rotasi)
@@ -443,10 +434,18 @@ def jalankan():
         baris.append(blok_berita)
 
     pesan = "\n".join(baris)
-    terkirim = inti.kirim_telegram(cfg, pesan)
-
-    print(pesan.replace("<b>", "").replace("</b>", ""))
-    print(f"\n✓ Telegram: {'terkirim' if terkirim else 'dilewati'}")
+    # Pada tahap pengingat, laporan lengkap dipanggil di bawah. Pesan pemantau
+    # dimasukkan sebagai pengantar ke laporan itu agar pengguna menerima satu
+    # chat, bukan ringkasan pemantau lalu laporan kedua yang isinya tumpang tindih.
+    kirim_pemantau = tahap is None and bool(perubahan or siaga)
+    if kirim_pemantau:
+        terkirim = inti.kirim_telegram(cfg, pesan, satu_pesan=True)
+        print(pesan.replace("<b>", "").replace("</b>", ""))
+        print(f"\n✓ Telegram: {'terkirim' if terkirim else 'dilewati'}")
+    elif tahap is not None:
+        print("→ Ringkasan pemantau akan digabung ke laporan deadline.")
+    else:
+        print("→ Tidak mengirim pesan pemantau kosong; lanjut ke pembedahan GW.")
 
     # --- pembedahan otomatis begitu gameweek rampung ---
     if lapgw is not None and cfg.get("entry_id"):
@@ -468,7 +467,7 @@ def jalankan():
     if tahap is not None:
         print(f"\n→ Deadline tinggal {sisa_jam:.1f} jam. Menyusun laporan lengkap…")
         try:
-            inti.jalankan()
+            inti.jalankan(pengantar_telegram=pesan)
             if catatan.get("gw") != gw:
                 catatan = {"gw": gw, "tahap": []}
             catatan["tahap"] = sorted(set(catatan.get("tahap", [])) | {tahap}, reverse=True)

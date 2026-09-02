@@ -43,6 +43,11 @@ try:
 except ImportError:
     modberita = None
 
+try:
+    import strategi_fpl as modstrategi
+except ImportError:
+    modstrategi = None
+
 # ------------------------------------------------------------------
 # KONFIGURASI
 # ------------------------------------------------------------------
@@ -64,6 +69,8 @@ BAWAAN = {
     "kirim_berkas": True,
     "tahap_laporan_jam": [24, 3, 1],
     "liga_id": 0,
+    "horizon_strategi": 5,
+    "biaya_hit": 4,
 }
 
 API = "https://fantasy.premierleague.com/api"
@@ -97,6 +104,8 @@ def muat_config():
         "FPL_BANK": ("budget_bank", float),
         "FPL_TAHAP_LAPORAN": ("tahap_laporan_jam", jam),
         "FPL_LIGA_ID": ("liga_id", int),
+        "FPL_HORIZON_STRATEGI": ("horizon_strategi", int),
+        "FPL_BIAYA_HIT": ("biaya_hit", int),
     }
     for env, (kunci, ubah) in peta.items():
         nilai = os.environ.get(env, "").strip()
@@ -415,6 +424,27 @@ def rekomendasi(df, skuad, bank):
     return hasil
 
 
+def rakit_strategi(cfg, df, skuad, fixtures, gw_next, bank):
+    """Proyeksi multi-GW aman gagal; laporan utama tetap bisa berjalan."""
+    kosong = {"horizon": cfg.get("horizon_strategi", 5), "proyeksi": pd.DataFrame(),
+              "transfer": pd.DataFrame(), "kapten": [], "rencana": [], "teks": ""}
+    if modstrategi is None or skuad.empty:
+        return kosong
+    try:
+        return modstrategi.rakit_strategi(
+            df=df,
+            skuad=skuad,
+            fixtures=fixtures,
+            gw_awal=gw_next,
+            bank=bank,
+            horizon=cfg.get("horizon_strategi", 5),
+            biaya_hit=cfg.get("biaya_hit", 4),
+        )
+    except Exception as e:
+        print(f"⚠ Strategi multi-GW dilewati: {e}")
+        return kosong
+
+
 # ------------------------------------------------------------------
 # KOMENTAR AI (opsional)
 # ------------------------------------------------------------------
@@ -436,10 +466,11 @@ def komentar_ai(cfg, ringkasan):
                 "model": "claude-sonnet-4-6",
                 "max_tokens": 900,
                 "system": (
-                    "Kamu analis Fantasy Premier League. Bahasa Indonesia, langsung ke inti. "
-                    "Kamu diberi data yang SUDAH dihitung — jangan mengarang angka di luar data itu. "
-                    "Berikan: 1 pilihan kapten dengan alasannya, 1 transfer prioritas, "
-                    "dan 1 peringatan risiko. Maksimal 250 kata."
+                    "Kamu analis senior Fantasy Premier League. Bahasa Indonesia, tegas dan ringkas. "
+                    "Kamu diberi data serta proyeksi multi-gameweek yang SUDAH dihitung; jangan "
+                    "mengarang angka, cedera, atau berita di luar data. Uji rekomendasi mesin: jelaskan "
+                    "mengapa transfer utama layak atau sebaiknya ditunda, risiko terbesar, serta satu "
+                    "pemicu yang dapat mengubah rencana. Jangan mengulang tabel. Maksimal 140 kata."
                 ),
                 "messages": [{"role": "user", "content": ringkasan}],
             },
@@ -564,7 +595,7 @@ def bedah_gw_lengkap(cfg, bootstrap, fixtures, gw):
 # KELUARAN
 # ------------------------------------------------------------------
 
-def tulis_excel(folder, gw, df, skuad, naik, turun):
+def tulis_excel(folder, gw, df, skuad, naik, turun, strategi=None):
     berkas = folder / f"FPL_GW{gw}_data.xlsx"
     kolom = [c for c in df.columns if not c.startswith("_")]
     with pd.ExcelWriter(berkas, engine="openpyxl") as w:
@@ -573,6 +604,17 @@ def tulis_excel(folder, gw, df, skuad, naik, turun):
             skuad[kolom].to_excel(w, sheet_name="Skuad Saya", index=False)
         naik[kolom].to_excel(w, sheet_name="Calon Naik Harga", index=False)
         turun[kolom].to_excel(w, sheet_name="Calon Turun Harga", index=False)
+        strategi = strategi or {}
+        if not strategi.get("proyeksi", pd.DataFrame()).empty:
+            proyeksi = strategi["proyeksi"]
+            tampil = [c for c in proyeksi.columns if not c.startswith("_")]
+            proyeksi[tampil].to_excel(w, sheet_name="Proyeksi Multi GW", index=False)
+        if not strategi.get("transfer", pd.DataFrame()).empty:
+            transfer = strategi["transfer"]
+            tampil = [c for c in transfer.columns if not c.startswith("_")]
+            transfer[tampil].to_excel(w, sheet_name="Strategi Transfer", index=False)
+        if strategi.get("rencana"):
+            pd.DataFrame(strategi["rencana"]).to_excel(w, sheet_name="Rencana Jangka Panjang", index=False)
         for pos in ("GKP", "DEF", "MID", "FWD"):
             sub = df[df["Pos"] == pos].head(40)
             if not sub.empty:
@@ -591,7 +633,8 @@ def tabel_html(judul, records, kolom):
     return f"<h3>{judul}</h3><table><thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table>"
 
 
-def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber="", ekstra=None, gwr=None, kabar=None):
+def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai,
+               sumber="", ekstra=None, gwr=None, kabar=None, strategi=None):
     kol = ["Nama", "Klub", "Pos", "Harga", "Form", "xGI/90", "FDR", "Milik%", "Bola Mati", "Skor"]
     bagian = ""
 
@@ -615,6 +658,28 @@ def tulis_html(folder, gw, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumb
             bagian += tabel_html("Berita & tindakan yang disarankan", rows,
                                  ["Pemain", "Pos", "Harga", "Milik%", "Status",
                                   "Peluang", "Kabar", "Tindakan", "Alasan"])
+
+    strategi = strategi or {}
+    horizon = strategi.get("horizon", 5)
+    transfer = strategi.get("transfer", pd.DataFrame())
+    proyeksi = strategi.get("proyeksi", pd.DataFrame())
+    if not transfer.empty:
+        kolom_transfer = ["Keluar", "Masuk", "Pos", "Harga Masuk", "Sisa Bank",
+                          "Gain GW Depan", f"Gain {horizon}GW", "Net jika -4",
+                          "Risiko Masuk", "Keputusan"]
+        bagian += tabel_html(
+            f"Rekomendasi transfer — horizon {horizon} gameweek",
+            transfer.head(12).to_dict("records"), kolom_transfer)
+    if strategi.get("rencana"):
+        bagian += tabel_html("Rencana jangka panjang", strategi["rencana"],
+                             ["GW", "Aksi", "Alasan", "Pemicu"])
+    if not proyeksi.empty:
+        kolom_gw = [c for c in proyeksi.columns if c.startswith("GW")]
+        kolom_proyeksi = ["Nama", "Klub", "Pos", "Harga", *kolom_gw,
+                          f"Total {horizon}GW", "Risiko"]
+        bagian += tabel_html(
+            f"Proyeksi pemain — {horizon} gameweek",
+            proyeksi.head(40).to_dict("records"), kolom_proyeksi)
 
     gwr = gwr or {}
     if gwr.get("poin", {}).get("baris") and lapgw:
@@ -713,6 +778,7 @@ Data: API resmi Fantasy Premier League.</div>
 
 
 BATAS_TELEGRAM = 3900          # batas resmi 4096, disisakan ruang aman
+BATAS_RINGKASAN = 3400         # laporan utama harus tetap satu bubble Telegram
 
 
 def potong_pesan(pesan, batas=BATAS_TELEGRAM):
@@ -743,12 +809,30 @@ def potong_pesan(pesan, batas=BATAS_TELEGRAM):
     return potongan
 
 
-def kirim_telegram(cfg, pesan):
+def batasi_satu_pesan(pesan, batas=BATAS_RINGKASAN):
+    """Ringkas pada batas baris agar satu laporan tidak berubah jadi banyak chat."""
+    if len(pesan) <= batas:
+        return pesan
+    penutup = "\n\n<i>Rincian selebihnya tersedia di laporan HTML/Excel.</i>"
+    ruang = batas - len(penutup)
+    terpilih, panjang = [], 0
+    for baris in pesan.splitlines():
+        tambahan = len(baris) + (1 if terpilih else 0)
+        if panjang + tambahan > ruang:
+            break
+        terpilih.append(baris)
+        panjang += tambahan
+    if not terpilih:
+        return pesan[:ruang] + penutup
+    return "\n".join(terpilih).rstrip() + penutup
+
+
+def kirim_telegram(cfg, pesan, satu_pesan=False):
     token, chat = cfg.get("telegram_token"), cfg.get("telegram_chat_id")
     if not token or not chat:
         return False
 
-    bagian = potong_pesan(pesan)
+    bagian = [batasi_satu_pesan(pesan)] if satu_pesan else potong_pesan(pesan)
     berhasil = True
     for i, isi in enumerate(bagian):
         if len(bagian) > 1:
@@ -793,7 +877,7 @@ def kirim_dokumen(cfg, berkas, judul=""):
 # ALUR UTAMA
 # ------------------------------------------------------------------
 
-def jalankan():
+def jalankan(pengantar_telegram=""):
     cfg = muat_config()
     folder = AKAR / cfg["folder_laporan"]
     folder.mkdir(exist_ok=True)
@@ -823,6 +907,10 @@ def jalankan():
         print(f"→ Saran chip: {[c['chip'] + ' GW' + str(c['gw']) for c in ekstra['chip']]}")
     print(f"→ Skuad dibaca dari: {sumber} ({len(skuad)} pemain)")
     rek = rekomendasi(df, skuad, bank)
+    strategi = rakit_strategi(cfg, df, skuad, fixtures, gw_next, bank)
+    if not strategi["transfer"].empty:
+        utama = strategi["transfer"].iloc[0]
+        print(f"→ Transfer utama: {utama['Keluar']} → {utama['Masuk']}")
 
     # ringkasan padat untuk dikirim ke Claude
     def ringkas(sub, n=8):
@@ -839,10 +927,13 @@ def jalankan():
         f"TEKANAN BELI: {', '.join(naik['Nama'].head(6))}\n"
         f"TEKANAN JUAL: {', '.join(turun['Nama'].head(6))}"
     )
+    if strategi.get("teks"):
+        ringkasan += f"\n\nHASIL MESIN STRATEGI:\n{strategi['teks']}"
     ai = komentar_ai(cfg, ringkasan)
 
-    berkas_html = tulis_html(folder, gw_next, nama_tim, bank, df, skuad, rek, naik, turun, ai, sumber, ekstra, gwr, kabar)
-    berkas_xlsx = tulis_excel(folder, gw_next, df, skuad, naik, turun)
+    berkas_html = tulis_html(folder, gw_next, nama_tim, bank, df, skuad, rek, naik,
+                             turun, ai, sumber, ekstra, gwr, kabar, strategi)
+    berkas_xlsx = tulis_excel(folder, gw_next, df, skuad, naik, turun, strategi)
 
     # pesan Telegram
     baris = [f"<b>AGEN FPL — GW{gw_next}</b>", f"{nama_tim} · bank {bank:.1f}jt"]
@@ -850,40 +941,37 @@ def jalankan():
         baris.append("⚠️ <i>Skuad dibaca dari daftar manual, bukan akun FPL. "
                      "Transfer terbarumu belum tentu ikut terbaca.</i>")
     baris.append("")
-    if rek["kapten"]:
+    if pengantar_telegram:
+        baris.append(batasi_satu_pesan(pengantar_telegram, 850))
+        baris.append("")
+    if strategi.get("teks"):
+        baris.append(strategi["teks"])
+    elif rek["kapten"]:
         k = rek["kapten"][0]
         baris.append(f"⭐ Kapten: <b>{k['Nama']}</b> ({k['Klub']}) — skor {k['Skor']}, FDR {k['FDR']}")
-    if rek["jual"]:
-        j = rek["jual"][0]
-        baris.append(f"⚠️ Titik lemah: {j['Nama']} ({j['Klub']}) — skor {j['Skor']}")
-        gnt = rek["beli"].get(j["Nama"], [])
-        if gnt:
-            baris.append(f"↔️ Ganti ke: {gnt[0]['Nama']} ({gnt[0]['Klub']}, "
-                         f"{gnt[0]['Harga']}jt, skor {gnt[0]['Skor']})")
     def dengan_klub(sub, n=4):
         return ", ".join(f"{r['Nama']} ({r['Klub']})" for r in sub.head(n).to_dict("records"))
 
     if len(naik):
-        baris.append(f"📈 Berpotensi naik: {dengan_klub(naik)}")
+        baris.append(f"📈 Harga naik: {dengan_klub(naik, 3)}")
     if len(turun):
-        baris.append(f"📉 Berpotensi turun: {dengan_klub(turun)}")
-    if kabar.get("teks"):
-        baris.append(kabar["teks"])
-    if gwr.get("teks"):
-        baris.append("\n" + gwr["teks"])
-    if ekstra.get("teks"):
-        baris.append(ekstra["teks"])
+        baris.append(f"📉 Harga turun: {dengan_klub(turun, 3)}")
+    penting = [b for b in kabar.get("item", []) if b["tindakan"] not in ("ABAIKAN", "TAHAN")]
+    if penting:
+        baris.append("\n<b>📰 Berita prioritas</b>")
+        baris += [
+            f"• {b['nama']} ({b['klub']}): <b>{b['tindakan']}</b> — {b['kabar'][:180]}"
+            for b in penting[:3]
+        ]
+    if ekstra.get("chip"):
+        c = ekstra["chip"][0]
+        baris.append(f"🎟️ Chip dipantau: {c['chip']} GW{c['gw']} — {c['alasan'][:160]}")
     if ai:
-        baris += ["", ai[:900]]
-    if kabar.get("teks"):
-        baris.append(kabar["teks"])
-    if gwr.get("teks"):
-        baris.append("\n" + gwr["teks"])
-    if ekstra.get("teks"):
-        baris.append(ekstra["teks"])
+        baris += ["", "<b>Catatan analis AI</b>", ai[:650]]
+    baris.append("\n<i>Analisis lengkap, proyeksi pemain, dan seluruh opsi transfer ada di lampiran.</i>")
     pesan = "\n".join(baris)
 
-    terkirim = kirim_telegram(cfg, pesan)
+    terkirim = kirim_telegram(cfg, pesan, satu_pesan=True)
     if terkirim and cfg.get("kirim_berkas", True):
         kirim_dokumen(cfg, berkas_html, f"Laporan lengkap GW{gw_next} — buka di browser HP")
         kirim_dokumen(cfg, berkas_xlsx, f"Data mentah GW{gw_next}")

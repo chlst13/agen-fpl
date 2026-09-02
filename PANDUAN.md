@@ -9,8 +9,9 @@
 # Agen FPL — panduan pemasangan
 
 Agen ini menarik data resmi FPL, menghitung skor tiap pemain, membedah skuadmu,
-lalu menulis laporan dan mengirim ringkasan ke Telegram. Sekali dipasang, dia
-jalan sendiri sesuai jadwal — kamu tinggal buka HP.
+lalu membuat proyeksi dan strategi transfer beberapa gameweek. Laporan mendalam
+masuk ke HTML/Excel, sedangkan Telegram menerima satu decision brief agar tidak
+panjang atau berulang. Sekali dipasang, dia jalan sendiri sesuai jadwal.
 
 ---
 
@@ -38,6 +39,8 @@ jalankan.bat
 | `telegram_token` | Kosongkan kalau belum mau notifikasi. Cara ambil di bawah. |
 | `anthropic_api_key` | Opsional. Tanpa ini agen tetap jalan penuh, hanya tanpa komentar naratif. |
 | `ambang_harga` | Sensitivitas sinyal harga. Turunkan ke 0.5 kalau mau lebih banyak peringatan. |
+| `horizon_strategi` | Jarak proyeksi 1–8 GW. Bawaan 5 GW. |
+| `biaya_hit` | Biaya transfer tambahan untuk simulasi. Bawaan 4 poin. |
 
 ## 3. Uji jalan
 
@@ -98,6 +101,17 @@ resminya. Pakai untuk memutuskan "beli sekarang atau tunggu", bukan sebagai jami
 Kolom `Laga` menunjukkan berapa kali klub itu bertanding di rentang GW yang
 dipantau. Angka di atas normal berarti ada double gameweek — itu sinyal paling
 berharga di FPL.
+
+## Mesin strategi multi-gameweek
+
+Sheet **Proyeksi Multi GW** menghitung estimasi poin per GW dengan menggabungkan
+PPG, form, xGI/90, keandalan menit, ketersediaan, FDR, venue, blank, dan double
+gameweek. Sheet **Strategi Transfer** membandingkan pemain keluar dan masuk
+dengan budget nyata, posisi yang sama, serta batas maksimal tiga pemain per klub.
+
+Kolom `Gain 5GW` adalah kenaikan proyeksi sebelum hit. `Net jika -4` sudah
+mengurangi biaya hit. Gunakan kolom risiko dan berita terakhir sebagai syarat
+sebelum mengeksekusi keputusan; proyeksi bukan jaminan poin.
 
 ---
 
@@ -231,6 +245,8 @@ tab **Secrets** → *New repository secret*:
 | `FPL_PANTAU_TAMBAHAN` | `Saka, Isak` |
 | `FPL_PAKAI_AI` | `ya` atau `tidak` |
 | `FPL_BANK` | `1.5` |
+| `FPL_HORIZON_STRATEGI` | `5` |
+| `FPL_BIAYA_HIT` | `4` |
 
 Bedanya: Secrets disembunyikan dari log, Variables tidak. Jadi token wajib di
 Secrets, daftar pemain boleh di Variables.

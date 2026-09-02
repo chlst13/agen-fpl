@@ -79,7 +79,7 @@ ke bot. Ulangi langkah 1–2, tunggu 10 detik, muat ulang halaman.
 
 # BAGIAN 2 — Berkas yang perlu diunggah
 
-## Yang DIUNGGAH — 5 berkas
+## Yang DIUNGGAH — berkas aplikasi
 
 ```
 agen_fpl.py
@@ -87,10 +87,12 @@ pemantau_fpl.py
 fitur_lanjutan.py
 laporan_gw.py
 berita.py
+strategi_fpl.py
 requirements.txt
 .gitignore
 .github/workflows/pantau.yml
 .github/workflows/laporan.yml
+.github/workflows/tests.yml
 ```
 
 ## Yang TIDAK diunggah
@@ -116,12 +118,14 @@ AgenFPL/
 ├── fitur_lanjutan.py
 ├── laporan_gw.py
 ├── berita.py
+├── strategi_fpl.py
 ├── requirements.txt
 ├── .gitignore
 └── .github/
     └── workflows/
         ├── pantau.yml
-        └── laporan.yml
+        ├── laporan.yml
+        └── tests.yml
 ```
 
 **Windows sering menolak membuat folder berawalan titik.** Akalinya: ketik nama
@@ -233,6 +237,8 @@ Klik tab **Variables** di halaman yang sama → **New repository variable**.
 | `FPL_PANTAU_TAMBAHAN` | `Saka, Isak` | opsional |
 | `FPL_TAHAP_LAPORAN` | `24,3,1` | opsional |
 | `FPL_LIGA_ID` | ID liga mini | opsional |
+| `FPL_HORIZON_STRATEGI` | `5` | opsional, proyeksi 1–8 GW |
+| `FPL_BIAYA_HIT` | `4` | opsional, biaya simulasi transfer tambahan |
 
 **`FPL_TAHAP_LAPORAN`** menentukan kapan pengingat deadline dikirim. `24,3,1`
 berarti 1 hari, 3 jam, dan 1 jam sebelum deadline. Ubah sesukamu — misalnya
@@ -294,7 +300,7 @@ lagi.
 | Kapan | Isi |
 |---|---|
 | Tiap 20 menit, **hanya kalau ada perubahan** | cedera baru, pemain pulih, peluang main berubah, harga bergerak |
-| Tiap pagi 06.00 WIB | laporan lengkap + berkas HTML & Excel |
+| Tiap pagi 06.00 WIB | satu ringkasan Telegram + strategi multi-GW + berkas HTML & Excel |
 | **1 hari sebelum deadline** | laporan lengkap + saran chip |
 | **3 jam sebelum deadline** | laporan + risiko rotasi + pemeriksaan skuad |
 | **1 jam sebelum deadline** | pengingat terakhir, kondisi paling mutakhir |

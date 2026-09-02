@@ -34,6 +34,8 @@ jobs:
       FPL_TAHAP_LAPORAN: ${{ vars.FPL_TAHAP_LAPORAN }}
       FPL_LIGA_ID:       ${{ vars.FPL_LIGA_ID }}
       FPL_BANK:          ${{ vars.FPL_BANK }}
+      FPL_HORIZON_STRATEGI: ${{ vars.FPL_HORIZON_STRATEGI }}
+      FPL_BIAYA_HIT:     ${{ vars.FPL_BIAYA_HIT }}
 
     steps:
       - uses: actions/checkout@v4
