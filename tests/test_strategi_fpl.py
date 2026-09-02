@@ -1,4 +1,6 @@
 import unittest
+import tempfile
+from pathlib import Path
 
 import pandas as pd
 
@@ -6,6 +8,25 @@ import strategi_fpl as strategi
 
 
 class TestStrategiFPL(unittest.TestCase):
+    def test_expected_minutes_membedakan_pemain_nagil_dan_rotasi(self):
+        pemain = pd.DataFrame([
+            {"_id": 1, "Nama": "Aman", "Klub": "AAA", "Pos": "MID", "Menit": 710,
+             "Starts": 8, "GW Selesai": 8, "Peluang": 100, "Status": "a",
+             "Siap": True, "Kabar": ""},
+            {"_id": 2, "Nama": "Rotasi", "Klub": "BBB", "Pos": "MID", "Menit": 190,
+             "Starts": 2, "GW Selesai": 8, "Peluang": 100, "Status": "a",
+             "Siap": True, "Kabar": ""},
+        ])
+
+        hasil = strategi.expected_minutes(pemain).set_index("Nama")
+
+        self.assertGreater(hasil.loc["Aman", "xMins"], 75)
+        self.assertLess(hasil.loc["Rotasi", "xMins"], 40)
+        self.assertGreater(
+            hasil.loc["Aman", "Peluang Starter%"],
+            hasil.loc["Rotasi", "Peluang Starter%"],
+        )
+
     def test_proyeksi_mengenali_double_dan_blank_gameweek(self):
         pemain = pd.DataFrame([{
             "_id": 1, "_klub": 1, "Nama": "Alpha", "Klub": "AAA", "Pos": "MID",
@@ -55,6 +76,79 @@ class TestStrategiFPL(unittest.TestCase):
 
         self.assertNotIn("Kandidat Terlarang", set(hasil["Masuk"]))
         self.assertIn("Kandidat Aman", set(hasil["Masuk"]))
+
+    def test_lineup_selalu_memiliki_formasi_legal(self):
+        posisi = ["GKP", "GKP"] + ["DEF"] * 5 + ["MID"] * 5 + ["FWD"] * 3
+        skuad = pd.DataFrame([
+            {"_id": i + 1, "Nama": f"P{i+1}", "Klub": "AAA", "Pos": pos,
+             "Form": 5, "xGI/90": 0.3}
+            for i, pos in enumerate(posisi)
+        ])
+        proyeksi = pd.DataFrame([
+            {"_id": i + 1, "GW4": float(20 - i), "xMins": 80, "Risiko": "Rendah",
+             "Confidence%": 90}
+            for i in range(15)
+        ])
+
+        hasil = strategi.optimasi_lineup(skuad, proyeksi, 4)
+        starter = pd.DataFrame(hasil["starter"])
+
+        self.assertEqual(len(starter), 11)
+        self.assertEqual((starter["Pos"] == "GKP").sum(), 1)
+        self.assertGreaterEqual((starter["Pos"] == "DEF").sum(), 3)
+        self.assertGreaterEqual((starter["Pos"] == "MID").sum(), 2)
+        self.assertGreaterEqual((starter["Pos"] == "FWD").sum(), 1)
+        self.assertEqual(len(hasil["bench"]), 4)
+
+    def test_simulasi_transfer_deterministik(self):
+        transfer = pd.DataFrame([{
+            "Keluar": "A", "Masuk": "B", "Gain 5GW": 6.0, "Risiko Masuk": "Sedang"
+        }])
+
+        satu = strategi.simulasi_transfer(transfer, horizon=5, jumlah=300, seed=7)
+        dua = strategi.simulasi_transfer(transfer, horizon=5, jumlah=300, seed=7)
+
+        pd.testing.assert_frame_equal(satu, dua)
+        self.assertGreater(satu.iloc[0]["Peluang Untung%"], 50)
+
+    def test_keputusan_om_menaikkan_setuju_dan_menurunkan_tolak(self):
+        transfer = pd.DataFrame([
+            {"Keluar": "A", "Masuk": "B", "Gain 5GW": 9.0,
+             "_keluar_id": 1, "_masuk_id": 2},
+            {"Keluar": "C", "Masuk": "D", "Gain 5GW": 5.0,
+             "_keluar_id": 3, "_masuk_id": 4},
+        ])
+        keputusan = [
+            {"gw": 4, "keluar_id": 1, "masuk_id": 2, "status": "DITOLAK"},
+            {"gw": 4, "keluar_id": 3, "masuk_id": 4, "status": "DISETUJUI"},
+        ]
+
+        hasil = strategi.terapkan_keputusan(transfer, keputusan, 4)
+
+        self.assertEqual(hasil.iloc[0]["Status Om"], "DISETUJUI")
+        self.assertEqual(hasil.iloc[-1]["Status Om"], "DITOLAK")
+
+    def test_backtest_mengkalibrasi_prediksi_gw_berikutnya(self):
+        pemain = pd.DataFrame([
+            {"_id": i, "Poin": 10.0} for i in range(1, 21)
+        ])
+        prediksi_1 = pd.DataFrame([
+            {"_id": i, "GW1": 4.0, "Total 1GW": 4.0, "Rata-rata": 4.0}
+            for i in range(1, 21)
+        ])
+        prediksi_2 = pd.DataFrame([
+            {"_id": i, "GW2": 4.0, "Total 1GW": 4.0, "Rata-rata": 4.0}
+            for i in range(1, 21)
+        ])
+
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "state.json"
+            strategi.kalibrasi_proyeksi(pemain, prediksi_1, 1, path)
+            pemain["Poin"] = 15.0
+            _, hasil = strategi.kalibrasi_proyeksi(pemain, prediksi_2, 2, path)
+
+        self.assertIsNotNone(hasil["Evaluasi Terakhir"])
+        self.assertGreater(hasil["Faktor"], 1.0)
 
 
 if __name__ == "__main__":

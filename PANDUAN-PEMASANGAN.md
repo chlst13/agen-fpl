@@ -239,6 +239,7 @@ Klik tab **Variables** di halaman yang sama → **New repository variable**.
 | `FPL_LIGA_ID` | ID liga mini | opsional |
 | `FPL_HORIZON_STRATEGI` | `5` | opsional, proyeksi 1–8 GW |
 | `FPL_BIAYA_HIT` | `4` | opsional, biaya simulasi transfer tambahan |
+| `FPL_FREE_TRANSFERS` | `1` | opsional, jumlah free transfer yang tersedia |
 
 **`FPL_TAHAP_LAPORAN`** menentukan kapan pengingat deadline dikirim. `24,3,1`
 berarti 1 hari, 3 jam, dan 1 jam sebelum deadline. Ubah sesukamu — misalnya

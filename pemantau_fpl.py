@@ -26,6 +26,11 @@ import requests
 import agen_fpl as inti
 
 try:
+    import keputusan_transfer as keputusan
+except ImportError:
+    keputusan = None
+
+try:
     import fitur_lanjutan as lanjut
 except ImportError:
     lanjut = None
@@ -318,6 +323,10 @@ def simpan_state(potret_kini, catatan):
 def jalankan():
     cfg = inti.muat_config()
     bootstrap = inti.ambil("bootstrap-static/")
+    # Klik Setujui/Tolak/Tunda diproses di awal agar tetap tercatat walaupun
+    # tidak ada perubahan pemain dan pemantau kemudian memilih diam.
+    if keputusan:
+        keputusan.proses_callback(cfg, bootstrap)
     kini = potret(bootstrap)
 
     gw, sisa_jam, batas = jam_ke_deadline(bootstrap)

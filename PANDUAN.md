@@ -41,6 +41,7 @@ jalankan.bat
 | `ambang_harga` | Sensitivitas sinyal harga. Turunkan ke 0.5 kalau mau lebih banyak peringatan. |
 | `horizon_strategi` | Jarak proyeksi 1–8 GW. Bawaan 5 GW. |
 | `biaya_hit` | Biaya transfer tambahan untuk simulasi. Bawaan 4 poin. |
+| `free_transfers` | Free transfer yang tersedia saat laporan dibuat. Bawaan 1. |
 
 ## 3. Uji jalan
 
@@ -102,7 +103,7 @@ Kolom `Laga` menunjukkan berapa kali klub itu bertanding di rentang GW yang
 dipantau. Angka di atas normal berarti ada double gameweek — itu sinyal paling
 berharga di FPL.
 
-## Mesin strategi multi-gameweek
+## Mesin strategi Pro
 
 Sheet **Proyeksi Multi GW** menghitung estimasi poin per GW dengan menggabungkan
 PPG, form, xGI/90, keandalan menit, ketersediaan, FDR, venue, blank, dan double
@@ -113,14 +114,38 @@ Kolom `Gain 5GW` adalah kenaikan proyeksi sebelum hit. `Net jika -4` sudah
 mengurangi biaya hit. Gunakan kolom risiko dan berita terakhir sebagai syarat
 sebelum mengeksekusi keputusan; proyeksi bukan jaminan poin.
 
+Versi Pro juga membuat:
+
+- **Expected Minutes**: peluang starter, peluang 60+ menit, xMins, dan confidence.
+- **Rute Transfer**: optimasi satu atau dua langkah dengan budget, hit, posisi,
+  dan batas tiga pemain per klub.
+- **Simulasi**: rentang P10–P90 dan peluang transfer menghasilkan gain positif.
+- **Starting XI**: formasi legal terbaik, kapten, wakil, dan urutan bench.
+- **Chip Planner**: sinyal per GW dari blank/double, kekuatan XI, dan bench.
+- **Mini-League Mode**: Proteksi, Seimbang, atau Agresif sesuai jarak rival.
+- **Backtest Model**: prediksi GW lalu dibandingkan hasil aktual dan dipakai
+  mengalibrasi proyeksi berikutnya.
+
+## Persetujuan transfer semi-otomatis
+
+Laporan Telegram menampilkan tombol untuk maksimal tiga transfer teratas:
+**Setujui**, **Tolak**, dan **Tunda**. Klik diproses saat workflow `Pemantau FPL`
+berjalan berikutnya (biasanya maksimal 20 menit), kemudian disimpan ke
+`keputusan_transfer.json`.
+
+Keputusan Om muncul lagi di laporan Telegram, HTML, dan sheet **Keputusan Om**.
+Opsi yang ditolak tidak lagi menjadi prioritas pada GW yang sama. Persetujuan
+ini **tidak mengeksekusi transfer ke akun FPL**; eksekusi final tetap dilakukan
+di aplikasi FPL agar tidak ada hit, chip, atau transfer permanen tanpa kontrol.
+
 ---
 
 ## Batasnya
 
 - Data berasal dari API resmi FPL. Kalau FPL mengubah struktur datanya, script
   perlu disesuaikan.
-- Agen tidak melakukan transfer otomatis. Keputusan tetap di tanganmu — dan
-  memang sebaiknya begitu.
+- Agen mencatat persetujuan semi-otomatis, tetapi tidak login atau mengeksekusi
+  transfer ke akun FPL. Keputusan final tetap di tanganmu.
 - Komentar AI opsional dan berbayar (pakai API key sendiri). Tanpa itu, seluruh
   analisis tetap berjalan karena semua perhitungan dilakukan lokal.
 
@@ -247,6 +272,7 @@ tab **Secrets** → *New repository secret*:
 | `FPL_BANK` | `1.5` |
 | `FPL_HORIZON_STRATEGI` | `5` |
 | `FPL_BIAYA_HIT` | `4` |
+| `FPL_FREE_TRANSFERS` | `1` |
 
 Bedanya: Secrets disembunyikan dari log, Variables tidak. Jadi token wajib di
 Secrets, daftar pemain boleh di Variables.

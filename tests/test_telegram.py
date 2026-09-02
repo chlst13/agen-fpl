@@ -80,6 +80,18 @@ class TestTelegram(unittest.TestCase):
         self.assertEqual(post.call_count, agen_fpl.PERCOBAAN_TELEGRAM)
         self.assertEqual(tidur.call_count, agen_fpl.PERCOBAAN_TELEGRAM - 1)
 
+    def test_tombol_keputusan_dikirim_sebagai_reply_markup(self):
+        cfg = {"telegram_token": "token", "telegram_chat_id": "123"}
+        respons = Mock(status_code=200, text="ok")
+        tombol = {"inline_keyboard": [[{"text": "Setujui", "callback_data": "fpl|a|4|1|2"}]]}
+
+        with patch("agen_fpl.requests.post", return_value=respons) as post:
+            berhasil = agen_fpl.kirim_telegram(
+                cfg, "Laporan", satu_pesan=True, reply_markup=tombol)
+
+        self.assertTrue(berhasil)
+        self.assertEqual(post.call_args.kwargs["json"]["reply_markup"], tombol)
+
 
 if __name__ == "__main__":
     unittest.main()
