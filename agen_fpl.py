@@ -19,6 +19,7 @@ Semua pengaturan ada di config.json — script ini tidak perlu diubah.
 """
 
 import json
+import html
 import os
 import sys
 import time
@@ -375,6 +376,9 @@ def skuad_terkini(entry_id, gw_berjalan, gw_next):
             ids[ids.index(keluar)] = masuk
         elif masuk not in ids:
             ids.append(masuk)
+    if modkeputusan:
+        ids, _ = modkeputusan.terapkan_transfer_manual(
+            ids, modkeputusan.muat(), gw_next)
     return ids
 
 
@@ -394,6 +398,13 @@ def ambil_skuad(cfg, gw_berjalan, df, gw_next=None):
         if ids:
             sumber = "akun FPL (transfer terbaru sudah ikut)"
 
+    state_keputusan = modkeputusan.muat() if modkeputusan else {}
+    bank_manual = (
+        modkeputusan.bank_manual_gw(state_keputusan, gw_next) if modkeputusan else None
+    )
+    if bank_manual is not None:
+        bank = bank_manual
+
     if not ids and cfg.get("skuad_manual"):
         kandidat = [{"id": r["_id"], "nama": r["Nama"], "klub": r["Klub"]}
                     for r in df[["_id", "Nama", "Klub"]].to_dict("records")]
@@ -402,6 +413,15 @@ def ambil_skuad(cfg, gw_berjalan, df, gw_next=None):
             print(f"⚠ Daftar manual: {c}")
         if len(ids) != 15:
             print(f"⚠ Daftar manual menghasilkan {len(ids)} pemain, seharusnya 15.")
+
+    if ids and modkeputusan:
+        ids, manual_diterapkan = modkeputusan.terapkan_transfer_manual(
+            ids, state_keputusan, gw_next)
+        if manual_diterapkan:
+            if sumber.startswith("akun FPL"):
+                sumber = "akun FPL + sinkronisasi Telegram pra-deadline"
+            else:
+                sumber = "daftar manual + sinkronisasi Telegram pra-deadline"
 
     skuad = df[df["_id"].isin(ids)].copy() if ids else pd.DataFrame(columns=df.columns)
     return nama_tim, bank, skuad, sumber
@@ -1087,7 +1107,10 @@ def jalankan(pengantar_telegram=""):
 
     # pesan Telegram
     baris = [f"<b>AGEN FPL — GW{gw_next}</b>", f"{nama_tim} · bank {bank:.1f}jt"]
-    if sumber.startswith("daftar manual"):
+    if "sinkronisasi Telegram" in sumber and modkeputusan:
+        sinkron = modkeputusan.teks_sinkronisasi(keputusan, gw_next)
+        baris.append(f"✅ <i>Skuad pra-deadline disinkronkan: {html.escape(sinkron)}</i>")
+    elif sumber.startswith("daftar manual"):
         baris.append("⚠️ <i>Skuad dibaca dari daftar manual, bukan akun FPL. "
                      "Transfer terbarumu belum tentu ikut terbaca.</i>")
     baris.append("")
