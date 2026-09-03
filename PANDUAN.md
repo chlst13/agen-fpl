@@ -149,6 +149,26 @@ deadline, rekomendasi untuk GW yang sudah lewat, atau persetujuan pemain masuk
 yang status resminya berubah menjadi cedera/diragukan. Jalankan `Laporan FPL`
 lagi untuk memperoleh tombol baru setelah ada perubahan penting.
 
+### Sinkronisasi transfer pra-deadline tanpa login
+
+FPL kadang belum membuka transfer yang baru dilakukan sebelum deadline melalui
+endpoint publik. Kirim perintah berikut ke bot Telegram agar skuad sementara
+langsung mengikuti aplikasi FPL:
+
+```text
+/transfer Davies > Ajayi
+/bank 0.5
+```
+
+Gunakan `/statusskuad` untuk melihat konfirmasi aktif dan `/batalsync` untuk
+menghapusnya. Jika nama pemain ambigu, tambahkan kode klub, misalnya
+`/transfer Silva (AAA) > Silva (BBB)`. Perintah hanya diterima dari
+`TELEGRAM_CHAT_ID` milik Om dan otomatis tidak berlaku ketika GW berganti.
+
+Perintah diproses oleh jadwal `Pemantau FPL` berikutnya. Setelah bot membalas,
+jalankan `Laporan FPL` agar analisis, Starting XI, dan rekomendasi dihitung ulang
+dengan skuad serta bank yang sudah disinkronkan.
+
 ---
 
 ## Batasnya

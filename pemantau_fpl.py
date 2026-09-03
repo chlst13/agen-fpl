@@ -325,10 +325,15 @@ def jalankan():
     bootstrap = inti.ambil("bootstrap-static/")
     gw, sisa_jam, batas = jam_ke_deadline(bootstrap)
     gw_berjalan, gw_depan = inti.gw_aktif(bootstrap)
+    ids_perintah = []
+    if cfg.get("entry_id"):
+        ids_perintah = inti.skuad_terkini(
+            cfg["entry_id"], gw_berjalan, gw or gw_depan)
     # Klik Setujui/Tolak/Tunda diproses di awal agar tetap tercatat walaupun
     # tidak ada perubahan pemain dan pemantau kemudian memilih diam.
     if keputusan:
-        keputusan.proses_callback(cfg, bootstrap, gw_aktif=gw or gw_depan)
+        keputusan.proses_callback(
+            cfg, bootstrap, gw_aktif=gw or gw_depan, skuad_ids=ids_perintah)
     kini = potret(bootstrap)
 
     # --- tentukan siapa yang dipantau ketat ---

@@ -8,7 +8,10 @@ opsi mana yang disetujui, ditolak, atau ditunda.
 """
 
 import datetime as dt
+import html
 import json
+import re
+import unicodedata
 from pathlib import Path
 
 import requests
@@ -60,6 +63,82 @@ def _normal_id(nilai):
         return int(float(nilai))
     except (TypeError, ValueError):
         return 0
+
+
+def _normal_nama(nilai):
+    teks = unicodedata.normalize("NFKD", str(nilai or ""))
+    teks = "".join(c for c in teks if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", " ", teks.lower()).strip()
+
+
+def _cari_pemain(teks, bootstrap):
+    """Cari satu pemain secara aman; dukung `Nama (KLUB)` bila ambigu."""
+    mentah = str(teks or "").strip()
+    cocok_klub = re.match(r"^(.*?)\s*\(([^)]+)\)\s*$", mentah)
+    nama_cari = _normal_nama(cocok_klub.group(1) if cocok_klub else mentah)
+    klub_cari = _normal_nama(cocok_klub.group(2)) if cocok_klub else ""
+    klub = {int(t["id"]): t.get("short_name", "") for t in bootstrap.get("teams", [])}
+    temuan = []
+    for p in bootstrap.get("elements", []):
+        alias = {
+            _normal_nama(p.get("web_name")),
+            _normal_nama(f"{p.get('first_name', '')} {p.get('second_name', '')}"),
+        }
+        if nama_cari not in alias:
+            continue
+        singkat = klub.get(int(p.get("team", 0)), "")
+        if klub_cari and _normal_nama(singkat) != klub_cari:
+            continue
+        temuan.append({"id": int(p["id"]), "nama": p.get("web_name", mentah), "klub": singkat})
+    if len(temuan) == 1:
+        return temuan[0], ""
+    if not temuan:
+        return None, f"Pemain '{mentah}' tidak ditemukan. Gunakan nama yang tampil di FPL."
+    daftar = ", ".join(f"{x['nama']} ({x['klub']})" for x in temuan)
+    return None, f"Nama ambigu: {daftar}. Tambahkan klub, misalnya Nama (MUN)."
+
+
+def transfer_manual_gw(data, gw):
+    return [
+        x for x in data.get("transfer_manual", [])
+        if _normal_id(x.get("gw")) == _normal_id(gw)
+    ]
+
+
+def bank_manual_gw(data, gw):
+    item = data.get("bank_manual") or {}
+    if _normal_id(item.get("gw")) != _normal_id(gw):
+        return None
+    try:
+        return float(item.get("nilai"))
+    except (TypeError, ValueError):
+        return None
+
+
+def terapkan_transfer_manual(ids, data, gw):
+    """Tempel transfer konfirmasi Telegram ke susunan publik pra-deadline."""
+    hasil = list(ids or [])
+    diterapkan = []
+    for item in transfer_manual_gw(data or {}, gw):
+        keluar = _normal_id(item.get("keluar_id"))
+        masuk = _normal_id(item.get("masuk_id"))
+        if keluar in hasil:
+            hasil[hasil.index(keluar)] = masuk
+            diterapkan.append(item)
+        elif masuk in hasil:
+            # FPL sudah membuka transfer tersebut; jangan menambah pemain ganda.
+            diterapkan.append(item)
+    return list(dict.fromkeys(hasil)), diterapkan
+
+
+def teks_sinkronisasi(data, gw):
+    baris = []
+    for x in transfer_manual_gw(data or {}, gw):
+        baris.append(f"{x.get('keluar', '?')} → {x.get('masuk', '?')}")
+    bank = bank_manual_gw(data or {}, gw)
+    if bank is not None:
+        baris.append(f"bank {bank:.1f}jt")
+    return "; ".join(baris)
 
 
 def daftar_gw(data, gw):
@@ -192,8 +271,112 @@ def _jawab_callback(token, callback_id, teks):
         pass
 
 
-def proses_callback(cfg, bootstrap, path=BERKAS_KEPUTUSAN, gw_aktif=None, sekarang=None):
-    """Ambil klik tombol Telegram dan simpan sebagai catatan keputusan."""
+def _balas_pesan(token, chat_id, teks, message_id=None):
+    payload = {"chat_id": chat_id, "text": teks}
+    if message_id:
+        payload["reply_parameters"] = {"message_id": message_id}
+    try:
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            timeout=(10, 30),
+            json=payload,
+        )
+    except requests.RequestException:
+        pass
+
+
+def _status_sinkronisasi(data, gw):
+    transfer = transfer_manual_gw(data, gw)
+    bank = bank_manual_gw(data, gw)
+    if not transfer and bank is None:
+        return f"Belum ada sinkronisasi manual untuk GW{gw}."
+    baris = [f"Sinkronisasi sementara GW{gw}:"]
+    baris += [f"• {x['keluar']} → {x['masuk']}" for x in transfer]
+    baris.append(f"• Bank: {bank:.1f}jt" if bank is not None else "• Bank belum dikonfirmasi")
+    return "\n".join(baris)
+
+
+def _proses_perintah(teks, data, bootstrap, gw, skuad_ids=None):
+    """Proses perintah sinkronisasi skuad; kembalikan balasan atau None."""
+    bagian = str(teks or "").strip().split(maxsplit=1)
+    if not bagian or not bagian[0].startswith("/"):
+        return None
+    perintah = bagian[0].lower().split("@", 1)[0]
+    isi = bagian[1].strip() if len(bagian) > 1 else ""
+    gw = _normal_id(gw)
+
+    if perintah in ("/bantuanskuad", "/helpskuad"):
+        return (
+            "Perintah sinkronisasi skuad:\n"
+            "/transfer Pemain Lama > Pemain Baru\n"
+            "/bank 0.5\n"
+            "/statusskuad\n"
+            "/batalsync"
+        )
+    if perintah == "/statusskuad":
+        return _status_sinkronisasi(data, gw)
+    if perintah in ("/batalsync", "/bataltransfer"):
+        data["transfer_manual"] = [
+            x for x in data.get("transfer_manual", []) if _normal_id(x.get("gw")) != gw
+        ]
+        if _normal_id((data.get("bank_manual") or {}).get("gw")) == gw:
+            data.pop("bank_manual", None)
+        return f"Sinkronisasi manual GW{gw} dibatalkan. Bot kembali memakai data publik FPL."
+    if perintah == "/bank":
+        try:
+            nilai = float(isi.replace(",", "."))
+        except ValueError:
+            return "Format salah. Contoh: /bank 0.5"
+        if not 0 <= nilai <= 20:
+            return "Bank harus antara 0 sampai 20 juta."
+        data["bank_manual"] = {
+            "gw": gw,
+            "nilai": round(nilai, 1),
+            "waktu": _utc().isoformat(timespec="seconds"),
+        }
+        return f"Bank sementara GW{gw} disimpan: {nilai:.1f}jt."
+    if perintah != "/transfer":
+        return None
+    if not gw:
+        return "GW berikutnya belum dapat ditentukan. Coba lagi setelah data FPL tersedia."
+
+    cocok = re.match(r"^(.+?)\s*(?:->|→|>)\s*(.+?)$", isi)
+    if not cocok:
+        return "Format salah. Contoh: /transfer Davies > Ajayi"
+    keluar, galat = _cari_pemain(cocok.group(1), bootstrap)
+    if galat:
+        return galat
+    masuk, galat = _cari_pemain(cocok.group(2), bootstrap)
+    if galat:
+        return galat
+    if keluar["id"] == masuk["id"]:
+        return "Pemain keluar dan masuk tidak boleh sama."
+
+    ids = set(int(x) for x in (skuad_ids or []))
+    if ids and keluar["id"] not in ids:
+        return f"{keluar['nama']} tidak ada di skuad sementara Om. Cek /statusskuad."
+    if ids and masuk["id"] in ids:
+        return f"{masuk['nama']} sudah ada di skuad sementara Om."
+
+    item = {
+        "gw": gw,
+        "keluar_id": keluar["id"],
+        "masuk_id": masuk["id"],
+        "keluar": keluar["nama"],
+        "masuk": masuk["nama"],
+        "waktu": _utc().isoformat(timespec="seconds"),
+    }
+    data.setdefault("transfer_manual", []).append(item)
+    data["transfer_manual"] = data["transfer_manual"][-30:]
+    return (
+        f"Transfer sementara GW{gw} disimpan: {keluar['nama']} → {masuk['nama']}.\n"
+        "Agar perhitungan budget akurat, kirim juga bank terbaru, contoh: /bank 0.5"
+    )
+
+
+def proses_callback(cfg, bootstrap, path=BERKAS_KEPUTUSAN, gw_aktif=None, sekarang=None,
+                    skuad_ids=None):
+    """Ambil tombol keputusan dan perintah sinkronisasi skuad dari Telegram."""
     token = cfg.get("telegram_token")
     chat_id = str(cfg.get("telegram_chat_id") or "")
     if not token or not chat_id:
@@ -207,7 +390,7 @@ def proses_callback(cfg, bootstrap, path=BERKAS_KEPUTUSAN, gw_aktif=None, sekara
             params={
                 "offset": int(data.get("offset", 0)),
                 "timeout": 0,
-                "allowed_updates": json.dumps(["callback_query"]),
+                "allowed_updates": json.dumps(["callback_query", "message"]),
             },
         )
         if r.status_code != 200:
@@ -225,6 +408,19 @@ def proses_callback(cfg, bootstrap, path=BERKAS_KEPUTUSAN, gw_aktif=None, sekara
 
     for update in updates:
         offset = max(offset, int(update.get("update_id", -1)) + 1)
+        pesan = update.get("message") or {}
+        if pesan:
+            pesan_chat = str(((pesan.get("chat") or {}).get("id") or ""))
+            if pesan_chat != chat_id:
+                continue
+            ids_efektif, _ = terapkan_transfer_manual(skuad_ids, data, gw_aktif)
+            balasan = _proses_perintah(
+                pesan.get("text", ""), data, bootstrap, gw_aktif,
+                skuad_ids=ids_efektif)
+            if balasan:
+                _balas_pesan(token, chat_id, balasan, pesan.get("message_id"))
+                print(f"→ Perintah Telegram: {str(pesan.get('text', '')).split(maxsplit=1)[0]}")
+            continue
         cb = update.get("callback_query") or {}
         mentah = str(cb.get("data") or "")
         bagian = mentah.split("|")
