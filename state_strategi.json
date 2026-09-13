@@ -1,2157 +1,2073 @@
 {
   "prediksi": {
-    "gw": 4,
-    "dibuat": "2026-09-05T00:27:55+00:00",
+    "gw": 5,
+    "dibuat": "2026-09-13T00:29:18+00:00",
     "pemain": {
       "426": {
-        "xpts": 7.48,
-        "poin_awal": 25.0
-      },
-      "367": {
-        "xpts": 7.4,
-        "poin_awal": 28.0
-      },
-      "12": {
-        "xpts": 6.21,
-        "poin_awal": 20.0
-      },
-      "165": {
-        "xpts": 7.36,
-        "poin_awal": 20.0
-      },
-      "154": {
-        "xpts": 7.35,
-        "poin_awal": 20.0
-      },
-      "379": {
-        "xpts": 6.85,
-        "poin_awal": 23.0
-      },
-      "8": {
-        "xpts": 5.64,
-        "poin_awal": 20.0
-      },
-      "279": {
-        "xpts": 4.89,
-        "poin_awal": 20.0
-      },
-      "572": {
-        "xpts": 4.69,
-        "poin_awal": 20.0
-      },
-      "115": {
-        "xpts": 6.01,
-        "poin_awal": 17.0
-      },
-      "10": {
-        "xpts": 5.03,
-        "poin_awal": 18.0
-      },
-      "454": {
-        "xpts": 4.84,
-        "poin_awal": 17.0
-      },
-      "565": {
-        "xpts": 5.12,
-        "poin_awal": 18.0
-      },
-      "229": {
-        "xpts": 4.91,
-        "poin_awal": 18.0
-      },
-      "427": {
-        "xpts": 4.52,
-        "poin_awal": 13.0
+        "xpts": 10.08,
+        "poin_awal": 27.0
       },
       "411": {
-        "xpts": 4.23,
-        "poin_awal": 15.0
+        "xpts": 11.0,
+        "poin_awal": 24.0
+      },
+      "12": {
+        "xpts": 9.35,
+        "poin_awal": 30.0
+      },
+      "165": {
+        "xpts": 9.22,
+        "poin_awal": 33.0
+      },
+      "68": {
+        "xpts": 8.12,
+        "poin_awal": 29.0
+      },
+      "94": {
+        "xpts": 8.01,
+        "poin_awal": 30.0
+      },
+      "480": {
+        "xpts": 9.61,
+        "poin_awal": 26.0
+      },
+      "367": {
+        "xpts": 8.2,
+        "poin_awal": 29.0
+      },
+      "15": {
+        "xpts": 7.99,
+        "poin_awal": 27.0
+      },
+      "427": {
+        "xpts": 8.14,
+        "poin_awal": 21.0
+      },
+      "40": {
+        "xpts": 7.98,
+        "poin_awal": 27.0
+      },
+      "8": {
+        "xpts": 7.75,
+        "poin_awal": 28.0
+      },
+      "379": {
+        "xpts": 7.85,
+        "poin_awal": 25.0
+      },
+      "154": {
+        "xpts": 7.72,
+        "poin_awal": 26.0
+      },
+      "572": {
+        "xpts": 7.32,
+        "poin_awal": 28.0
+      },
+      "286": {
+        "xpts": 7.31,
+        "poin_awal": 27.0
+      },
+      "69": {
+        "xpts": 7.12,
+        "poin_awal": 28.0
+      },
+      "1": {
+        "xpts": 7.52,
+        "poin_awal": 29.0
+      },
+      "316": {
+        "xpts": 7.43,
+        "poin_awal": 24.0
+      },
+      "229": {
+        "xpts": 9.14,
+        "poin_awal": 29.0
+      },
+      "391": {
+        "xpts": 8.51,
+        "poin_awal": 22.0
+      },
+      "279": {
+        "xpts": 7.08,
+        "poin_awal": 26.0
+      },
+      "388": {
+        "xpts": 8.35,
+        "poin_awal": 20.0
+      },
+      "282": {
+        "xpts": 6.75,
+        "poin_awal": 24.0
+      },
+      "399": {
+        "xpts": 8.1,
+        "poin_awal": 25.0
+      },
+      "277": {
+        "xpts": 6.57,
+        "poin_awal": 25.0
+      },
+      "115": {
+        "xpts": 7.06,
+        "poin_awal": 21.0
+      },
+      "449": {
+        "xpts": 7.65,
+        "poin_awal": 18.0
+      },
+      "330": {
+        "xpts": 7.78,
+        "poin_awal": 22.0
+      },
+      "305": {
+        "xpts": 6.69,
+        "poin_awal": 23.0
+      },
+      "98": {
+        "xpts": 6.42,
+        "poin_awal": 25.0
+      },
+      "268": {
+        "xpts": 6.01,
+        "poin_awal": 22.0
+      },
+      "454": {
+        "xpts": 7.44,
+        "poin_awal": 18.0
+      },
+      "4": {
+        "xpts": 6.55,
+        "poin_awal": 24.0
       },
       "335": {
+        "xpts": 7.09,
+        "poin_awal": 19.0
+      },
+      "544": {
+        "xpts": 4.42,
+        "poin_awal": 21.0
+      },
+      "565": {
         "xpts": 5.9,
+        "poin_awal": 22.0
+      },
+      "453": {
+        "xpts": 6.79,
         "poin_awal": 17.0
       },
       "86": {
-        "xpts": 4.94,
-        "poin_awal": 16.0
+        "xpts": 5.72,
+        "poin_awal": 19.0
       },
-      "480": {
-        "xpts": 4.1,
-        "poin_awal": 15.0
-      },
-      "40": {
-        "xpts": 5.42,
-        "poin_awal": 13.0
-      },
-      "449": {
-        "xpts": 4.3,
-        "poin_awal": 14.0
-      },
-      "277": {
-        "xpts": 4.04,
-        "poin_awal": 17.0
-      },
-      "544": {
-        "xpts": 4.17,
-        "poin_awal": 15.0
-      },
-      "124": {
-        "xpts": 5.0,
-        "poin_awal": 15.0
-      },
-      "88": {
-        "xpts": 4.42,
-        "poin_awal": 15.0
-      },
-      "399": {
-        "xpts": 3.74,
+      "233": {
+        "xpts": 7.15,
         "poin_awal": 22.0
       },
-      "464": {
-        "xpts": 3.92,
-        "poin_awal": 12.0
-      },
-      "15": {
-        "xpts": 4.0,
-        "poin_awal": 14.0
+      "10": {
+        "xpts": 5.78,
+        "poin_awal": 21.0
       },
       "368": {
-        "xpts": 4.6,
-        "poin_awal": 15.0
-      },
-      "586": {
-        "xpts": 3.56,
-        "poin_awal": 16.0
-      },
-      "69": {
-        "xpts": 4.37,
-        "poin_awal": 14.0
-      },
-      "391": {
-        "xpts": 3.49,
-        "poin_awal": 14.0
-      },
-      "94": {
-        "xpts": 4.07,
-        "poin_awal": 13.0
-      },
-      "249": {
-        "xpts": 3.9,
-        "poin_awal": 10.0
-      },
-      "4": {
-        "xpts": 3.68,
-        "poin_awal": 13.0
+        "xpts": 5.82,
+        "poin_awal": 18.0
       },
       "237": {
-        "xpts": 3.37,
-        "poin_awal": 13.0
-      },
-      "388": {
-        "xpts": 3.36,
-        "poin_awal": 12.0
-      },
-      "236": {
-        "xpts": 3.8,
-        "poin_awal": 13.0
-      },
-      "483": {
-        "xpts": 3.13,
-        "poin_awal": 12.0
-      },
-      "593": {
-        "xpts": 3.4,
-        "poin_awal": 12.0
+        "xpts": 6.64,
+        "poin_awal": 16.0
       },
       "258": {
-        "xpts": 3.04,
-        "poin_awal": 12.0
+        "xpts": 5.25,
+        "poin_awal": 19.0
       },
-      "398": {
-        "xpts": 3.15,
-        "poin_awal": 10.0
-      },
-      "127": {
-        "xpts": 4.05,
-        "poin_awal": 11.0
-      },
-      "282": {
-        "xpts": 3.12,
-        "poin_awal": 12.0
-      },
-      "1": {
-        "xpts": 3.36,
-        "poin_awal": 12.0
-      },
-      "68": {
-        "xpts": 3.81,
-        "poin_awal": 11.0
+      "13": {
+        "xpts": 5.71,
+        "poin_awal": 19.0
       },
       "173": {
-        "xpts": 3.79,
-        "poin_awal": 11.0
+        "xpts": 5.15,
+        "poin_awal": 15.0
       },
-      "428": {
-        "xpts": 3.22,
-        "poin_awal": 11.0
+      "472": {
+        "xpts": 6.54,
+        "poin_awal": 19.0
       },
-      "332": {
-        "xpts": 4.08,
-        "poin_awal": 12.0
-      },
-      "385": {
-        "xpts": 4.06,
-        "poin_awal": 12.0
-      },
-      "377": {
-        "xpts": 3.74,
+      "464": {
+        "xpts": 6.19,
         "poin_awal": 13.0
       },
-      "316": {
-        "xpts": 3.24,
+      "504": {
+        "xpts": 5.6,
+        "poin_awal": 18.0
+      },
+      "124": {
+        "xpts": 5.6,
+        "poin_awal": 16.0
+      },
+      "397": {
+        "xpts": 6.01,
+        "poin_awal": 13.0
+      },
+      "214": {
+        "xpts": 5.06,
+        "poin_awal": 18.0
+      },
+      "503": {
+        "xpts": 5.59,
+        "poin_awal": 15.0
+      },
+      "350": {
+        "xpts": 5.22,
+        "poin_awal": 19.0
+      },
+      "230": {
+        "xpts": 6.38,
+        "poin_awal": 19.0
+      },
+      "249": {
+        "xpts": 6.36,
+        "poin_awal": 14.0
+      },
+      "204": {
+        "xpts": 5.0,
+        "poin_awal": 17.0
+      },
+      "26": {
+        "xpts": 5.07,
+        "poin_awal": 17.0
+      },
+      "242": {
+        "xpts": 6.24,
+        "poin_awal": 18.0
+      },
+      "112": {
+        "xpts": 5.45,
+        "poin_awal": 18.0
+      },
+      "469": {
+        "xpts": 5.89,
+        "poin_awal": 17.0
+      },
+      "428": {
+        "xpts": 5.11,
+        "poin_awal": 14.0
+      },
+      "483": {
+        "xpts": 5.84,
+        "poin_awal": 14.0
+      },
+      "362": {
+        "xpts": 4.97,
+        "poin_awal": 18.0
+      },
+      "88": {
+        "xpts": 4.79,
+        "poin_awal": 17.0
+      },
+      "542": {
+        "xpts": 3.58,
+        "poin_awal": 13.0
+      },
+      "332": {
+        "xpts": 5.66,
+        "poin_awal": 16.0
+      },
+      "236": {
+        "xpts": 6.04,
+        "poin_awal": 17.0
+      },
+      "79": {
+        "xpts": 4.58,
+        "poin_awal": 16.0
+      },
+      "70": {
+        "xpts": 4.56,
+        "poin_awal": 15.0
+      },
+      "597": {
+        "xpts": 4.68,
+        "poin_awal": 14.0
+      },
+      "533": {
+        "xpts": 3.45,
+        "poin_awal": 13.0
+      },
+      "356": {
+        "xpts": 4.75,
+        "poin_awal": 17.0
+      },
+      "385": {
+        "xpts": 5.31,
+        "poin_awal": 15.0
+      },
+      "226": {
+        "xpts": 5.61,
+        "poin_awal": 17.0
+      },
+      "127": {
+        "xpts": 4.6,
+        "poin_awal": 13.0
+      },
+      "496": {
+        "xpts": 4.77,
+        "poin_awal": 16.0
+      },
+      "569": {
+        "xpts": 4.03,
+        "poin_awal": 12.0
+      },
+      "250": {
+        "xpts": 4.0,
+        "poin_awal": 15.0
+      },
+      "334": {
+        "xpts": 5.05,
+        "poin_awal": 14.0
+      },
+      "588": {
+        "xpts": 4.2,
+        "poin_awal": 13.0
+      },
+      "570": {
+        "xpts": 3.94,
+        "poin_awal": 11.0
+      },
+      "377": {
+        "xpts": 4.35,
+        "poin_awal": 14.0
+      },
+      "591": {
+        "xpts": 4.28,
+        "poin_awal": 13.0
+      },
+      "557": {
+        "xpts": 4.24,
+        "poin_awal": 14.0
+      },
+      "398": {
+        "xpts": 4.88,
+        "poin_awal": 11.0
+      },
+      "290": {
+        "xpts": 4.05,
+        "poin_awal": 13.0
+      },
+      "211": {
+        "xpts": 4.04,
+        "poin_awal": 12.0
+      },
+      "295": {
+        "xpts": 3.98,
         "poin_awal": 12.0
       },
       "346": {
-        "xpts": 3.8,
-        "poin_awal": 9.0
-      },
-      "87": {
-        "xpts": 3.17,
-        "poin_awal": 11.0
-      },
-      "98": {
-        "xpts": 3.13,
+        "xpts": 4.74,
         "poin_awal": 10.0
       },
-      "268": {
-        "xpts": 2.53,
-        "poin_awal": 9.0
-      },
-      "569": {
-        "xpts": 2.52,
-        "poin_awal": 8.0
-      },
-      "327": {
-        "xpts": 3.62,
-        "poin_awal": 11.0
-      },
-      "79": {
-        "xpts": 3.2,
-        "poin_awal": 9.0
-      },
-      "591": {
-        "xpts": 2.92,
-        "poin_awal": 11.0
-      },
-      "230": {
-        "xpts": 2.9,
+      "390": {
+        "xpts": 4.62,
         "poin_awal": 10.0
       },
       "244": {
-        "xpts": 2.89,
-        "poin_awal": 10.0
+        "xpts": 4.88,
+        "poin_awal": 14.0
       },
-      "233": {
-        "xpts": 2.88,
-        "poin_awal": 10.0
+      "156": {
+        "xpts": 3.99,
+        "poin_awal": 12.0
       },
-      "226": {
-        "xpts": 2.86,
-        "poin_awal": 10.0
+      "502": {
+        "xpts": 4.25,
+        "poin_awal": 13.0
       },
-      "334": {
-        "xpts": 3.5,
-        "poin_awal": 10.0
-      },
-      "445": {
-        "xpts": 2.62,
-        "poin_awal": 9.0
-      },
-      "161": {
-        "xpts": 3.14,
-        "poin_awal": 8.0
-      },
-      "84": {
-        "xpts": 2.84,
-        "poin_awal": 9.0
-      },
-      "13": {
-        "xpts": 2.59,
-        "poin_awal": 8.0
-      },
-      "286": {
-        "xpts": 2.37,
-        "poin_awal": 9.0
-      },
-      "26": {
-        "xpts": 2.5,
-        "poin_awal": 8.0
-      },
-      "447": {
-        "xpts": 2.39,
-        "poin_awal": 8.0
-      },
-      "567": {
-        "xpts": 2.38,
-        "poin_awal": 8.0
-      },
-      "469": {
-        "xpts": 2.17,
-        "poin_awal": 8.0
-      },
-      "290": {
-        "xpts": 2.23,
-        "poin_awal": 8.0
-      },
-      "82": {
-        "xpts": 2.62,
-        "poin_awal": 9.0
-      },
-      "534": {
-        "xpts": 2.35,
-        "poin_awal": 8.0
-      },
-      "366": {
-        "xpts": 2.86,
-        "poin_awal": 9.0
-      },
-      "397": {
-        "xpts": 2.17,
-        "poin_awal": 7.0
-      },
-      "532": {
-        "xpts": 2.24,
-        "poin_awal": 8.0
-      },
-      "350": {
-        "xpts": 2.74,
-        "poin_awal": 10.0
-      },
-      "330": {
-        "xpts": 2.87,
-        "poin_awal": 8.0
-      },
-      "200": {
-        "xpts": 2.65,
-        "poin_awal": 7.0
-      },
-      "305": {
-        "xpts": 2.33,
-        "poin_awal": 9.0
-      },
-      "533": {
-        "xpts": 2.14,
-        "poin_awal": 9.0
-      },
-      "356": {
-        "xpts": 2.62,
-        "poin_awal": 9.0
+      "280": {
+        "xpts": 3.76,
+        "poin_awal": 13.0
       },
       "551": {
-        "xpts": 2.11,
-        "poin_awal": 8.0
+        "xpts": 2.82,
+        "poin_awal": 12.0
       },
-      "70": {
-        "xpts": 2.47,
-        "poin_awal": 6.0
+      "87": {
+        "xpts": 3.78,
+        "poin_awal": 14.0
       },
-      "362": {
-        "xpts": 2.57,
-        "poin_awal": 9.0
+      "366": {
+        "xpts": 3.89,
+        "poin_awal": 12.0
       },
-      "536": {
-        "xpts": 2.09,
-        "poin_awal": 7.0
+      "82": {
+        "xpts": 3.74,
+        "poin_awal": 14.0
+      },
+      "567": {
+        "xpts": 4.2,
+        "poin_awal": 10.0
+      },
+      "264": {
+        "xpts": 3.38,
+        "poin_awal": 10.0
+      },
+      "532": {
+        "xpts": 2.69,
+        "poin_awal": 12.0
+      },
+      "45": {
+        "xpts": 3.62,
+        "poin_awal": 11.0
+      },
+      "455": {
+        "xpts": 3.96,
+        "poin_awal": 12.0
+      },
+      "161": {
+        "xpts": 3.7,
+        "poin_awal": 11.0
+      },
+      "384": {
+        "xpts": 4.2,
+        "poin_awal": 10.0
+      },
+      "432": {
+        "xpts": 3.72,
+        "poin_awal": 14.0
+      },
+      "486": {
+        "xpts": 4.26,
+        "poin_awal": 10.0
       },
       "541": {
-        "xpts": 2.06,
-        "poin_awal": 7.0
+        "xpts": 2.62,
+        "poin_awal": 11.0
+      },
+      "467": {
+        "xpts": 4.22,
+        "poin_awal": 12.0
+      },
+      "447": {
+        "xpts": 3.95,
+        "poin_awal": 9.0
+      },
+      "558": {
+        "xpts": 4.1,
+        "poin_awal": 11.0
+      },
+      "481": {
+        "xpts": 3.99,
+        "poin_awal": 8.0
+      },
+      "529": {
+        "xpts": 2.49,
+        "poin_awal": 11.0
+      },
+      "254": {
+        "xpts": 3.1,
+        "poin_awal": 10.0
+      },
+      "393": {
+        "xpts": 3.89,
+        "poin_awal": 9.0
+      },
+      "566": {
+        "xpts": 3.18,
+        "poin_awal": 10.0
+      },
+      "491": {
+        "xpts": 3.92,
+        "poin_awal": 11.0
+      },
+      "516": {
+        "xpts": 3.59,
+        "poin_awal": 11.0
+      },
+      "261": {
+        "xpts": 3.0,
+        "poin_awal": 9.0
+      },
+      "41": {
+        "xpts": 3.21,
+        "poin_awal": 9.0
       },
       "43": {
-        "xpts": 2.06,
-        "poin_awal": 6.0
-      },
-      "315": {
-        "xpts": 2.17,
+        "xpts": 3.34,
         "poin_awal": 8.0
       },
       "210": {
-        "xpts": 2.4,
-        "poin_awal": 6.0
-      },
-      "529": {
-        "xpts": 1.98,
-        "poin_awal": 7.0
-      },
-      "338": {
-        "xpts": 2.61,
-        "poin_awal": 7.0
-      },
-      "7": {
-        "xpts": 1.99,
-        "poin_awal": 6.0
-      },
-      "459": {
-        "xpts": 1.91,
-        "poin_awal": 6.0
-      },
-      "295": {
-        "xpts": 1.77,
-        "poin_awal": 6.0
-      },
-      "372": {
-        "xpts": 2.28,
-        "poin_awal": 7.0
-      },
-      "542": {
-        "xpts": 1.82,
-        "poin_awal": 5.0
-      },
-      "224": {
-        "xpts": 2.17,
-        "poin_awal": 3.0
-      },
-      "566": {
-        "xpts": 2.12,
-        "poin_awal": 6.0
-      },
-      "267": {
-        "xpts": 1.95,
-        "poin_awal": 8.0
-      },
-      "504": {
-        "xpts": 2.2,
-        "poin_awal": 6.0
-      },
-      "557": {
-        "xpts": 1.85,
-        "poin_awal": 6.0
-      },
-      "214": {
-        "xpts": 2.12,
-        "poin_awal": 5.0
-      },
-      "473": {
-        "xpts": 1.64,
-        "poin_awal": 5.0
-      },
-      "309": {
-        "xpts": 1.91,
-        "poin_awal": 6.0
-      },
-      "60": {
-        "xpts": 2.06,
-        "poin_awal": 5.0
-      },
-      "486": {
-        "xpts": 1.6,
-        "poin_awal": 5.0
-      },
-      "109": {
-        "xpts": 2.11,
-        "poin_awal": 6.0
-      },
-      "472": {
-        "xpts": 1.58,
-        "poin_awal": 5.0
-      },
-      "481": {
-        "xpts": 1.61,
-        "poin_awal": 5.0
-      },
-      "418": {
-        "xpts": 1.7,
-        "poin_awal": 5.0
-      },
-      "460": {
-        "xpts": 1.7,
-        "poin_awal": 9.0
-      },
-      "453": {
-        "xpts": 1.69,
-        "poin_awal": 5.0
-      },
-      "71": {
-        "xpts": 1.96,
-        "poin_awal": 6.0
-      },
-      "502": {
-        "xpts": 1.89,
-        "poin_awal": 5.0
-      },
-      "148": {
-        "xpts": 2.02,
-        "poin_awal": 5.0
-      },
-      "562": {
-        "xpts": 1.76,
-        "poin_awal": 6.0
-      },
-      "264": {
-        "xpts": 1.46,
-        "poin_awal": 5.0
-      },
-      "242": {
-        "xpts": 1.74,
-        "poin_awal": 5.0
-      },
-      "471": {
-        "xpts": 1.47,
-        "poin_awal": 5.0
-      },
-      "250": {
-        "xpts": 1.42,
-        "poin_awal": 5.0
-      },
-      "605": {
-        "xpts": 1.93,
-        "poin_awal": 9.0
-      },
-      "156": {
-        "xpts": 1.93,
-        "poin_awal": 8.0
-      },
-      "259": {
-        "xpts": 1.7,
-        "poin_awal": 7.0
-      },
-      "545": {
-        "xpts": 1.58,
-        "poin_awal": 5.0
-      },
-      "114": {
-        "xpts": 1.92,
-        "poin_awal": 5.0
-      },
-      "261": {
-        "xpts": 1.4,
-        "poin_awal": 4.0
-      },
-      "390": {
-        "xpts": 1.46,
-        "poin_awal": 4.0
-      },
-      "106": {
-        "xpts": 1.71,
-        "poin_awal": 2.0
-      },
-      "246": {
-        "xpts": 1.66,
-        "poin_awal": 5.0
-      },
-      "358": {
-        "xpts": 1.87,
-        "poin_awal": 6.0
-      },
-      "116": {
-        "xpts": 1.86,
-        "poin_awal": 5.0
-      },
-      "61": {
-        "xpts": 1.78,
-        "poin_awal": 5.0
-      },
-      "184": {
-        "xpts": 1.75,
-        "poin_awal": 4.0
-      },
-      "57": {
-        "xpts": 1.75,
-        "poin_awal": 5.0
-      },
-      "387": {
-        "xpts": 1.4,
-        "poin_awal": 4.0
-      },
-      "265": {
-        "xpts": 1.3,
-        "poin_awal": 4.0
-      },
-      "41": {
-        "xpts": 1.65,
-        "poin_awal": 4.0
-      },
-      "491": {
-        "xpts": 1.33,
-        "poin_awal": 3.0
-      },
-      "67": {
-        "xpts": 1.67,
-        "poin_awal": 4.0
-      },
-      "564": {
-        "xpts": 1.53,
-        "poin_awal": 6.0
-      },
-      "514": {
-        "xpts": 1.6,
-        "poin_awal": 4.0
-      },
-      "575": {
-        "xpts": 1.64,
-        "poin_awal": 4.0
-      },
-      "455": {
-        "xpts": 1.54,
-        "poin_awal": 4.0
-      },
-      "46": {
-        "xpts": 1.54,
-        "poin_awal": 4.0
-      },
-      "552": {
-        "xpts": 1.34,
-        "poin_awal": 4.0
-      },
-      "304": {
-        "xpts": 1.42,
-        "poin_awal": 5.0
-      },
-      "47": {
-        "xpts": 1.48,
-        "poin_awal": 4.0
-      },
-      "522": {
-        "xpts": 1.47,
-        "poin_awal": 4.0
-      },
-      "51": {
-        "xpts": 1.47,
-        "poin_awal": 4.0
-      },
-      "393": {
-        "xpts": 1.21,
-        "poin_awal": 4.0
-      },
-      "176": {
-        "xpts": 1.48,
-        "poin_awal": 3.0
-      },
-      "175": {
-        "xpts": 1.45,
-        "poin_awal": 3.0
-      },
-      "211": {
-        "xpts": 1.48,
-        "poin_awal": 6.0
-      },
-      "190": {
-        "xpts": 1.44,
-        "poin_awal": 3.0
-      },
-      "254": {
-        "xpts": 1.1,
-        "poin_awal": 3.0
-      },
-      "110": {
-        "xpts": 1.36,
-        "poin_awal": 3.0
-      },
-      "138": {
-        "xpts": 1.42,
-        "poin_awal": 6.0
-      },
-      "423": {
-        "xpts": 1.17,
-        "poin_awal": 3.0
-      },
-      "570": {
-        "xpts": 1.05,
-        "poin_awal": 3.0
-      },
-      "337": {
-        "xpts": 1.53,
-        "poin_awal": 4.0
-      },
-      "202": {
-        "xpts": 1.38,
-        "poin_awal": 3.0
-      },
-      "371": {
-        "xpts": 1.4,
-        "poin_awal": 7.0
-      },
-      "198": {
-        "xpts": 1.36,
-        "poin_awal": 3.0
+        "xpts": 3.18,
+        "poin_awal": 10.0
       },
       "579": {
-        "xpts": 1.37,
+        "xpts": 3.28,
+        "poin_awal": 15.0
+      },
+      "460": {
+        "xpts": 3.65,
+        "poin_awal": 11.0
+      },
+      "459": {
+        "xpts": 3.62,
+        "poin_awal": 8.0
+      },
+      "445": {
+        "xpts": 3.59,
+        "poin_awal": 8.0
+      },
+      "116": {
+        "xpts": 3.29,
+        "poin_awal": 10.0
+      },
+      "222": {
+        "xpts": 3.04,
+        "poin_awal": 12.0
+      },
+      "315": {
+        "xpts": 3.09,
+        "poin_awal": 9.0
+      },
+      "200": {
+        "xpts": 3.12,
+        "poin_awal": 10.0
+      },
+      "338": {
+        "xpts": 3.5,
+        "poin_awal": 9.0
+      },
+      "96": {
+        "xpts": 2.91,
+        "poin_awal": 13.0
+      },
+      "46": {
+        "xpts": 2.94,
+        "poin_awal": 9.0
+      },
+      "109": {
+        "xpts": 3.08,
+        "poin_awal": 9.0
+      },
+      "267": {
+        "xpts": 2.91,
+        "poin_awal": 9.0
+      },
+      "7": {
+        "xpts": 2.9,
+        "poin_awal": 9.0
+      },
+      "31": {
+        "xpts": 2.9,
+        "poin_awal": 11.0
+      },
+      "605": {
+        "xpts": 2.97,
+        "poin_awal": 11.0
+      },
+      "257": {
+        "xpts": 2.61,
+        "poin_awal": 9.0
+      },
+      "67": {
+        "xpts": 2.69,
+        "poin_awal": 8.0
+      },
+      "473": {
+        "xpts": 3.32,
+        "poin_awal": 8.0
+      },
+      "545": {
+        "xpts": 2.06,
+        "poin_awal": 8.0
+      },
+      "47": {
+        "xpts": 2.79,
+        "poin_awal": 9.0
+      },
+      "418": {
+        "xpts": 2.85,
+        "poin_awal": 7.0
+      },
+      "60": {
+        "xpts": 2.62,
+        "poin_awal": 8.0
+      },
+      "265": {
+        "xpts": 2.54,
+        "poin_awal": 8.0
+      },
+      "184": {
+        "xpts": 2.5,
+        "poin_awal": 6.0
+      },
+      "619": {
+        "xpts": 2.71,
+        "poin_awal": 9.0
+      },
+      "514": {
+        "xpts": 2.94,
+        "poin_awal": 8.0
+      },
+      "562": {
+        "xpts": 2.7,
+        "poin_awal": 7.0
+      },
+      "175": {
+        "xpts": 2.46,
+        "poin_awal": 6.0
+      },
+      "522": {
+        "xpts": 2.9,
+        "poin_awal": 7.0
+      },
+      "167": {
+        "xpts": 3.15,
+        "poin_awal": 8.0
+      },
+      "51": {
+        "xpts": 2.64,
+        "poin_awal": 8.0
+      },
+      "327": {
+        "xpts": 3.1,
+        "poin_awal": 12.0
+      },
+      "552": {
+        "xpts": 1.95,
+        "poin_awal": 7.0
+      },
+      "239": {
+        "xpts": 3.3,
+        "poin_awal": 8.0
+      },
+      "534": {
+        "xpts": 1.95,
+        "poin_awal": 9.0
+      },
+      "304": {
+        "xpts": 2.65,
+        "poin_awal": 8.0
+      },
+      "401": {
+        "xpts": 2.86,
+        "poin_awal": 6.0
+      },
+      "61": {
+        "xpts": 2.49,
+        "poin_awal": 8.0
+      },
+      "28": {
+        "xpts": 2.65,
+        "poin_awal": 7.0
+      },
+      "148": {
+        "xpts": 2.65,
+        "poin_awal": 8.0
+      },
+      "106": {
+        "xpts": 2.55,
+        "poin_awal": 5.0
+      },
+      "259": {
+        "xpts": 2.6,
+        "poin_awal": 8.0
+      },
+      "114": {
+        "xpts": 2.69,
+        "poin_awal": 7.0
+      },
+      "37": {
+        "xpts": 2.55,
+        "poin_awal": 7.0
+      },
+      "644": {
+        "xpts": 2.5,
+        "poin_awal": 6.0
+      },
+      "650": {
+        "xpts": 2.31,
+        "poin_awal": 8.0
+      },
+      "576": {
+        "xpts": 2.41,
+        "poin_awal": 7.0
+      },
+      "649": {
+        "xpts": 3.09,
+        "poin_awal": 13.0
+      },
+      "176": {
+        "xpts": 2.21,
+        "poin_awal": 5.0
+      },
+      "246": {
+        "xpts": 2.95,
+        "poin_awal": 6.0
+      },
+      "138": {
+        "xpts": 2.46,
+        "poin_awal": 8.0
+      },
+      "580": {
+        "xpts": 2.16,
+        "poin_awal": 9.0
+      },
+      "564": {
+        "xpts": 2.36,
+        "poin_awal": 7.0
+      },
+      "358": {
+        "xpts": 2.39,
+        "poin_awal": 7.0
+      },
+      "57": {
+        "xpts": 2.21,
         "poin_awal": 7.0
       },
       "492": {
-        "xpts": 1.28,
-        "poin_awal": 3.0
-      },
-      "432": {
-        "xpts": 1.08,
+        "xpts": 2.11,
         "poin_awal": 5.0
       },
-      "467": {
-        "xpts": 0.99,
-        "poin_awal": 3.0
-      },
-      "496": {
-        "xpts": 1.21,
-        "poin_awal": 3.0
-      },
-      "412": {
-        "xpts": 1.06,
-        "poin_awal": 3.0
-      },
-      "384": {
-        "xpts": 0.99,
-        "poin_awal": 3.0
-      },
-      "619": {
-        "xpts": 1.1,
+      "110": {
+        "xpts": 2.07,
         "poin_awal": 5.0
       },
-      "576": {
-        "xpts": 0.93,
-        "poin_awal": 3.0
+      "403": {
+        "xpts": 2.44,
+        "poin_awal": 6.0
       },
-      "558": {
-        "xpts": 0.88,
-        "poin_awal": 5.0
-      },
-      "182": {
-        "xpts": 1.1,
-        "poin_awal": 2.0
+      "166": {
+        "xpts": 2.19,
+        "poin_awal": 4.0
       },
       "183": {
-        "xpts": 1.1,
+        "xpts": 2.0,
+        "poin_awal": 6.0
+      },
+      "202": {
+        "xpts": 2.11,
+        "poin_awal": 6.0
+      },
+      "182": {
+        "xpts": 1.94,
         "poin_awal": 4.0
       },
-      "547": {
-        "xpts": 0.94,
-        "poin_awal": 1.0
+      "412": {
+        "xpts": 2.07,
+        "poin_awal": 5.0
       },
-      "112": {
-        "xpts": 1.02,
-        "poin_awal": 2.0
-      },
-      "144": {
-        "xpts": 1.09,
-        "poin_awal": 2.0
-      },
-      "255": {
-        "xpts": 0.8,
-        "poin_awal": 3.0
-      },
-      "45": {
-        "xpts": 1.01,
-        "poin_awal": 2.0
-      },
-      "257": {
-        "xpts": 0.8,
-        "poin_awal": 2.0
-      },
-      "95": {
-        "xpts": 0.95,
-        "poin_awal": 4.0
-      },
-      "498": {
-        "xpts": 0.98,
-        "poin_awal": 3.0
-      },
-      "151": {
-        "xpts": 1.03,
-        "poin_awal": 4.0
+      "309": {
+        "xpts": 2.0,
+        "poin_awal": 6.0
       },
       "429": {
-        "xpts": 0.84,
-        "poin_awal": 3.0
+        "xpts": 2.0,
+        "poin_awal": 6.0
       },
-      "474": {
-        "xpts": 0.77,
-        "poin_awal": 2.0
+      "73": {
+        "xpts": 1.84,
+        "poin_awal": 8.0
       },
-      "34": {
-        "xpts": 0.95,
-        "poin_awal": 2.0
+      "371": {
+        "xpts": 1.95,
+        "poin_awal": 8.0
+      },
+      "372": {
+        "xpts": 1.91,
+        "poin_awal": 6.0
+      },
+      "145": {
+        "xpts": 1.8,
+        "poin_awal": 4.0
       },
       "525": {
-        "xpts": 0.94,
-        "poin_awal": 3.0
+        "xpts": 1.92,
+        "poin_awal": 6.0
       },
-      "64": {
-        "xpts": 0.96,
-        "poin_awal": 2.0
-      },
-      "260": {
-        "xpts": 1.05,
+      "387": {
+        "xpts": 2.05,
         "poin_awal": 4.0
       },
-      "247": {
-        "xpts": 0.83,
+      "93": {
+        "xpts": 1.7,
+        "poin_awal": 7.0
+      },
+      "142": {
+        "xpts": 1.7,
+        "poin_awal": 3.0
+      },
+      "144": {
+        "xpts": 1.68,
         "poin_awal": 4.0
       },
-      "588": {
-        "xpts": 0.92,
-        "poin_awal": 3.0
+      "209": {
+        "xpts": 2.04,
+        "poin_awal": 6.0
       },
-      "401": {
-        "xpts": 0.86,
-        "poin_awal": 2.0
+      "95": {
+        "xpts": 1.59,
+        "poin_awal": 6.0
       },
-      "222": {
-        "xpts": 0.9,
-        "poin_awal": 3.0
+      "71": {
+        "xpts": 1.55,
+        "poin_awal": 7.0
       },
-      "516": {
-        "xpts": 0.86,
-        "poin_awal": 3.0
+      "575": {
+        "xpts": 1.49,
+        "poin_awal": 5.0
       },
-      "96": {
-        "xpts": 0.83,
+      "405": {
+        "xpts": 1.84,
         "poin_awal": 4.0
+      },
+      "151": {
+        "xpts": 1.62,
+        "poin_awal": 5.0
       },
       "105": {
-        "xpts": 0.83,
+        "xpts": 1.55,
+        "poin_awal": 5.0
+      },
+      "104": {
+        "xpts": 1.45,
+        "poin_awal": 4.0
+      },
+      "419": {
+        "xpts": 1.62,
+        "poin_awal": 4.0
+      },
+      "336": {
+        "xpts": 1.84,
+        "poin_awal": 6.0
+      },
+      "33": {
+        "xpts": 1.52,
+        "poin_awal": 7.0
+      },
+      "190": {
+        "xpts": 1.41,
+        "poin_awal": 4.0
+      },
+      "313": {
+        "xpts": 1.49,
+        "poin_awal": 9.0
+      },
+      "129": {
+        "xpts": 1.52,
+        "poin_awal": 4.0
+      },
+      "201": {
+        "xpts": 1.7,
+        "poin_awal": 3.0
+      },
+      "501": {
+        "xpts": 1.05,
         "poin_awal": 3.0
       },
       "306": {
-        "xpts": 0.8,
-        "poin_awal": 2.0
-      },
-      "204": {
-        "xpts": 0.88,
-        "poin_awal": 1.0
-      },
-      "553": {
-        "xpts": 0.7,
-        "poin_awal": 9.0
-      },
-      "104": {
-        "xpts": 0.82,
-        "poin_awal": 2.0
-      },
-      "194": {
-        "xpts": 0.8,
+        "xpts": 1.42,
         "poin_awal": 3.0
-      },
-      "405": {
-        "xpts": 0.69,
-        "poin_awal": 2.0
-      },
-      "32": {
-        "xpts": 0.76,
-        "poin_awal": 1.0
-      },
-      "28": {
-        "xpts": 0.82,
-        "poin_awal": 2.0
-      },
-      "336": {
-        "xpts": 0.88,
-        "poin_awal": 3.0
-      },
-      "417": {
-        "xpts": 0.67,
-        "poin_awal": 3.0
-      },
-      "357": {
-        "xpts": 0.81,
-        "poin_awal": 1.0
-      },
-      "488": {
-        "xpts": 0.61,
-        "poin_awal": 2.0
-      },
-      "203": {
-        "xpts": 0.78,
-        "poin_awal": 1.0
-      },
-      "241": {
-        "xpts": 0.76,
-        "poin_awal": 3.0
-      },
-      "597": {
-        "xpts": 0.72,
-        "poin_awal": 2.0
-      },
-      "149": {
-        "xpts": 0.77,
-        "poin_awal": 1.0
-      },
-      "162": {
-        "xpts": 0.63,
-        "poin_awal": 3.0
-      },
-      "36": {
-        "xpts": 0.71,
-        "poin_awal": 1.0
-      },
-      "369": {
-        "xpts": 0.75,
-        "poin_awal": 3.0
-      },
-      "195": {
-        "xpts": 0.71,
-        "poin_awal": 2.0
-      },
-      "320": {
-        "xpts": 0.66,
-        "poin_awal": 6.0
-      },
-      "499": {
-        "xpts": 0.69,
-        "poin_awal": 1.0
-      },
-      "415": {
-        "xpts": 0.6,
-        "poin_awal": 1.0
-      },
-      "166": {
-        "xpts": 0.68,
-        "poin_awal": 2.0
-      },
-      "11": {
-        "xpts": 0.61,
-        "poin_awal": 12.0
-      },
-      "422": {
-        "xpts": 0.58,
-        "poin_awal": 2.0
-      },
-      "577": {
-        "xpts": 0.59,
-        "poin_awal": 2.0
-      },
-      "421": {
-        "xpts": 0.47,
-        "poin_awal": 1.0
-      },
-      "142": {
-        "xpts": 0.57,
-        "poin_awal": 1.0
-      },
-      "419": {
-        "xpts": 0.44,
-        "poin_awal": 1.0
-      },
-      "253": {
-        "xpts": 0.4,
-        "poin_awal": 1.0
-      },
-      "462": {
-        "xpts": 0.44,
-        "poin_awal": 2.0
-      },
-      "239": {
-        "xpts": 0.46,
-        "poin_awal": 2.0
-      },
-      "123": {
-        "xpts": 0.51,
-        "poin_awal": 16.0
-      },
-      "395": {
-        "xpts": 0.39,
-        "poin_awal": 1.0
-      },
-      "29": {
-        "xpts": 0.46,
-        "poin_awal": 1.0
-      },
-      "186": {
-        "xpts": 0.46,
-        "poin_awal": 1.0
-      },
-      "37": {
-        "xpts": 0.44,
-        "poin_awal": 0.0
-      },
-      "313": {
-        "xpts": 0.39,
-        "poin_awal": 8.0
-      },
-      "539": {
-        "xpts": 0.36,
-        "poin_awal": 1.0
-      },
-      "520": {
-        "xpts": 0.34,
-        "poin_awal": 1.0
-      },
-      "563": {
-        "xpts": 0.28,
-        "poin_awal": 1.0
-      },
-      "201": {
-        "xpts": 0.26,
-        "poin_awal": 0.0
-      },
-      "280": {
-        "xpts": 0.25,
-        "poin_awal": 6.0
-      },
-      "125": {
-        "xpts": 0.31,
-        "poin_awal": 5.0
-      },
-      "113": {
-        "xpts": 0.25,
-        "poin_awal": 0.0
-      },
-      "503": {
-        "xpts": 0.23,
-        "poin_awal": 0.0
-      },
-      "14": {
-        "xpts": 0.2,
-        "poin_awal": 2.0
-      },
-      "519": {
-        "xpts": 0.22,
-        "poin_awal": 0.0
-      },
-      "145": {
-        "xpts": 0.22,
-        "poin_awal": 0.0
-      },
-      "347": {
-        "xpts": 0.24,
-        "poin_awal": 4.0
-      },
-      "188": {
-        "xpts": 0.21,
-        "poin_awal": 2.0
-      },
-      "42": {
-        "xpts": 0.21,
-        "poin_awal": 2.0
-      },
-      "526": {
-        "xpts": 0.2,
-        "poin_awal": 2.0
-      },
-      "585": {
-        "xpts": 0.15,
-        "poin_awal": 2.0
-      },
-      "580": {
-        "xpts": 0.14,
-        "poin_awal": 2.0
-      },
-      "269": {
-        "xpts": 0.14,
-        "poin_awal": 2.0
-      },
-      "598": {
-        "xpts": 0.18,
-        "poin_awal": 1.0
-      },
-      "616": {
-        "xpts": 0.13,
-        "poin_awal": 1.0
-      },
-      "456": {
-        "xpts": 0.14,
-        "poin_awal": 1.0
-      },
-      "17": {
-        "xpts": 0.14,
-        "poin_awal": 2.0
-      },
-      "583": {
-        "xpts": 0.16,
-        "poin_awal": 2.0
-      },
-      "323": {
-        "xpts": 0.14,
-        "poin_awal": 3.0
-      },
-      "102": {
-        "xpts": 0.14,
-        "poin_awal": 2.0
-      },
-      "621": {
-        "xpts": 0.12,
-        "poin_awal": 1.0
-      },
-      "108": {
-        "xpts": 0.14,
-        "poin_awal": 2.0
-      },
-      "406": {
-        "xpts": 0.11,
-        "poin_awal": 2.0
-      },
-      "592": {
-        "xpts": 0.13,
-        "poin_awal": 3.0
-      },
-      "506": {
-        "xpts": 0.14,
-        "poin_awal": 2.0
-      },
-      "243": {
-        "xpts": 0.13,
-        "poin_awal": 1.0
-      },
-      "343": {
-        "xpts": 0.15,
-        "poin_awal": 1.0
-      },
-      "589": {
-        "xpts": 0.11,
-        "poin_awal": 1.0
       },
       "345": {
-        "xpts": 0.15,
-        "poin_awal": 1.0
+        "xpts": 1.59,
+        "poin_awal": 6.0
       },
-      "439": {
-        "xpts": 0.11,
+      "598": {
+        "xpts": 1.56,
+        "poin_awal": 5.0
+      },
+      "417": {
+        "xpts": 1.38,
+        "poin_awal": 4.0
+      },
+      "247": {
+        "xpts": 1.64,
+        "poin_awal": 9.0
+      },
+      "337": {
+        "xpts": 1.51,
+        "poin_awal": 5.0
+      },
+      "203": {
+        "xpts": 1.25,
         "poin_awal": 2.0
       },
       "289": {
-        "xpts": 0.1,
+        "xpts": 1.23,
+        "poin_awal": 3.0
+      },
+      "553": {
+        "xpts": 0.92,
+        "poin_awal": 14.0
+      },
+      "186": {
+        "xpts": 1.14,
+        "poin_awal": 3.0
+      },
+      "149": {
+        "xpts": 1.25,
         "poin_awal": 2.0
       },
-      "490": {
-        "xpts": 0.1,
-        "poin_awal": 1.0
+      "519": {
+        "xpts": 1.27,
+        "poin_awal": 3.0
       },
-      "129": {
-        "xpts": 0.12,
+      "64": {
+        "xpts": 1.08,
         "poin_awal": 2.0
       },
-      "457": {
-        "xpts": 0.1,
-        "poin_awal": 1.0
+      "633": {
+        "xpts": 1.08,
+        "poin_awal": 3.0
+      },
+      "102": {
+        "xpts": 1.08,
+        "poin_awal": 6.0
       },
       "627": {
+        "xpts": 1.11,
+        "poin_awal": 4.0
+      },
+      "253": {
+        "xpts": 1.0,
+        "poin_awal": 2.0
+      },
+      "255": {
+        "xpts": 0.92,
+        "poin_awal": 3.0
+      },
+      "581": {
+        "xpts": 1.19,
+        "poin_awal": 5.0
+      },
+      "155": {
+        "xpts": 1.16,
+        "poin_awal": 4.0
+      },
+      "357": {
+        "xpts": 1.0,
+        "poin_awal": 2.0
+      },
+      "91": {
+        "xpts": 0.9,
+        "poin_awal": 4.0
+      },
+      "498": {
+        "xpts": 1.05,
+        "poin_awal": 3.0
+      },
+      "611": {
+        "xpts": 0.94,
+        "poin_awal": 5.0
+      },
+      "526": {
+        "xpts": 1.01,
+        "poin_awal": 5.0
+      },
+      "113": {
+        "xpts": 0.96,
+        "poin_awal": 2.0
+      },
+      "593": {
+        "xpts": 1.0,
+        "poin_awal": 13.0
+      },
+      "195": {
+        "xpts": 0.8,
+        "poin_awal": 3.0
+      },
+      "589": {
+        "xpts": 0.81,
+        "poin_awal": 3.0
+      },
+      "194": {
+        "xpts": 0.78,
+        "poin_awal": 4.0
+      },
+      "586": {
+        "xpts": 0.8,
+        "poin_awal": 25.0
+      },
+      "471": {
+        "xpts": 0.94,
+        "poin_awal": 12.0
+      },
+      "369": {
+        "xpts": 0.78,
+        "poin_awal": 4.0
+      },
+      "488": {
+        "xpts": 0.9,
+        "poin_awal": 3.0
+      },
+      "260": {
+        "xpts": 0.88,
+        "poin_awal": 4.0
+      },
+      "199": {
+        "xpts": 0.72,
+        "poin_awal": 2.0
+      },
+      "415": {
+        "xpts": 0.76,
+        "poin_awal": 2.0
+      },
+      "90": {
+        "xpts": 0.71,
+        "poin_awal": 4.0
+      },
+      "162": {
+        "xpts": 0.72,
+        "poin_awal": 4.0
+      },
+      "320": {
+        "xpts": 0.7,
+        "poin_awal": 6.0
+      },
+      "241": {
+        "xpts": 0.68,
+        "poin_awal": 3.0
+      },
+      "422": {
+        "xpts": 0.7,
+        "poin_awal": 3.0
+      },
+      "474": {
+        "xpts": 0.79,
+        "poin_awal": 10.0
+      },
+      "331": {
+        "xpts": 0.78,
+        "poin_awal": 2.0
+      },
+      "452": {
+        "xpts": 0.64,
+        "poin_awal": 9.0
+      },
+      "577": {
+        "xpts": 0.6,
+        "poin_awal": 2.0
+      },
+      "520": {
+        "xpts": 0.66,
+        "poin_awal": 2.0
+      },
+      "547": {
+        "xpts": 0.44,
+        "poin_awal": 1.0
+      },
+      "462": {
+        "xpts": 0.66,
+        "poin_awal": 3.0
+      },
+      "224": {
+        "xpts": 0.56,
+        "poin_awal": 7.0
+      },
+      "640": {
+        "xpts": 0.54,
+        "poin_awal": 6.0
+      },
+      "421": {
+        "xpts": 0.55,
+        "poin_awal": 1.0
+      },
+      "456": {
+        "xpts": 0.6,
+        "poin_awal": 7.0
+      },
+      "499": {
+        "xpts": 0.56,
+        "poin_awal": 8.0
+      },
+      "52": {
+        "xpts": 0.51,
+        "poin_awal": 8.0
+      },
+      "32": {
+        "xpts": 0.51,
+        "poin_awal": 7.0
+      },
+      "423": {
+        "xpts": 0.52,
+        "poin_awal": 7.0
+      },
+      "395": {
+        "xpts": 0.59,
+        "poin_awal": 1.0
+      },
+      "29": {
+        "xpts": 0.48,
+        "poin_awal": 1.0
+      },
+      "643": {
+        "xpts": 0.45,
+        "poin_awal": 8.0
+      },
+      "364": {
+        "xpts": 0.46,
+        "poin_awal": 2.0
+      },
+      "539": {
+        "xpts": 0.31,
+        "poin_awal": 1.0
+      },
+      "583": {
+        "xpts": 0.43,
+        "poin_awal": 4.0
+      },
+      "11": {
+        "xpts": 0.43,
+        "poin_awal": 12.0
+      },
+      "585": {
+        "xpts": 0.39,
+        "poin_awal": 4.0
+      },
+      "439": {
+        "xpts": 0.4,
+        "poin_awal": 7.0
+      },
+      "617": {
+        "xpts": 0.34,
+        "poin_awal": 3.0
+      },
+      "123": {
+        "xpts": 0.36,
+        "poin_awal": 16.0
+      },
+      "269": {
+        "xpts": 0.3,
+        "poin_awal": 3.0
+      },
+      "512": {
+        "xpts": 0.35,
+        "poin_awal": 3.0
+      },
+      "347": {
+        "xpts": 0.36,
+        "poin_awal": 5.0
+      },
+      "635": {
+        "xpts": 0.25,
+        "poin_awal": 2.0
+      },
+      "125": {
+        "xpts": 0.28,
+        "poin_awal": 5.0
+      },
+      "14": {
+        "xpts": 0.26,
+        "poin_awal": 3.0
+      },
+      "271": {
+        "xpts": 0.24,
+        "poin_awal": 3.0
+      },
+      "72": {
+        "xpts": 0.24,
+        "poin_awal": 3.0
+      },
+      "19": {
+        "xpts": 0.24,
+        "poin_awal": 4.0
+      },
+      "34": {
+        "xpts": 0.24,
+        "poin_awal": 3.0
+      },
+      "56": {
+        "xpts": 0.24,
+        "poin_awal": 3.0
+      },
+      "642": {
+        "xpts": 0.22,
+        "poin_awal": 2.0
+      },
+      "238": {
+        "xpts": 0.29,
+        "poin_awal": 3.0
+      },
+      "594": {
+        "xpts": 0.24,
+        "poin_awal": 1.0
+      },
+      "621": {
+        "xpts": 0.24,
+        "poin_awal": 2.0
+      },
+      "243": {
+        "xpts": 0.25,
+        "poin_awal": 1.0
+      },
+      "188": {
+        "xpts": 0.19,
+        "poin_awal": 2.0
+      },
+      "17": {
+        "xpts": 0.2,
+        "poin_awal": 3.0
+      },
+      "490": {
+        "xpts": 0.24,
+        "poin_awal": 3.0
+      },
+      "343": {
+        "xpts": 0.22,
+        "poin_awal": 1.0
+      },
+      "42": {
+        "xpts": 0.19,
+        "poin_awal": 2.0
+      },
+      "108": {
+        "xpts": 0.19,
+        "poin_awal": 3.0
+      },
+      "36": {
+        "xpts": 0.19,
+        "poin_awal": 9.0
+      },
+      "157": {
+        "xpts": 0.19,
+        "poin_awal": 3.0
+      },
+      "263": {
+        "xpts": 0.18,
+        "poin_awal": 3.0
+      },
+      "119": {
+        "xpts": 0.19,
+        "poin_awal": 2.0
+      },
+      "506": {
+        "xpts": 0.19,
+        "poin_awal": 7.0
+      },
+      "616": {
+        "xpts": 0.2,
+        "poin_awal": 2.0
+      },
+      "608": {
+        "xpts": 0.16,
+        "poin_awal": 2.0
+      },
+      "631": {
+        "xpts": 0.16,
+        "poin_awal": 1.0
+      },
+      "457": {
+        "xpts": 0.19,
+        "poin_awal": 2.0
+      },
+      "75": {
+        "xpts": 0.15,
+        "poin_awal": 3.0
+      },
+      "323": {
+        "xpts": 0.15,
+        "poin_awal": 3.0
+      },
+      "592": {
+        "xpts": 0.15,
+        "poin_awal": 4.0
+      },
+      "97": {
+        "xpts": 0.15,
+        "poin_awal": 6.0
+      },
+      "136": {
+        "xpts": 0.15,
+        "poin_awal": 2.0
+      },
+      "262": {
+        "xpts": 0.14,
+        "poin_awal": 3.0
+      },
+      "406": {
+        "xpts": 0.16,
+        "poin_awal": 2.0
+      },
+      "584": {
+        "xpts": 0.12,
+        "poin_awal": 3.0
+      },
+      "381": {
+        "xpts": 0.14,
+        "poin_awal": 2.0
+      },
+      "16": {
+        "xpts": 0.14,
+        "poin_awal": 2.0
+      },
+      "53": {
         "xpts": 0.12,
         "poin_awal": 1.0
       },
-      "73": {
-        "xpts": 0.11,
+      "646": {
+        "xpts": 0.1,
         "poin_awal": 2.0
       },
-      "119": {
-        "xpts": 0.11,
+      "5": {
+        "xpts": 0.12,
         "poin_awal": 1.0
+      },
+      "212": {
+        "xpts": 0.12,
+        "poin_awal": 2.0
+      },
+      "287": {
+        "xpts": 0.12,
+        "poin_awal": 6.0
       },
       "185": {
         "xpts": 0.11,
         "poin_awal": 1.0
       },
-      "209": {
-        "xpts": 0.11,
-        "poin_awal": 2.0
+      "160": {
+        "xpts": 0.12,
+        "poin_awal": 3.0
       },
-      "608": {
-        "xpts": 0.11,
-        "poin_awal": 1.0
-      },
-      "262": {
-        "xpts": 0.08,
+      "634": {
+        "xpts": 0.14,
         "poin_awal": 1.0
       },
       "568": {
-        "xpts": 0.11,
+        "xpts": 0.12,
         "poin_awal": 1.0
       },
       "389": {
-        "xpts": 0.08,
+        "xpts": 0.14,
         "poin_awal": 1.0
       },
       "600": {
+        "xpts": 0.12,
+        "poin_awal": 2.0
+      },
+      "637": {
+        "xpts": 0.11,
+        "poin_awal": 1.0
+      },
+      "548": {
+        "xpts": 0.09,
+        "poin_awal": 2.0
+      },
+      "420": {
+        "xpts": 0.12,
+        "poin_awal": 2.0
+      },
+      "647": {
+        "xpts": 0.11,
+        "poin_awal": 1.0
+      },
+      "207": {
         "xpts": 0.11,
         "poin_awal": 2.0
       },
-      "584": {
+      "595": {
         "xpts": 0.11,
         "poin_awal": 2.0
       },
-      "97": {
+      "596": {
+        "xpts": 0.11,
+        "poin_awal": 2.0
+      },
+      "515": {
+        "xpts": 0.12,
+        "poin_awal": 2.0
+      },
+      "465": {
+        "xpts": 0.12,
+        "poin_awal": 4.0
+      },
+      "478": {
+        "xpts": 0.14,
+        "poin_awal": 2.0
+      },
+      "9": {
+        "xpts": 0.11,
+        "poin_awal": 2.0
+      },
+      "81": {
         "xpts": 0.1,
-        "poin_awal": 6.0
+        "poin_awal": 2.0
       },
-      "19": {
+      "571": {
+        "xpts": 0.11,
+        "poin_awal": 1.0
+      },
+      "461": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
+      },
+      "535": {
         "xpts": 0.08,
+        "poin_awal": 1.0
+      },
+      "559": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
+      },
+      "446": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
+      },
+      "375": {
+        "xpts": 0.11,
         "poin_awal": 2.0
       },
-      "381": {
-        "xpts": 0.1,
-        "poin_awal": 2.0
+      "450": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
       },
-      "263": {
-        "xpts": 0.08,
-        "poin_awal": 2.0
+      "622": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
       },
-      "364": {
+      "556": {
         "xpts": 0.1,
         "poin_awal": 1.0
       },
-      "167": {
-        "xpts": 0.07,
+      "638": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "25": {
+        "xpts": 0.11,
+        "poin_awal": 1.0
+      },
+      "396": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
+      },
+      "574": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "285": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "493": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
+      },
+      "482": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
+      },
+      "487": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
+      },
+      "318": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "35": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "213": {
+        "xpts": 0.1,
         "poin_awal": 1.0
       },
       "549": {
         "xpts": 0.08,
         "poin_awal": 1.0
       },
-      "271": {
-        "xpts": 0.07,
-        "poin_awal": 1.0
-      },
-      "640": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "16": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "135": {
-        "xpts": 0.09,
-        "poin_awal": 1.0
-      },
-      "512": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "287": {
-        "xpts": 0.07,
-        "poin_awal": 6.0
-      },
-      "90": {
-        "xpts": 0.08,
-        "poin_awal": 2.0
-      },
-      "375": {
-        "xpts": 0.08,
-        "poin_awal": 2.0
-      },
-      "465": {
-        "xpts": 0.07,
-        "poin_awal": 4.0
-      },
-      "478": {
-        "xpts": 0.06,
-        "poin_awal": 2.0
-      },
-      "548": {
-        "xpts": 0.07,
-        "poin_awal": 2.0
-      },
-      "160": {
-        "xpts": 0.08,
-        "poin_awal": 2.0
-      },
-      "535": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "91": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "617": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "74": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "611": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "155": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "622": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "420": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "285": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "559": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "461": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "207": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "595": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "446": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "153": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "157": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "164": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "594": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "463": {
-        "xpts": 0.06,
-        "poin_awal": 4.0
-      },
-      "9": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "31": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "487": {
-        "xpts": 0.05,
-        "poin_awal": 1.0
-      },
-      "482": {
-        "xpts": 0.05,
-        "poin_awal": 1.0
-      },
-      "493": {
-        "xpts": 0.05,
-        "poin_awal": 1.0
-      },
-      "435": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "596": {
-        "xpts": 0.07,
-        "poin_awal": 1.0
-      },
-      "33": {
-        "xpts": 0.07,
-        "poin_awal": 1.0
-      },
-      "238": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "56": {
-        "xpts": 0.07,
-        "poin_awal": 1.0
-      },
-      "35": {
-        "xpts": 0.07,
-        "poin_awal": 1.0
-      },
-      "223": {
-        "xpts": 0.07,
-        "poin_awal": 2.0
-      },
-      "543": {
-        "xpts": 0.06,
-        "poin_awal": 5.0
-      },
-      "329": {
-        "xpts": 0.08,
-        "poin_awal": 7.0
-      },
-      "130": {
-        "xpts": 0.07,
-        "poin_awal": 7.0
-      },
-      "89": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "556": {
-        "xpts": 0.05,
-        "poin_awal": 1.0
-      },
-      "81": {
-        "xpts": 0.07,
-        "poin_awal": 1.0
-      },
-      "339": {
-        "xpts": 0.08,
-        "poin_awal": 1.0
-      },
-      "75": {
-        "xpts": 0.07,
-        "poin_awal": 1.0
-      },
-      "396": {
-        "xpts": 0.05,
+      "620": {
+        "xpts": 0.1,
         "poin_awal": 1.0
       },
       "76": {
-        "xpts": 0.07,
-        "poin_awal": 1.0
-      },
-      "308": {
-        "xpts": 0.06,
-        "poin_awal": 1.0
-      },
-      "240": {
-        "xpts": 0.05,
-        "poin_awal": 1.0
-      },
-      "72": {
-        "xpts": 0.07,
+        "xpts": 0.1,
         "poin_awal": 1.0
       },
       "321": {
-        "xpts": 0.06,
+        "xpts": 0.1,
         "poin_awal": 1.0
       },
-      "52": {
-        "xpts": 0.06,
+      "74": {
+        "xpts": 0.1,
+        "poin_awal": 2.0
+      },
+      "147": {
+        "xpts": 0.11,
         "poin_awal": 1.0
+      },
+      "164": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "84": {
+        "xpts": 0.1,
+        "poin_awal": 10.0
+      },
+      "463": {
+        "xpts": 0.11,
+        "poin_awal": 4.0
+      },
+      "308": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "543": {
+        "xpts": 0.08,
+        "poin_awal": 5.0
+      },
+      "89": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "435": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "223": {
+        "xpts": 0.1,
+        "poin_awal": 2.0
+      },
+      "232": {
+        "xpts": 0.12,
+        "poin_awal": 1.0
+      },
+      "339": {
+        "xpts": 0.11,
+        "poin_awal": 1.0
+      },
+      "328": {
+        "xpts": 0.1,
+        "poin_awal": 1.0
+      },
+      "329": {
+        "xpts": 0.1,
+        "poin_awal": 7.0
+      },
+      "130": {
+        "xpts": 0.09,
+        "poin_awal": 7.0
+      },
+      "240": {
+        "xpts": 0.08,
+        "poin_awal": 1.0
+      },
+      "536": {
+        "xpts": 0.05,
+        "poin_awal": 7.0
       },
       "523": {
-        "xpts": 0.04,
+        "xpts": 0.08,
         "poin_awal": 3.0
       },
-      "140": {
-        "xpts": 0.04,
-        "poin_awal": 2.0
+      "198": {
+        "xpts": 0.06,
+        "poin_awal": 5.0
       },
       "527": {
-        "xpts": 0.04,
+        "xpts": 0.06,
         "poin_awal": 2.0
       },
-      "599": {
-        "xpts": 0.04,
+      "386": {
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
-      "626": {
-        "xpts": 0.03,
+      "628": {
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
-      "272": {
-        "xpts": 0.03,
+      "653": {
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
-      "650": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "636": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "179": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "189": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "172": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "623": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "187": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "178": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "251": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "635": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "270": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "256": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "25": {
-        "xpts": 0.03,
+      "392": {
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
       "587": {
-        "xpts": 0.03,
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
-      "378": {
-        "xpts": 0.04,
+      "636": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "590": {
-        "xpts": 0.03,
+      "178": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "581": {
-        "xpts": 0.03,
+      "179": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "351": {
+      "655": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "172": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "189": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "272": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "270": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "251": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "626": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "656": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "256": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "599": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "623": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "443": {
+        "xpts": 0.06,
+        "poin_awal": 0.0
+      },
+      "442": {
+        "xpts": 0.06,
+        "poin_awal": 0.0
+      },
+      "140": {
+        "xpts": 0.05,
+        "poin_awal": 2.0
+      },
+      "651": {
         "xpts": 0.04,
         "poin_awal": 0.0
       },
       "489": {
-        "xpts": 0.03,
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
-      "468": {
-        "xpts": 0.03,
+      "590": {
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
       "476": {
-        "xpts": 0.03,
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
-      "443": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "392": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "386": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "628": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "444": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "212": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "199": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "633": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "221": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "382": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "555": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "609": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "634": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "647": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "442": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "218": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "217": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "213": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "355": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "352": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "361": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "374": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "219": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "643": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "644": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "510": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "578": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "601": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "248": {
-        "xpts": 0.03,
-        "poin_awal": 2.0
-      },
-      "509": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "231": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "531": {
-        "xpts": 0.03,
+      "468": {
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
       "550": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "228": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "501": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "111": {
         "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "232": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "614": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "639": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "646": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "107": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "66": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "620": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "100": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "58": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "561": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "136": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "170": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "158": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "169": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "20": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "560": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "3": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "227": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "403": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "2": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "93": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "92": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "613": {
-        "xpts": 0.03,
         "poin_awal": 0.0
       },
       "612": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "120": {
         "xpts": 0.04,
         "poin_awal": 0.0
       },
-      "328": {
+      "613": {
         "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "134": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "649": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "245": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "147": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "117": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "651": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "524": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "497": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "495": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "126": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "508": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "615": {
-        "xpts": 0.03,
         "poin_awal": 0.0
       },
       "62": {
-        "xpts": 0.03,
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "615": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
       "573": {
-        "xpts": 0.03,
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "66": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "58": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "531": {
+        "xpts": 0.04,
+        "poin_awal": 0.0
+      },
+      "601": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "245": {
+        "xpts": 0.06,
+        "poin_awal": 0.0
+      },
+      "382": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "657": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "92": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "355": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "378": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "107": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
       "83": {
-        "xpts": 0.03,
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "574": {
-        "xpts": 0.03,
+      "100": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "292": {
-        "xpts": 0.03,
+      "654": {
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
-      "645": {
-        "xpts": 0.03,
+      "221": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "555": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
       "288": {
-        "xpts": 0.03,
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "300": {
-        "xpts": 0.03,
+      "292": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "571": {
-        "xpts": 0.03,
+      "228": {
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
-      "631": {
-        "xpts": 0.03,
+      "227": {
+        "xpts": 0.06,
         "poin_awal": 0.0
       },
-      "324": {
-        "xpts": 0.03,
+      "352": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "642": {
-        "xpts": 0.03,
+      "524": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "424": {
-        "xpts": 0.03,
+      "374": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "296": {
-        "xpts": 0.03,
+      "495": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "437": {
-        "xpts": 0.03,
+      "508": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "273": {
-        "xpts": 0.03,
+      "510": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "325": {
-        "xpts": 0.03,
+      "361": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "231": {
+        "xpts": 0.06,
+        "poin_awal": 0.0
+      },
+      "351": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "218": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
       "284": {
-        "xpts": 0.03,
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "606": {
-        "xpts": 0.03,
+      "509": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "434": {
-        "xpts": 0.03,
+      "497": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "38": {
-        "xpts": 0.03,
+      "273": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
       "340": {
-        "xpts": 0.03,
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "637": {
-        "xpts": 0.03,
+      "294": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "302": {
-        "xpts": 0.03,
+      "645": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "632": {
-        "xpts": 0.03,
+      "20": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
       "50": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "638": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "438": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "641": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "440": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "441": {
-        "xpts": 0.03,
-        "poin_awal": 0.0
-      },
-      "625": {
-        "xpts": 0.04,
-        "poin_awal": 0.0
-      },
-      "331": {
-        "xpts": 0.04,
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
       "303": {
-        "xpts": 0.03,
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "630": {
-        "xpts": 0.03,
+      "324": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "629": {
-        "xpts": 0.04,
+      "300": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "648": {
-        "xpts": 0.04,
+      "310": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "604": {
-        "xpts": 0.04,
+      "38": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "603": {
-        "xpts": 0.04,
+      "302": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
-      "618": {
-        "xpts": 0.03,
+      "606": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
       "301": {
-        "xpts": 0.03,
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "3": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "2": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "630": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "440": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "424": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "437": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "430": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "441": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "248": {
+        "xpts": 0.06,
+        "poin_awal": 2.0
+      },
+      "325": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "560": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "561": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "438": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "158": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "434": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "169": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "614": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "639": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "120": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "629": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "641": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "604": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "648": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "134": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "117": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "625": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "603": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "111": {
+        "xpts": 0.05,
+        "poin_awal": 0.0
+      },
+      "126": {
+        "xpts": 0.05,
         "poin_awal": 0.0
       },
       "281": {
-        "xpts": 0.02,
+        "xpts": 0.04,
         "poin_awal": 2.0
       },
+      "135": {
+        "xpts": 0.04,
+        "poin_awal": 1.0
+      },
       "206": {
-        "xpts": 0.03,
+        "xpts": 0.04,
+        "poin_awal": 1.0
+      },
+      "563": {
+        "xpts": 0.04,
+        "poin_awal": 1.0
+      },
+      "578": {
+        "xpts": 0.04,
         "poin_awal": 1.0
       },
       "159": {
-        "xpts": 0.03,
+        "xpts": 0.04,
         "poin_awal": 1.0
       },
-      "515": {
-        "xpts": 0.02,
-        "poin_awal": 1.0
-      },
-      "452": {
+      "153": {
         "xpts": 0.02,
         "poin_awal": 1.0
       },
-      "507": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "225": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "505": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "500": {
+      "448": {
         "xpts": 0.02,
         "poin_awal": 0.0
       },
       "466": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "174": {
         "xpts": 0.02,
         "poin_awal": 0.0
       },
-      "191": {
+      "609": {
         "xpts": 0.02,
         "poin_awal": 0.0
       },
-      "192": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "181": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "193": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "220": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "205": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "216": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "208": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "215": {
+      "458": {
         "xpts": 0.02,
         "poin_awal": 0.0
       },
       "451": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "444": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "193": {
         "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "196": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "197": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "177": {
-        "xpts": 0.02,
         "poin_awal": 0.0
       },
       "180": {
-        "xpts": 0.02,
+        "xpts": 0.01,
         "poin_awal": 0.0
       },
       "171": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "252": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "266": {
+      "174": {
         "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "610": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "141": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "146": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "143": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "101": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "150": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "163": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "152": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "168": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "521": {
-        "xpts": 0.02,
         "poin_awal": 0.0
       },
       "518": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "511": {
         "xpts": 0.02,
         "poin_awal": 0.0
       },
@@ -2163,7 +2079,19 @@
         "xpts": 0.02,
         "poin_awal": 0.0
       },
-      "528": {
+      "505": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "507": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "521": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "500": {
         "xpts": 0.02,
         "poin_awal": 0.0
       },
@@ -2171,63 +2099,23 @@
         "xpts": 0.02,
         "poin_awal": 0.0
       },
-      "448": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "458": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "450": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "235": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "348": {
+      "511": {
         "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "291": {
+        "xpts": 0.01,
         "poin_awal": 0.0
       },
       "283": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "311": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "310": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "21": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "342": {
+      "409": {
         "xpts": 0.02,
         "poin_awal": 0.0
       },
-      "118": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "77": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "80": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "297": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "470": {
+      "296": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
@@ -2235,15 +2123,31 @@
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "293": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "294": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
       "307": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "314": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "528": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "319": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "554": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "602": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "311": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
@@ -2251,15 +2155,23 @@
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "55": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "314": {
+      "322": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "274": {
+      "537": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "530": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "538": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "610": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
@@ -2267,83 +2179,199 @@
         "xpts": 0.01,
         "poin_awal": 0.0
       },
+      "274": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "297": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "252": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "404": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
       "276": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "128": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "318": {
+      "278": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "122": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "121": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "78": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "582": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "344": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "373": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "353": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "354": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "380": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "376": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "383": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "370": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "360": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "359": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "365": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "27": {
+      "298": {
         "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "299": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "540": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "394": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "293": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "402": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "632": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "400": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "408": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "407": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "410": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "197": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "177": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "187": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "546": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "181": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "192": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "191": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "196": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "266": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "170": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "150": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "143": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "152": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "141": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "235": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "163": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "479": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "484": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "217": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "215": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "208": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "475": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "205": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "470": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "216": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "234": {
+        "xpts": 0.02,
         "poin_awal": 0.0
       },
       "22": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "485": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "85": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "101": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "146": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "168": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
@@ -2355,23 +2383,7 @@
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "652": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "479": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "484": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "5": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "6": {
+      "30": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
@@ -2379,31 +2391,67 @@
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "363": {
+      "27": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "44": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "48": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "618": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "49": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "582": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "55": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "607": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "39": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "6": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "78": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "21": {
         "xpts": 0.02,
         "poin_awal": 0.0
       },
-      "477": {
+      "65": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "291": {
+      "59": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "546": {
+      "433": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "485": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "530": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "131": {
+      "63": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
@@ -2411,55 +2459,15 @@
         "xpts": 0.01,
         "poin_awal": 0.0
       },
+      "77": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "80": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
       "413": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "475": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "404": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "416": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "410": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "39": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "44": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "48": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "49": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "53": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "433": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "425": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "430": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
@@ -2467,135 +2475,39 @@
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "538": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "537": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "540": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
       "414": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "349": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "298": {
+      "416": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "299": {
+      "425": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "278": {
+      "220": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "394": {
+      "219": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "400": {
+      "477": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "225": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "402": {
+      "131": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "409": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "132": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "133": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "234": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "408": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "602": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "30": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "607": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "407": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "59": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "624": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "139": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "137": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "319": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "322": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "554": {
-        "xpts": 0.01,
-        "poin_awal": 0.0
-      },
-      "333": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "65": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "341": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "326": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "63": {
-        "xpts": 0.02,
-        "poin_awal": 0.0
-      },
-      "85": {
+      "99": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
@@ -2603,7 +2515,115 @@
         "xpts": 0.01,
         "poin_awal": 0.0
       },
-      "99": {
+      "376": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "118": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "353": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "354": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "624": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "365": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "348": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "342": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "341": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "139": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "133": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "121": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "333": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "360": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "132": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "122": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "652": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "128": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "359": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "370": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "363": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "349": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "380": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "383": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "373": {
+        "xpts": 0.01,
+        "poin_awal": 0.0
+      },
+      "326": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "344": {
+        "xpts": 0.02,
+        "poin_awal": 0.0
+      },
+      "137": {
         "xpts": 0.01,
         "poin_awal": 0.0
       },
@@ -2613,7 +2633,7 @@
       }
     }
   },
-  "factor": 0.75,
+  "factor": 1.25,
   "riwayat": [
     {
       "GW": 3,
@@ -2621,6 +2641,13 @@
       "MAE": 1.27,
       "Bias": 1.12,
       "Faktor Baru": 0.75
+    },
+    {
+      "GW": 4,
+      "Pemain": 652,
+      "MAE": 1.71,
+      "Bias": -1.37,
+      "Faktor Baru": 1.25
     }
   ]
 }
