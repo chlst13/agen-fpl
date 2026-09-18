@@ -2,13 +2,13 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-09-18T00:53:07+00:00",
+    "dibuat": "2026-09-18T16:42:45+00:00",
     "gw": 5,
     "kedaluwarsa": "2026-09-18T17:30:00+00:00",
     "opsi": [
       {
         "confidence": 68.0,
-        "gain": 45.23,
+        "gain": 45.87,
         "keluar": "Shaw",
         "keluar_id": 423,
         "kesiapan": "KUNING",
@@ -18,7 +18,7 @@
       },
       {
         "confidence": 68.0,
-        "gain": 34.18,
+        "gain": 34.82,
         "keluar": "Shaw",
         "keluar_id": 423,
         "kesiapan": "KUNING",
@@ -28,7 +28,7 @@
       },
       {
         "confidence": 68.0,
-        "gain": 33.2,
+        "gain": 33.84,
         "keluar": "Shaw",
         "keluar_id": 423,
         "kesiapan": "KUNING",
