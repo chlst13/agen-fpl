@@ -2,39 +2,39 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-09-18T16:42:45+00:00",
-    "gw": 5,
-    "kedaluwarsa": "2026-09-18T17:30:00+00:00",
+    "dibuat": "2026-09-19T00:45:07+00:00",
+    "gw": 6,
+    "kedaluwarsa": "2026-10-10T10:00:00+00:00",
     "opsi": [
       {
         "confidence": 68.0,
-        "gain": 45.87,
-        "keluar": "Shaw",
-        "keluar_id": 423,
+        "gain": 19.33,
+        "keluar": "João Pedro",
+        "keluar_id": 165,
         "kesiapan": "KUNING",
-        "masuk": "Bogle",
-        "masuk_id": 330,
-        "xmins": 81.6
+        "masuk": "Emersonn",
+        "masuk_id": 316,
+        "xmins": 73.1
       },
       {
         "confidence": 68.0,
-        "gain": 34.82,
-        "keluar": "Shaw",
-        "keluar_id": 423,
+        "gain": 13.82,
+        "keluar": "João Pedro",
+        "keluar_id": 165,
         "kesiapan": "KUNING",
-        "masuk": "Giles",
-        "masuk_id": 282,
-        "xmins": 89.2
+        "masuk": "Havertz",
+        "masuk_id": 26,
+        "xmins": 88.2
       },
       {
         "confidence": 68.0,
-        "gain": 33.84,
-        "keluar": "Shaw",
-        "keluar_id": 423,
+        "gain": 13.52,
+        "keluar": "João Pedro",
+        "keluar_id": 165,
         "kesiapan": "KUNING",
-        "masuk": "Egan",
-        "masuk_id": 277,
-        "xmins": 90.0
+        "masuk": "Barry",
+        "masuk_id": 249,
+        "xmins": 85.5
       }
     ]
   }
