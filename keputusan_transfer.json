@@ -2,7 +2,7 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-09-22T01:20:45+00:00",
+    "dibuat": "2026-09-23T01:00:42+00:00",
     "gw": 6,
     "kedaluwarsa": "2026-10-10T10:00:00+00:00",
     "opsi": [
@@ -28,7 +28,7 @@
       },
       {
         "confidence": 73.0,
-        "gain": 16.27,
+        "gain": 17.88,
         "keluar": "Szoboszlai",
         "keluar_id": 368,
         "kesiapan": "HIJAU",
