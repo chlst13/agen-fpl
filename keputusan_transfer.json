@@ -2,20 +2,10 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-09-24T00:57:24+00:00",
+    "dibuat": "2026-09-25T01:00:14+00:00",
     "gw": 6,
     "kedaluwarsa": "2026-10-10T10:00:00+00:00",
     "opsi": [
-      {
-        "confidence": 73.0,
-        "gain": 22.9,
-        "keluar": "João Pedro",
-        "keluar_id": 165,
-        "kesiapan": "HIJAU",
-        "masuk": "Brobbey",
-        "masuk_id": 552,
-        "xmins": 84.4
-      },
       {
         "confidence": 73.0,
         "gain": 18.38,
@@ -35,6 +25,16 @@
         "masuk": "Schade",
         "masuk_id": 94,
         "xmins": 89.7
+      },
+      {
+        "confidence": 73.0,
+        "gain": 16.24,
+        "keluar": "João Pedro",
+        "keluar_id": 165,
+        "kesiapan": "HIJAU",
+        "masuk": "Barry",
+        "masuk_id": 249,
+        "xmins": 86.4
       }
     ]
   }
