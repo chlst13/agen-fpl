@@ -2,19 +2,19 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-10-11T01:23:56+00:00",
+    "dibuat": "2026-10-12T01:53:53+00:00",
     "gw": 7,
     "kedaluwarsa": "2026-10-17T10:00:00+00:00",
     "opsi": [
       {
         "confidence": 73.0,
-        "gain": 26.12,
+        "gain": 30.24,
         "keluar": "Schade",
         "keluar_id": 94,
         "kesiapan": "HIJAU",
         "masuk": "Belloumi",
         "masuk_id": 286,
-        "xmins": 83.8
+        "xmins": 86.7
       },
       {
         "confidence": 73.0,
