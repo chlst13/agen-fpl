@@ -2,39 +2,39 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-10-13T03:15:45+00:00",
+    "dibuat": "2026-10-14T01:28:01+00:00",
     "gw": 7,
     "kedaluwarsa": "2026-10-17T10:00:00+00:00",
     "opsi": [
       {
-        "confidence": 73.0,
-        "gain": 28.66,
+        "confidence": 79.0,
+        "gain": 28.94,
         "keluar": "Schade",
         "keluar_id": 94,
         "kesiapan": "HIJAU",
         "masuk": "McGinn",
         "masuk_id": 45,
-        "xmins": 90.0
+        "xmins": 88.5
       },
       {
-        "confidence": 73.0,
-        "gain": 27.66,
+        "confidence": 79.0,
+        "gain": 27.94,
         "keluar": "Schade",
         "keluar_id": 94,
         "kesiapan": "HIJAU",
         "masuk": "Buendía",
         "masuk_id": 41,
-        "xmins": 90.0
+        "xmins": 83.0
       },
       {
-        "confidence": 73.0,
-        "gain": 26.19,
-        "keluar": "Schade",
-        "keluar_id": 94,
+        "confidence": 79.0,
+        "gain": 23.03,
+        "keluar": "M.Sangaré",
+        "keluar_id": 565,
         "kesiapan": "HIJAU",
-        "masuk": "Belloumi",
-        "masuk_id": 286,
-        "xmins": 86.7
+        "masuk": "McGinn",
+        "masuk_id": 45,
+        "xmins": 88.5
       }
     ]
   }
