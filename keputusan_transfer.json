@@ -2,7 +2,7 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-10-14T01:28:01+00:00",
+    "dibuat": "2026-10-15T01:02:52+00:00",
     "gw": 7,
     "kedaluwarsa": "2026-10-17T10:00:00+00:00",
     "opsi": [
@@ -28,13 +28,13 @@
       },
       {
         "confidence": 79.0,
-        "gain": 23.03,
-        "keluar": "M.Sangaré",
-        "keluar_id": 565,
+        "gain": 23.87,
+        "keluar": "Schade",
+        "keluar_id": 94,
         "kesiapan": "HIJAU",
-        "masuk": "McGinn",
-        "masuk_id": 45,
-        "xmins": 88.5
+        "masuk": "Barnes",
+        "masuk_id": 453,
+        "xmins": 90.0
       }
     ]
   }
