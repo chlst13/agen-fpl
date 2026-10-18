@@ -2,38 +2,38 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-10-17T07:12:00+00:00",
-    "gw": 7,
-    "kedaluwarsa": "2026-10-17T10:00:00+00:00",
+    "dibuat": "2026-10-18T00:29:14+00:00",
+    "gw": 8,
+    "kedaluwarsa": "2026-10-23T17:30:00+00:00",
     "opsi": [
       {
         "confidence": 79.0,
-        "gain": 28.94,
-        "keluar": "Schade",
-        "keluar_id": 94,
+        "gain": 17.96,
+        "keluar": "M.Sangaré",
+        "keluar_id": 565,
+        "kesiapan": "HIJAU",
+        "masuk": "Iwobi",
+        "masuk_id": 261,
+        "xmins": 90.0
+      },
+      {
+        "confidence": 79.0,
+        "gain": 15.96,
+        "keluar": "M.Sangaré",
+        "keluar_id": 565,
         "kesiapan": "HIJAU",
         "masuk": "McGinn",
         "masuk_id": 45,
-        "xmins": 88.5
+        "xmins": 90.0
       },
       {
         "confidence": 79.0,
-        "gain": 27.94,
-        "keluar": "Schade",
-        "keluar_id": 94,
+        "gain": 15.39,
+        "keluar": "M.Sangaré",
+        "keluar_id": 565,
         "kesiapan": "HIJAU",
-        "masuk": "Buendía",
-        "masuk_id": 41,
-        "xmins": 83.0
-      },
-      {
-        "confidence": 79.0,
-        "gain": 23.87,
-        "keluar": "Schade",
-        "keluar_id": 94,
-        "kesiapan": "HIJAU",
-        "masuk": "Barnes",
-        "masuk_id": 453,
+        "masuk": "Lewis-Potter",
+        "masuk_id": 86,
         "xmins": 90.0
       }
     ]
