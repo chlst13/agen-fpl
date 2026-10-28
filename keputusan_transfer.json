@@ -2,13 +2,13 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-10-27T01:40:38+00:00",
+    "dibuat": "2026-10-28T01:53:35+00:00",
     "gw": 9,
     "kedaluwarsa": "2026-10-31T11:00:00+00:00",
     "opsi": [
       {
         "confidence": 90.0,
-        "gain": 27.96,
+        "gain": 31.46,
         "keluar": "João Pedro",
         "keluar_id": 165,
         "kesiapan": "HIJAU",
@@ -18,7 +18,7 @@
       },
       {
         "confidence": 90.0,
-        "gain": 23.51,
+        "gain": 27.01,
         "keluar": "João Pedro",
         "keluar_id": 165,
         "kesiapan": "HIJAU",
