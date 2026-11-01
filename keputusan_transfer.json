@@ -2,39 +2,39 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-10-31T09:12:41+00:00",
-    "gw": 9,
-    "kedaluwarsa": "2026-10-31T11:00:00+00:00",
+    "dibuat": "2026-11-01T01:36:12+00:00",
+    "gw": 10,
+    "kedaluwarsa": "2026-11-06T18:30:00+00:00",
     "opsi": [
       {
         "confidence": 90.0,
-        "gain": 31.46,
-        "keluar": "João Pedro",
-        "keluar_id": 165,
+        "gain": 17.8,
+        "keluar": "B.Fernandes",
+        "keluar_id": 426,
         "kesiapan": "HIJAU",
-        "masuk": "Evanilson",
-        "masuk_id": 79,
-        "xmins": 87.1
+        "masuk": "Tavernier",
+        "masuk_id": 68,
+        "xmins": 90.0
       },
       {
         "confidence": 90.0,
-        "gain": 27.01,
-        "keluar": "João Pedro",
-        "keluar_id": 165,
+        "gain": 16.87,
+        "keluar": "M.Sangaré",
+        "keluar_id": 565,
         "kesiapan": "HIJAU",
-        "masuk": "N.Jackson",
-        "masuk_id": 166,
-        "xmins": 73.0
+        "masuk": "Enciso",
+        "masuk_id": 591,
+        "xmins": 90.0
       },
       {
         "confidence": 90.0,
-        "gain": 20.64,
-        "keluar": "Calafiori",
-        "keluar_id": 8,
+        "gain": 16.04,
+        "keluar": "Gvardiol",
+        "keluar_id": 391,
         "kesiapan": "HIJAU",
-        "masuk": "Konsa",
-        "masuk_id": 31,
-        "xmins": 68.3
+        "masuk": "Van Hecke",
+        "masuk_id": 112,
+        "xmins": 90.0
       }
     ]
   }
