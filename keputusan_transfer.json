@@ -2,7 +2,7 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-11-01T01:36:12+00:00",
+    "dibuat": "2026-11-02T01:57:56+00:00",
     "gw": 10,
     "kedaluwarsa": "2026-11-06T18:30:00+00:00",
     "opsi": [
@@ -28,13 +28,13 @@
       },
       {
         "confidence": 90.0,
-        "gain": 16.04,
+        "gain": 16.75,
         "keluar": "Gvardiol",
         "keluar_id": 391,
         "kesiapan": "HIJAU",
-        "masuk": "Van Hecke",
-        "masuk_id": 112,
-        "xmins": 90.0
+        "masuk": "Konsa",
+        "masuk_id": 31,
+        "xmins": 79.5
       }
     ]
   }
