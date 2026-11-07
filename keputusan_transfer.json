@@ -2,23 +2,23 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-11-06T02:56:53+00:00",
-    "gw": 10,
-    "kedaluwarsa": "2026-11-06T18:30:00+00:00",
+    "dibuat": "2026-11-07T02:26:52+00:00",
+    "gw": 11,
+    "kedaluwarsa": "2026-11-21T11:00:00+00:00",
     "opsi": [
       {
         "confidence": 90.0,
-        "gain": 27.45,
+        "gain": 26.03,
         "keluar": "Calvert-Lewin",
         "keluar_id": 346,
         "kesiapan": "HIJAU",
         "masuk": "Barry",
         "masuk_id": 249,
-        "xmins": 87.0
+        "xmins": 90.0
       },
       {
         "confidence": 90.0,
-        "gain": 22.34,
+        "gain": 17.09,
         "keluar": "Calvert-Lewin",
         "keluar_id": 346,
         "kesiapan": "HIJAU",
@@ -28,7 +28,7 @@
       },
       {
         "confidence": 90.0,
-        "gain": 18.49,
+        "gain": 13.69,
         "keluar": "Gvardiol",
         "keluar_id": 391,
         "kesiapan": "HIJAU",
