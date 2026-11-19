@@ -2,13 +2,13 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-11-18T03:56:11+00:00",
+    "dibuat": "2026-11-19T03:54:02+00:00",
     "gw": 11,
     "kedaluwarsa": "2026-11-21T11:00:00+00:00",
     "opsi": [
       {
         "confidence": 90.0,
-        "gain": 27.73,
+        "gain": 29.66,
         "keluar": "Gvardiol",
         "keluar_id": 391,
         "kesiapan": "HIJAU",
