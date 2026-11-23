@@ -2,13 +2,13 @@
   "keputusan": [],
   "offset": 273037189,
   "penawaran": {
-    "dibuat": "2026-11-22T02:43:45+00:00",
+    "dibuat": "2026-11-23T03:19:37+00:00",
     "gw": 12,
     "kedaluwarsa": "2026-11-27T18:30:00+00:00",
     "opsi": [
       {
         "confidence": 90.0,
-        "gain": 25.17,
+        "gain": 25.08,
         "keluar": "Giles",
         "keluar_id": 282,
         "kesiapan": "HIJAU",
@@ -18,7 +18,7 @@
       },
       {
         "confidence": 90.0,
-        "gain": 23.34,
+        "gain": 23.25,
         "keluar": "Giles",
         "keluar_id": 282,
         "kesiapan": "HIJAU",
